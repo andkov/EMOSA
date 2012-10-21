@@ -147,35 +147,9 @@ hr {
 
 <h2>List of required R Packages</h2>
 
-<p>requiredPackages &lt;- c(&ldquo;rjags&rdquo;,&ldquo;knitr&rdquo;)</p>
+<p>requiredPackages &lt;- c(&ldquo;rjags&rdquo;)</p>
 
 <p>install.packages(requiredPackages)</p>
-
-<p>precision is the inverse of variance</p>
-
-<p>vague prior vs tight prior / </p>
-
-<p>flip coint 50 percent - tight prior</p>
-
-<p>sigmaG ~ dunif(0, 1000) - vague prior</p>
-
-<p>the posterior is always a comprimise between the likelihood and the prior<br/>
-vague priors render the prior parameters less influential in production of posterior</p>
-
-<h1>*</h1>
-
-<p><code>pg[i+1] ~ dnorm(pgHat[i+1], precG)<br/>
-pi[i+1] ~ dnorm(piHat[i+1], precI)</code></p>
-
-<p>states the distributional form of the observed data, where the second argument specifies the predicted value of the fitted model</p>
-
-<h1>*</h1>
-
-<p><code>precG &lt;- pow(sigmaG, -2)</code><br/>
-precision</p>
-
-<p><code>precG &lt;- pow(sigmaG, 2)</code><br/>
-variance</p>
 
 </body>
 
