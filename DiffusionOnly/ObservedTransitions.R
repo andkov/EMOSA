@@ -16,7 +16,7 @@ a /sum(a)
 # ia: 0.1211861     .303    0.31068
 # ig: 0.3257413     .132    0.08722
 
-#Beta effect (Oct 21)
+#Beta effects (Oct 21)
           Mean        SD  Naive SE Time-series SE
 Kag    0.05165   0.02433 0.0001405      0.0008969
 Kai    0.09636   0.06390 0.0003689      0.0039178

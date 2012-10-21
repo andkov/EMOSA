@@ -1,4 +1,7 @@
 rm(list=ls(all=TRUE))
+cohortYear <- 1980 #1980, 1981, 1982, 1983, 1984
+
+## @knitr GoDogGo
 require(rjags)
 
 
@@ -17,7 +20,7 @@ pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
 # curve(dbeta(x, 10,10))
 # curve(dlogis(x, location = .25, scale = 1), xlim=c(-5, 5))
 
-cohortYear <- 1984 #1980, 1981, 1982, 1983, 1984
+
 ds <- read.csv(pathData, stringsAsFactors=FALSE)
 ds <- ds[ds$byear == cohortYear, ] #Select only the desired cohort
 ds <- ds[order(ds$time), ] #Sort, just, to make sure values will be passed to JAGS in the correct order.
@@ -44,8 +47,8 @@ parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sumG", "sumI")
 #parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sigmaG", "sigmaI")
 # inits <- function(){ list(Kgi=rnorm(1), Kga=rnorm(1), Kig=rnorm(1), Kia=rnorm(1), Kag=rnorm(1), Kai=rnorm(1)) }
 
-countChains <- 3 #6
-countIterations <- 10000
+countChains <- 6#3 #6
+countIterations <- 100000
 
 startTime <- Sys.time()
 
