@@ -1,0 +1,46 @@
+model {
+	for( i in 1:(timeCount-1) ) {
+		pgHat[i+1] <- pg[i] + (Kig * pi[i]) + (Kag*pa[i]) - (Kgi*pg[i]) - (Kga*pg[i])
+		piHat[i+1] <- pi[i] + (Kgi * pg[i]) + (Kai*pa[i]) - (Kig*pi[i]) - (Kia*pi[i])
+#		paHat[i+1] <- pa[i] + (Kga * pg[i]) + (Kia*pi[i]) - (Kag*pa[i]) - (Kai*pa[i])
+#		paHat[i+1] <- 1 - pgHat[i+1] - piHat[i+1]
+		
+#		pg[i+1] ~ dnorm(pgHat[i+1], precG)
+#		pi[i+1] ~ dnorm(piHat[i+1], precI)
+
+		pgAlpha[i+1] <- pgHat[i+1] * sumG
+		pgBeta[i+1] <- (1 - pgHat[i+1]) * sumG
+		pg[i+1] ~ dbeta(pgAlpha[i+1], pgBeta[i+1])
+		
+		piAlpha[i+1] <- piHat[i+1] * sumI
+		piBeta[i+1] <- (1 - piHat[i+1]) * sumI
+		pi[i+1] ~ dbeta(piAlpha[i+1], piBeta[i+1])
+		
+#		paAlpha[i+1] <- paHat[i+1] * sumA
+#		paBeta[i+1] <- (1 - paHat[i+1]) * sumA
+#		pa[i+1] ~ dbeta(paAlpha[i+1], paBeta[i+1])
+						
+	}
+
+	sumG ~ dunif(0, 100000)
+	sumI ~ dunif(0, 100000)
+#	sumA ~ dunif(0, 100000)
+	
+	#precG <- pow(sigmaG, -2)
+	#precI <- pow(sigmaI, -2)
+	#precA <- pow(sigmaA, -2)
+
+	#sigmaG ~ dunif(0, 1000)
+	#sigmaI ~ dunif(0, 1000)
+	#sigmaA ~ dunif(0, 1000)
+		
+	alpha <- 1
+	beta <- 1
+	Kgi ~ dbeta(alpha, beta)
+	Kga ~ dbeta(alpha, beta)	
+	Kig ~ dbeta(alpha, beta)
+	Kia ~ dbeta(alpha, beta)
+	Kag ~ dbeta(alpha, beta)
+	Kai ~ dbeta(alpha, beta)
+}	
+	
