@@ -4,15 +4,23 @@ require(rjags)
 
 
 if( Sys.info()["nodename"] == "MICKEY" ) 
-  pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion"
+  pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EmosaFork/EMOSA/OneShot_Only1984Diffusion"
+  #pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion"
 if( Sys.info()["nodename"] == "MERKANEZ-PC" ) 
   pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy" #Change this directory location
 
-pathModel <- file.path(pathDirectory, "Diffusion.bugs")
-curve(dbeta(x, .1,.1))
-curve(dbeta(x, 1,1))
-curve(dbeta(x, 10,10))
+# pathModel <- file.path(pathDirectory, "DiffusionGauss.bugs")
+# pathModel <- file.path(pathDirectory, "DiffusionLogit.bugs")
+pathModel <- file.path(pathDirectory, "DiffusionBeta.bugs")
+# curve(dbeta(x, .1,.1))
+# curve(dbeta(x, 1,1))
+# curve(dbeta(x, 10,10))
 # curve(dlogis(x, location = .25, scale = 1), xlim=c(-5, 5))
+# curve(dlogis(x, location = 1.25, scale = 1), xlim=c(-5, 5), add=T)
+# curve(dlogis(x, location = .25, scale = 10), xlim=c(-5, 5))
+# 
+# curve(plogis(x, location = .25, scale = 1), xlim=c(-5, 5))
+# curve(qlogis(x, location = .25, scale = 1), xlim=c(0, 1))
 
 #Proportion of Goers, of Irregulars, or Nongoers (or absentees) {Check these with data; I may have messed up the order}
 #For the 1984 cohort
@@ -27,13 +35,17 @@ mean(c(pg, pi, pa))
 jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount)
 
 # parameters <- c("mu")
+parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sumG", "sumI")#, "sumA")
+# parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sumG", "sumI", "sumA")
+# parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai")
+
 #parameters <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "scaleG", "scaleI", "scaleA")
-parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sigmaG", "sigmaI")
+#parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sigmaG", "sigmaI")
 #parameters <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "precG", "precI", "precA")
 # inits <- function(){ list(Kgi=rnorm(1), Kga=rnorm(1), Kig=rnorm(1), Kia=rnorm(1), Kag=rnorm(1), Kai=rnorm(1)) }
 
 countChains <- 3 #6
-countIterations <- 100#00
+countIterations <- 10000
 
 startTime <- Sys.time()
 
