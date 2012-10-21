@@ -8,7 +8,8 @@ if( Sys.info()["nodename"] == "MICKEY" )
 if( Sys.info()["nodename"] == "MERKANEZ-PC" ) 
   pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy" #Change this directory location
 
-pathInData <- file.path(pathDirectory, "subject_data_emosa_nonmiss.csv")
+pathInData <- file.path(pathDirectory, "subject_data_emosa_nonmiss.csv") #The name of the file to read in.
+pathOutData <- file.path(pathDirectory, "SummaryBirthYearByTime.csv") #The name of the file to write to.
 
 dsWide <- read.csv(pathInData, stringsAsFactors=FALSE)
 
@@ -37,35 +38,38 @@ dsLong$variable <- gsub(pattern="att", replacement="", x=dsLong$variable) #Strip
 dsLong$variable <- as.integer(dsLong$variable) #Convert to a number.
 dsLong <- plyr::rename(dsLong, replace=c(variable="time", value="attendence"))
 summary(dsLong)
+head(dsLong, 20)
 
 #Create a function to summarize each byear*time cell
 SummarizeBYearTime <- function( df ) {#df stands for 'data.frame'
-  observationCount <- 
+  #Create a new data.frame with three columns
   dsResult <- data.frame(
+    TotalGoers=sum(df$attendence %in% c(6,7,8)),
+    TotalIrregulars= sum(df$attendence %in% c(3,4,5)),
+    TotalAbsentees=sum(df$attendence %in% c(1,2))
   )
+  
+  #Calculate the proportions
+  cellCount <- dsResult$TotalGoers + dsResult$TotalIrregulars + dsResult$TotalAbsentees
+  #Equivalent way: cellCount <- apply(dsResult[, c('TotalGoers', 'TotalIrregulars', 'TotalAbsentees')], 1, sum)
+  dsResult$ProportionGoers <- dsResult$TotalGoers / cellCount
+  dsResult$ProportionIrregulars <- dsResult$TotalIrregulars / cellCount
+  dsResult$ProportionAbsentees <- dsResult$TotalAbsentees / cellCount  
+  
+  #Check that the totals sum to 1.0.  Throw an error if not.
+  #dsResult$ProportionTotal <- dsResult$ProportionGoers + dsResult$ProportionIrregulars + dsResult$ProportionAbsentees
+  proportionTotal <- dsResult$ProportionGoers + dsResult$ProportionIrregulars + dsResult$ProportionAbsentees
+  if( abs(proportionTotal - 1) > 1e-7 ) stop("The proportions summing to 1 for each byear*time cell.")
+  
+  #Return the new data.frame (presumably to the ddply call).
   return( dsResult)
 }
 
+# Create a data.frame that has a row for each unique summarize each byear*time combination.
+dsSummarized <- plyr::ddply(dsLong, .variables=c("byear", "time"), .fun=SummarizeBYearTime)
 
-plyr::ddply(dsWide, .variables=c("byear", "time")
+#Inspect the variables & top part of the results.
+summary(dsSummarized)
+head(dsSummarized, 10)
 
-dsSummarized <- data.frame(
-  Time=times, 
-  TotalGoers=NA_real_, TotalIrregulars=NA_real_, TotalAbsentees=NA_real_,
-  ProportionGoers=NA_real_, ProportionIrregulars=NA_real_, ProportionAbsentees=NA_real_
-)
-
-# for( t in dsSummarized$Time ) {
-# # for( t in 7 ) {
-#   rawColumnName <- paste0("att0", t)
-#   #print(rawColumnName)
-#   count <- sum(!is.na(dsRaw[, rawColumnName]))
-#   dsSummarized[t+1, 'TotalGoers'] <- sum(dsRaw[, rawColumnName] %in% c(1,2))
-#   dsSummarized[t+1, 'TotalIrregulars'] <- sum(dsRaw[, rawColumnName] %in% c(3,4,5))
-#   dsSummarized[t+1, 'TotalAbsentees'] <- sum(dsRaw[, rawColumnName] %in% c(6,7,8))
-# }
-# yearCount <- apply(dsSummarized[, c('TotalGoers', 'TotalIrregulars', 'TotalAbsentees')], 1, sum)
-# dsSummarized[, 'ProportionGoers'] <- dsSummarized[, 'TotalGoers'] / yearCount
-# dsSummarized[, 'ProportionIrregulars'] <- dsSummarized[, 'TotalIrregulars'] / yearCount
-# dsSummarized[, 'ProportionAbsentees'] <- dsSummarized[, 'TotalAbsentees'] / yearCount
-
+write.csv(dsSummarized, pathOutData, row.names=FALSE)

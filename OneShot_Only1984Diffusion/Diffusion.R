@@ -37,11 +37,7 @@ jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount)
 # parameters <- c("mu")
 parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sumG", "sumI")#, "sumA")
 # parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sumG", "sumI", "sumA")
-# parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai")
-
-#parameters <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "scaleG", "scaleI", "scaleA")
 #parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sigmaG", "sigmaI")
-#parameters <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "precG", "precI", "precA")
 # inits <- function(){ list(Kgi=rnorm(1), Kga=rnorm(1), Kig=rnorm(1), Kia=rnorm(1), Kag=rnorm(1), Kai=rnorm(1)) }
 
 countChains <- 3 #6
