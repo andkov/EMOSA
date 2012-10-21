@@ -14,11 +14,8 @@ if( Sys.info()["nodename"] == "MERKANEZ-PC" )
 
 # pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionGauss.bugs")
 # pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionLogit.bugs")
-pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionBeta.bugs")
+pathModel <- file.path(pathDirectory, "ContagionOnly/Contagion.bugs")
 pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
-# curve(dbeta(x, 1,1))
-# curve(dbeta(x, 10,10))
-# curve(dlogis(x, location = .25, scale = 1), xlim=c(-5, 5))
 
 
 ds <- read.csv(pathData, stringsAsFactors=FALSE)
@@ -41,14 +38,10 @@ mean(c(pg, pi, pa))
 
 jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount)
 
-# parameters <- c("mu")
-parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sumG", "sumI")#, "sumA")
-# parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sumG", "sumI", "sumA")
-#parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sigmaG", "sigmaI")
-# inits <- function(){ list(Kgi=rnorm(1), Kga=rnorm(1), Kig=rnorm(1), Kia=rnorm(1), Kag=rnorm(1), Kai=rnorm(1)) }
+parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI")
 
-countChains <- 6#3 #6
-countIterations <- 100000
+countChains <- 3#3 #6
+countIterations <- 10000#0
 
 startTime <- Sys.time()
 
@@ -68,6 +61,4 @@ effectiveSize(chains) #Sample size adjusted for autocorrelation
 xyplot(chains) #Needs at least two parameters; else throws an error.
 densityplot(chains)
 # gelman.plot(chains)
-# print(rbind(paste("estimated mu: ", condensed$statistics["mu0", "Mean"]),
-#             paste("observed mean:", mean(y, na.rm=T))))
 elapsed
