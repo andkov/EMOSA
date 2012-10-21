@@ -32,6 +32,7 @@ summary(dsWide)
 
 #Transform the wide dataset into a long dataset
 dsLong <- melt(dsWide, id.vars=c("id", "byear"))
+dsLong <- dsLong[order(dsLong$id, dsLong$variable), ] #Sort for the sake of visual inspection.
 
 #Convert the year variable from a character to a number
 dsLong$variable <- gsub(pattern="att", replacement="", x=dsLong$variable) #Strip off the 'att' prefix
