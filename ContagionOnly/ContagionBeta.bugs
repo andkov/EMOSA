@@ -13,7 +13,7 @@ model {
 			- (Tia * pi[i] * pa[i])
 		
 		
-#		paHat[i+1] <- pa[i] + (Tga * pg[i]) + (Tia*pi[i]) - (Tag*pa[i]) - (Tai*pa[i])
+#		paHat[i+1] <- pa[i] + (Tga * pg[i] * pa[i]) + (Tia * pi[i] * pa[i]) - (Tag * pa[i] * pg[i]) - (Tai * pa[i] * pi[i])
 #		paHat[i+1] <- 1 - pgHat[i+1] - piHat[i+1]
 		
 		pgAlpha[i+1] <- pgHat[i+1] * sumG

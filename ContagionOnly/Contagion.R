@@ -1,5 +1,5 @@
 rm(list=ls(all=TRUE)) #Clear out variables from previous runs.
-cohortYear <- 1984 #1980, 1981, 1982, 1983, 1984
+cohortYear <- 1980 #1980, 1981, 1982, 1983, 1984
 
 ## @knitr GoDogGo
 require(rjags)
@@ -12,9 +12,8 @@ if( Sys.info()["nodename"] == "MICKEY" )
 if( Sys.info()["nodename"] == "MERKANEZ-PC" ) 
   pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy" #Change this directory location
 
-# pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionGauss.bugs")
-# pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionLogit.bugs")
-pathModel <- file.path(pathDirectory, "ContagionOnly/Contagion.bugs")
+# pathModel <- file.path(pathDirectory, "ContagionOnly/ContagionGauss.bugs")
+pathModel <- file.path(pathDirectory, "ContagionOnly/ContagionBeta.bugs")
 pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
 
 
@@ -38,10 +37,11 @@ mean(c(pg, pi, pa))
 
 jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount)
 
-parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI")
+parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI") #For Beta
+# parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sigmaG", "sigmaI") #For Gauss
 
 countChains <- 3#3 #6
-countIterations <- 10000#0
+countIterations <- 100000
 
 startTime <- Sys.time()
 
