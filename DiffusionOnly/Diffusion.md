@@ -137,26 +137,26 @@ elapsed <- Sys.time() - startTime
 ##    plus standard error of the mean:
 ## 
 ##          Mean       SD Naive SE Time-series SE
-## Kag  1.80e-01 6.49e-02 8.38e-05        0.00186
-## Kai  9.05e-02 6.53e-02 8.44e-05        0.00151
-## Kga  4.33e-01 2.44e-01 3.15e-04        0.00804
-## Kgi  5.29e-01 2.14e-01 2.76e-04        0.00734
-## Kia  3.06e-01 1.74e-01 2.25e-04        0.00543
-## Kig  2.14e-01 1.19e-01 1.54e-04        0.00366
-## sumG 2.07e+03 1.04e+03 1.34e+00        7.48277
-## sumI 1.65e+03 8.29e+02 1.07e+00        6.52770
+## Kag  1.79e-01 6.39e-02 8.24e-05        0.00169
+## Kai  9.16e-02 6.74e-02 8.70e-05        0.00166
+## Kga  4.29e-01 2.46e-01 3.18e-04        0.00845
+## Kgi  5.37e-01 2.18e-01 2.81e-04        0.00761
+## Kia  3.08e-01 1.77e-01 2.29e-04        0.00576
+## Kig  2.18e-01 1.19e-01 1.53e-04        0.00380
+## sumG 2.07e+03 1.04e+03 1.34e+00        7.49938
+## sumI 1.64e+03 8.30e+02 1.07e+00        7.21646
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%      25%      50%      75%    97.5%
-## Kag    0.0504    0.137 1.80e-01    0.222    0.309
-## Kai    0.0044    0.040 7.85e-02    0.127    0.247
-## Kga    0.0313    0.237 4.21e-01    0.611    0.919
-## Kgi    0.0983    0.379 5.36e-01    0.685    0.931
-## Kia    0.0269    0.175 2.89e-01    0.417    0.689
-## Kig    0.0189    0.124 2.04e-01    0.292    0.472
-## sumG 579.4133 1312.259 1.90e+03 2638.703 4564.056
-## sumI 455.5629 1043.401 1.51e+03 2102.512 3636.297
+## Kag  5.49e-02    0.136 1.78e-01    0.220    0.309
+## Kai  4.45e-03    0.040 7.86e-02    0.128    0.258
+## Kga  2.98e-02    0.233 4.09e-01    0.611    0.923
+## Kgi  9.54e-02    0.385 5.45e-01    0.698    0.931
+## Kia  2.63e-02    0.174 2.93e-01    0.420    0.703
+## Kig  2.06e-02    0.130 2.09e-01    0.294    0.478
+## sumG 5.77e+02 1313.884 1.90e+03 2641.606 4547.114
+## sumI 4.48e+02 1035.942 1.50e+03 2097.640 3635.838
 ```
 
 ```r
@@ -169,10 +169,10 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ## Potential scale reduction factors:
 ## 
 ##      Point est. Upper C.I.
-## Kag           1       1.00
-## Kai           1       1.01
+## Kag           1       1.01
+## Kai           1       1.00
 ## Kga           1       1.01
-## Kgi           1       1.01
+## Kgi           1       1.00
 ## Kia           1       1.00
 ## Kig           1       1.00
 ## sumG          1       1.00
@@ -180,7 +180,7 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ## 
 ## Multivariate psrf
 ## 
-## 1.01
+## 1
 ```
 
 ```r
@@ -188,8 +188,8 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 ```
 
 ```
-##   Kag   Kai   Kga   Kgi   Kia   Kig  sumG  sumI 
-##  1443  2461  1182  1029  1462  1248 40874 36610
+##     Kag     Kai     Kga     Kgi     Kia     Kig    sumG    sumI 
+##  1473.1  2273.0  1160.1   996.5  1428.1  1242.3 41533.4 33645.1
 ```
 
 ```r
@@ -197,13 +197,13 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 xyplot(chains)  #Needs at least two parameters; else throws an error.
 ```
 
-![plot of chunk GoDogGo](figure/GoDogGo1.png) 
+![plot of chunk GoDogGo](figure/Cohort1980GoDogGo1.png) 
 
 ```r
 densityplot(chains)
 ```
 
-![plot of chunk GoDogGo](figure/GoDogGo2.png) 
+![plot of chunk GoDogGo](figure/Cohort1980GoDogGo2.png) 
 
 ```r
 # gelman.plot(chains) print(rbind(paste('estimated mu: ',
@@ -213,7 +213,7 @@ elapsed
 ```
 
 ```
-## Time difference of 2.071 mins
+## Time difference of 2.072 mins
 ```
 
 
@@ -321,26 +321,26 @@ elapsed <- Sys.time() - startTime
 ##    plus standard error of the mean:
 ## 
 ##          Mean       SD Naive SE Time-series SE
-## Kag  1.29e-01 3.78e-02 4.88e-05       6.38e-04
-## Kai  5.94e-02 4.30e-02 5.55e-05       7.55e-04
-## Kga  2.69e-01 1.64e-01 2.12e-04       5.91e-03
-## Kgi  4.00e-01 1.80e-01 2.32e-04       7.15e-03
-## Kia  1.97e-01 1.24e-01 1.60e-04       3.66e-03
-## Kig  2.39e-01 1.14e-01 1.47e-04       3.77e-03
-## sumG 3.23e+03 1.64e+03 2.11e+00       1.00e+01
-## sumI 1.79e+03 9.02e+02 1.16e+00       5.71e+00
+## Kag     0.128 3.72e-02 4.80e-05       6.11e-04
+## Kai     0.059 4.29e-02 5.53e-05       7.01e-04
+## Kga     0.266 1.61e-01 2.07e-04       5.02e-03
+## Kgi     0.407 1.80e-01 2.32e-04       6.99e-03
+## Kia     0.196 1.21e-01 1.56e-04       3.11e-03
+## Kig     0.245 1.17e-01 1.51e-04       3.88e-03
+## sumG 3235.586 1.64e+03 2.12e+00       1.06e+01
+## sumI 1798.964 9.09e+02 1.17e+00       5.66e+00
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%      25%      50%      75%    97.5%
-## Kag  5.64e-02 1.05e-01 1.29e-01 1.52e-01    0.208
-## Kai  3.06e-03 2.68e-02 5.16e-02 8.26e-02    0.164
-## Kga  1.56e-02 1.37e-01 2.56e-01 3.81e-01    0.615
-## Kgi  6.29e-02 2.71e-01 3.98e-01 5.24e-01    0.757
-## Kia  1.10e-02 9.80e-02 1.85e-01 2.80e-01    0.466
-## Kig  3.45e-02 1.59e-01 2.36e-01 3.14e-01    0.477
-## sumG 8.80e+02 2.04e+03 2.96e+03 4.13e+03 7160.365
-## sumI 4.86e+02 1.13e+03 1.64e+03 2.29e+03 3945.611
+## Kag  5.74e-02 1.04e-01 1.27e-01 1.51e-01    0.206
+## Kai  3.04e-03 2.67e-02 5.12e-02 8.22e-02    0.162
+## Kga  1.67e-02 1.39e-01 2.52e-01 3.74e-01    0.610
+## Kgi  6.73e-02 2.81e-01 4.03e-01 5.27e-01    0.777
+## Kia  1.16e-02 1.01e-01 1.86e-01 2.77e-01    0.456
+## Kig  3.52e-02 1.63e-01 2.40e-01 3.19e-01    0.487
+## sumG 8.75e+02 2.03e+03 2.96e+03 4.13e+03 7183.570
+## sumI 4.84e+02 1.13e+03 1.65e+03 2.30e+03 3973.771
 ```
 
 ```r
@@ -355,10 +355,10 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ##      Point est. Upper C.I.
 ## Kag        1.00       1.00
 ## Kai        1.00       1.00
-## Kga        1.00       1.01
+## Kga        1.00       1.00
 ## Kgi        1.01       1.02
-## Kia        1.00       1.01
-## Kig        1.00       1.01
+## Kia        1.00       1.00
+## Kig        1.01       1.03
 ## sumG       1.00       1.00
 ## sumI       1.00       1.00
 ## 
@@ -373,7 +373,7 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 
 ```
 ##     Kag     Kai     Kga     Kgi     Kia     Kig    sumG    sumI 
-##  3854.9  5432.3  1253.9   776.1  2077.8  1112.1 45823.1 46023.0
+##  3985.2  5644.1  1372.1   781.6  2191.1  1072.4 44257.9 45659.2
 ```
 
 ```r
@@ -381,13 +381,13 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 xyplot(chains)  #Needs at least two parameters; else throws an error.
 ```
 
-![plot of chunk GoDogGo](figure/GoDogGo1.png) 
+![plot of chunk GoDogGo](figure/Cohort1981GoDogGo1.png) 
 
 ```r
 densityplot(chains)
 ```
 
-![plot of chunk GoDogGo](figure/GoDogGo2.png) 
+![plot of chunk GoDogGo](figure/Cohort1981GoDogGo2.png) 
 
 ```r
 # gelman.plot(chains) print(rbind(paste('estimated mu: ',
@@ -397,7 +397,7 @@ elapsed
 ```
 
 ```
-## Time difference of 2.014 mins
+## Time difference of 1.995 mins
 ```
 
 
@@ -504,26 +504,26 @@ elapsed <- Sys.time() - startTime
 ##    plus standard error of the mean:
 ## 
 ##          Mean       SD Naive SE Time-series SE
-## Kag  1.08e-01 5.77e-02 7.45e-05       0.001470
-## Kai  5.47e-02 3.42e-02 4.41e-05       0.000529
-## Kga  2.07e-01 1.40e-01 1.81e-04       0.002602
-## Kgi  6.57e-01 1.37e-01 1.77e-04       0.003670
-## Kia  2.24e-01 1.44e-01 1.85e-04       0.004438
-## Kig  4.31e-01 1.69e-01 2.18e-04       0.006433
-## sumG 7.20e+02 3.60e+02 4.64e-01       1.926107
-## sumI 2.70e+03 1.38e+03 1.78e+00       8.117569
+## Kag  1.07e-01 5.75e-02 7.42e-05       0.001494
+## Kai  5.55e-02 3.45e-02 4.45e-05       0.000515
+## Kga  2.04e-01 1.39e-01 1.80e-04       0.002670
+## Kgi  6.64e-01 1.34e-01 1.73e-04       0.003137
+## Kia  2.26e-01 1.46e-01 1.88e-04       0.004716
+## Kig  4.35e-01 1.69e-01 2.18e-04       0.006138
+## sumG 7.19e+02 3.58e+02 4.62e-01       1.908941
+## sumI 2.71e+03 1.39e+03 1.79e+00       7.723542
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%      25%      50%      75%    97.5%
-## Kag  1.29e-02 6.62e-02 1.03e-01 1.44e-01    0.234
-## Kai  4.11e-03 2.91e-02 5.03e-02 7.47e-02    0.133
-## Kga  1.01e-02 9.57e-02 1.88e-01 2.95e-01    0.525
-## Kgi  3.76e-01 5.70e-01 6.60e-01 7.50e-01    0.918
-## Kia  1.24e-02 1.09e-01 2.07e-01 3.17e-01    0.542
-## Kig  8.62e-02 3.17e-01 4.36e-01 5.49e-01    0.748
-## sumG 1.98e+02 4.57e+02 6.60e+02 9.18e+02 1577.310
-## sumI 7.09e+02 1.69e+03 2.47e+03 3.46e+03 6002.491
+## Kag  1.22e-02 6.55e-02 1.02e-01 1.43e-01    0.235
+## Kai  4.22e-03 2.99e-02 5.13e-02 7.55e-02    0.134
+## Kga  9.86e-03 9.31e-02 1.84e-01 2.91e-01    0.520
+## Kgi  3.84e-01 5.79e-01 6.68e-01 7.55e-01    0.918
+## Kia  1.21e-02 1.09e-01 2.10e-01 3.22e-01    0.542
+## Kig  9.14e-02 3.19e-01 4.42e-01 5.55e-01    0.750
+## sumG 1.98e+02 4.57e+02 6.60e+02 9.18e+02 1571.299
+## sumI 7.04e+02 1.69e+03 2.48e+03 3.47e+03 6032.638
 ```
 
 ```r
@@ -541,7 +541,7 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ## Kga        1.00       1.00
 ## Kgi        1.00       1.01
 ## Kia        1.00       1.01
-## Kig        1.01       1.01
+## Kig        1.01       1.02
 ## sumG       1.00       1.00
 ## sumI       1.00       1.00
 ## 
@@ -556,7 +556,7 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 
 ```
 ##     Kag     Kai     Kga     Kgi     Kia     Kig    sumG    sumI 
-##  3619.8  6230.4  5488.8  2116.7  1517.1   868.1 68598.9 43102.2
+##  3500.6  6193.9  5067.4  2217.5  1460.6   869.7 70581.7 44073.5
 ```
 
 ```r
@@ -564,13 +564,13 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 xyplot(chains)  #Needs at least two parameters; else throws an error.
 ```
 
-![plot of chunk GoDogGo](figure/GoDogGo1.png) 
+![plot of chunk GoDogGo](figure/Cohort1982GoDogGo1.png) 
 
 ```r
 densityplot(chains)
 ```
 
-![plot of chunk GoDogGo](figure/GoDogGo2.png) 
+![plot of chunk GoDogGo](figure/Cohort1982GoDogGo2.png) 
 
 ```r
 # gelman.plot(chains) print(rbind(paste('estimated mu: ',
@@ -580,7 +580,7 @@ elapsed
 ```
 
 ```
-## Time difference of 2.063 mins
+## Time difference of 2.056 mins
 ```
 
 
@@ -687,26 +687,26 @@ elapsed <- Sys.time() - startTime
 ##    plus standard error of the mean:
 ## 
 ##          Mean       SD Naive SE Time-series SE
-## Kag  7.34e-02 1.92e-02 2.47e-05       3.74e-04
-## Kai  9.24e-02 5.68e-02 7.33e-05       8.56e-04
-## Kga  7.00e-02 5.99e-02 7.73e-05       1.55e-03
-## Kgi  3.04e-01 6.40e-02 8.26e-05       1.68e-03
-## Kia  3.53e-01 1.34e-01 1.72e-04       2.58e-03
-## Kig  8.67e-02 5.15e-02 6.65e-05       1.09e-03
-## sumG 9.85e+03 5.24e+03 6.77e+00       3.42e+01
-## sumI 1.08e+03 5.60e+02 7.23e-01       4.75e+00
+## Kag  7.33e-02 1.95e-02 2.52e-05       3.96e-04
+## Kai  9.18e-02 5.54e-02 7.15e-05       8.45e-04
+## Kga  6.63e-02 5.51e-02 7.12e-05       1.35e-03
+## Kgi  3.08e-01 5.93e-02 7.66e-05       1.49e-03
+## Kia  3.55e-01 1.28e-01 1.66e-04       2.46e-03
+## Kig  8.70e-02 5.24e-02 6.77e-05       1.14e-03
+## sumG 9.84e+03 5.25e+03 6.78e+00       3.49e+01
+## sumI 1.09e+03 5.62e+02 7.25e-01       4.22e+00
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%      25%      50%      75%    97.5%
-## Kag  3.13e-02 6.16e-02 7.50e-02 8.70e-02 1.06e-01
-## Kai  6.96e-03 5.00e-02 8.55e-02 1.26e-01 2.21e-01
-## Kga  2.18e-03 2.37e-02 5.39e-02 1.01e-01 2.23e-01
-## Kgi  1.50e-01 2.70e-01 3.15e-01 3.48e-01 4.04e-01
-## Kia  1.12e-01 2.60e-01 3.46e-01 4.38e-01 6.33e-01
-## Kig  7.31e-03 4.81e-02 8.07e-02 1.18e-01 2.04e-01
-## sumG 2.43e+03 6.01e+03 8.94e+03 1.27e+04 2.25e+04
-## sumI 2.81e+02 6.68e+02 9.81e+02 1.38e+03 2.42e+03
+## Kag  2.95e-02 6.15e-02 7.50e-02 8.70e-02 1.07e-01
+## Kai  7.15e-03 5.05e-02 8.56e-02 1.25e-01 2.17e-01
+## Kga  2.20e-03 2.39e-02 5.28e-02 9.49e-02 2.05e-01
+## Kgi  1.69e-01 2.76e-01 3.17e-01 3.48e-01 4.03e-01
+## Kia  1.22e-01 2.66e-01 3.48e-01 4.36e-01 6.26e-01
+## Kig  7.20e-03 4.80e-02 8.08e-02 1.18e-01 2.09e-01
+## sumG 2.41e+03 5.99e+03 8.92e+03 1.27e+04 2.25e+04
+## sumI 2.89e+02 6.81e+02 9.97e+02 1.40e+03 2.44e+03
 ```
 
 ```r
@@ -739,7 +739,7 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 
 ```
 ##   Kag   Kai   Kga   Kgi   Kia   Kig  sumG  sumI 
-##  3495  5233  1959  2139  3741  2621 41015 28832
+##  3370  5331  2443  2571  3982  2572 40839 35827
 ```
 
 ```r
@@ -747,13 +747,13 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 xyplot(chains)  #Needs at least two parameters; else throws an error.
 ```
 
-![plot of chunk GoDogGo](figure/GoDogGo1.png) 
+![plot of chunk GoDogGo](figure/Cohort1983GoDogGo1.png) 
 
 ```r
 densityplot(chains)
 ```
 
-![plot of chunk GoDogGo](figure/GoDogGo2.png) 
+![plot of chunk GoDogGo](figure/Cohort1983GoDogGo2.png) 
 
 ```r
 # gelman.plot(chains) print(rbind(paste('estimated mu: ',
@@ -763,7 +763,7 @@ elapsed
 ```
 
 ```
-## Time difference of 2.055 hours
+## Time difference of 1.96 mins
 ```
 
 
@@ -871,26 +871,26 @@ elapsed <- Sys.time() - startTime
 ##    plus standard error of the mean:
 ## 
 ##          Mean       SD Naive SE Time-series SE
-## Kag    0.0505   0.0241 3.11e-05       0.000168
-## Kai    0.0919   0.0591 7.63e-05       0.000788
-## Kga    0.0976   0.0666 8.60e-05       0.000671
-## Kgi    0.2126   0.0625 8.06e-05       0.000655
-## Kia    0.2947   0.1424 1.84e-04       0.002021
-## Kig    0.0657   0.0533 6.88e-05       0.000487
-## sumG 969.9319 508.3459 6.56e-01       1.886756
-## sumI 646.5536 325.3208 4.20e-01       1.152129
+## Kag    0.0504   0.0242 3.12e-05       0.000170
+## Kai    0.0916   0.0593 7.65e-05       0.000711
+## Kga    0.0982   0.0664 8.57e-05       0.000605
+## Kgi    0.2124   0.0622 8.03e-05       0.000597
+## Kia    0.2934   0.1422 1.84e-04       0.001818
+## Kig    0.0662   0.0533 6.89e-05       0.000489
+## sumG 965.1307 504.2468 6.51e-01       1.783286
+## sumI 647.2846 326.8404 4.22e-01       1.155877
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%      25%      50%      75%    97.5%
-## Kag  5.45e-03   0.0334   0.0510 6.68e-02 9.74e-02
-## Kai  6.14e-03   0.0471   0.0838 1.27e-01 2.29e-01
-## Kga  4.91e-03   0.0450   0.0874 1.39e-01 2.51e-01
-## Kgi  7.92e-02   0.1729   0.2164 2.56e-01 3.26e-01
-## Kia  5.15e-02   0.1916   0.2828 3.84e-01 6.05e-01
-## Kig  2.12e-03   0.0233   0.0530 9.61e-02 1.95e-01
-## sumG 2.51e+02 598.3483 880.0617 1.24e+03 2.20e+03
-## sumI 1.76e+02 407.8096 592.3110 8.27e+02 1.42e+03
+## Kag  5.38e-03   0.0332   0.0508 6.68e-02 9.79e-02
+## Kai  6.16e-03   0.0468   0.0835 1.26e-01 2.28e-01
+## Kga  5.08e-03   0.0456   0.0882 1.39e-01 2.50e-01
+## Kgi  7.89e-02   0.1732   0.2161 2.55e-01 3.26e-01
+## Kia  5.13e-02   0.1903   0.2825 3.83e-01 6.02e-01
+## Kig  2.15e-03   0.0236   0.0537 9.69e-02 1.95e-01
+## sumG 2.49e+02 597.2285 876.7238 1.24e+03 2.18e+03
+## sumI 1.75e+02 407.9425 592.9738 8.27e+02 1.43e+03
 ```
 
 ```r
@@ -923,7 +923,7 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 
 ```
 ##   Kag   Kai   Kga   Kgi   Kia   Kig  sumG  sumI 
-## 21050  7384 12601 11833  5919 12714 87143 98453
+## 20992  7284 12792 11570  5747 12418 90443 97385
 ```
 
 ```r
@@ -931,13 +931,13 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 xyplot(chains)  #Needs at least two parameters; else throws an error.
 ```
 
-![plot of chunk GoDogGo](figure/GoDogGo1.png) 
+![plot of chunk GoDogGo](figure/Cohort1984GoDogGo1.png) 
 
 ```r
 densityplot(chains)
 ```
 
-![plot of chunk GoDogGo](figure/GoDogGo2.png) 
+![plot of chunk GoDogGo](figure/Cohort1984GoDogGo2.png) 
 
 ```r
 # gelman.plot(chains) print(rbind(paste('estimated mu: ',
@@ -947,7 +947,6 @@ elapsed
 ```
 
 ```
-## Time difference of 2.109 mins
+## Time difference of 2.103 mins
 ```
-
 
