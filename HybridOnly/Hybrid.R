@@ -1,8 +1,10 @@
 rm(list=ls(all=TRUE)) #Clear out variables from previous runs.
 cohortYear <- 1984 #1980, 1981, 1982, 1983, 1984
 
+
 ## @knitr GoDogGo
 require(rjags)
+
 
 
 
@@ -12,11 +14,11 @@ if( Sys.info()["nodename"] == "MICKEY" )
 if( Sys.info()["nodename"] == "MERKANEZ-PC" ) 
   pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy" #Change this directory location
 
-# pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionGauss.bugs")
-# pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionLogit.bugs")
-pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionBeta.bugs")
+pathModel <- file.path(pathDirectory, "HybridOnly/HybridBeta.bugs")
 pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
-# curve(dbeta(x, 1,1))
+pathOutChains <- file.path(pathDirectory, paste0("Data/ChainsHybrid", cohortYear, ".csv"))
+  
+  # curve(dbeta(x, 1,1))
 # curve(dbeta(x, 10,10))
 # curve(dlogis(x, location = .25, scale = 1), xlim=c(-5, 5))
 
@@ -41,13 +43,15 @@ mean(c(pg, pi, pa))
 
 jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount)
 
-# parameters <- c("mu")
-parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sumG", "sumI")#, "sumA")
-# parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sumG", "sumI", "sumA")
-#parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sigmaG", "sigmaI")
+
+parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", 
+                       "Cgi", "Cga", "Cig", "Cia", "Cag", "Cai",                       
+                       "sumG", "sumI"
+) #For Beta
+# parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sigmaG", "sigmaI") #For Gauss
 # inits <- function(){ list(Kgi=rnorm(1), Kga=rnorm(1), Kig=rnorm(1), Kia=rnorm(1), Kag=rnorm(1), Kai=rnorm(1)) }
 
-countChains <- 6#3 #6
+countChains <- 3#3 #6
 countIterations <- 100000
 
 startTime <- Sys.time()
@@ -60,6 +64,7 @@ jagsModel <- jags.model(file=pathModel, data=jagsData, n.chains=countChains)#, i
 chains <- coda.samples(jagsModel, variable.names=parametersToTrack, n.iter=countIterations)# updates the model, and coerces the output to a single mcmc.list object. 
 elapsed  <- Sys.time() - startTime
 (condensed <- summary(chains))
+head(chains, 20)
 
 # windows() # dev.off()
 gelman.diag(chains, autoburnin=FALSE) #This is R-hat; the burnin period is manually specified above, so turn off the auto argument. 
@@ -70,4 +75,5 @@ densityplot(chains)
 # gelman.plot(chains)
 # print(rbind(paste("estimated mu: ", condensed$statistics["mu0", "Mean"]),
 #             paste("observed mean:", mean(y, na.rm=T))))
+write.csv(chains, pathOutChains, row.names=FALSE)
 elapsed
