@@ -40,7 +40,7 @@ jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount)
 parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI") #For Beta
 # parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sigmaG", "sigmaI") #For Gauss
 
-countChains <- 3#3 #6
+countChains <- 6#3 #6
 countIterations <- 100000
 
 startTime <- Sys.time()
@@ -48,7 +48,8 @@ startTime <- Sys.time()
 jagsModel <- jags.model(file=pathModel, data=jagsData, n.chains=countChains)#, inits=inits)
 #print(jagsModel)
 #update(jagsModel, 1000) #modifies the original object and returns NULL
-# dic <- dic.samples(jagsModel, n.iter=countIterations) 
+dic <- dic.samples(jagsModel, n.iter=countIterations) 
+dic
 #mcarray <- jags.samples(model=jagsModel, c('mu'), n.iter=countIterations) #If I understand correctly, the following line is similar, but better
 chains <- coda.samples(jagsModel, variable.names=parametersToTrack, n.iter=countIterations)# updates the model, and coerces the output to a single mcmc.list object. 
 elapsed  <- Sys.time() - startTime

@@ -4,7 +4,8 @@ cohortYear <- 1984 #1980, 1981, 1982, 1983, 1984
 
 ## @knitr GoDogGo
 require(rjags)
-
+# require(coda)
+rjags::load.module("dic") # load a few useful modules (JAGS is modular in design): https://sites.google.com/site/autocatalysis/bayesian-methods-using-jags
 
 
 
@@ -49,9 +50,10 @@ parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai",
                        "sumG", "sumI"
 ) #For Beta
 # parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sigmaG", "sigmaI") #For Gauss
+parametersToTrackWithDic <- c("pD", "deviance", parametersToTrack) #Must first execute 'rjags::load.module("dic")'
 # inits <- function(){ list(Kgi=rnorm(1), Kga=rnorm(1), Kig=rnorm(1), Kia=rnorm(1), Kag=rnorm(1), Kai=rnorm(1)) }
 
-countChains <- 3#3 #6
+countChains <- 6#3 #6
 countIterations <- 100000
 
 startTime <- Sys.time()
@@ -59,12 +61,22 @@ startTime <- Sys.time()
 jagsModel <- jags.model(file=pathModel, data=jagsData, n.chains=countChains)#, inits=inits)
 #print(jagsModel)
 #update(jagsModel, 1000) #modifies the original object and returns NULL
-# dic <- dic.samples(jagsModel, n.iter=countIterations) 
-#mcarray <- jags.samples(model=jagsModel, c('mu'), n.iter=countIterations) #If I understand correctly, the following line is similar, but better
+dic <- dic.samples(jagsModel, n.iter=countIterations) 
+dic
+# mcarray <- jags.samples(model=jagsModel, variable.names=parametersToTrackWithDic, n.iter=countIterations ) #If I understand correctly, the following line is similar, but better
+# as.mcmc.list(mcarray$Cag)
+# mcarray <- mcmc(mcarray)
+# mcarray <- mcmc.list(mcarray)
+# nchain(mcarray)
+# str(mcarray)
+# class(mcarray)
+# summary(mcarray)
+
 chains <- coda.samples(jagsModel, variable.names=parametersToTrack, n.iter=countIterations)# updates the model, and coerces the output to a single mcmc.list object. 
+# class(chains)
 elapsed  <- Sys.time() - startTime
 (condensed <- summary(chains))
-head(chains, 20)
+# head(chains, 20)
 
 # windows() # dev.off()
 gelman.diag(chains, autoburnin=FALSE) #This is R-hat; the burnin period is manually specified above, so turn off the auto argument. 
@@ -75,5 +87,9 @@ densityplot(chains)
 # gelman.plot(chains)
 # print(rbind(paste("estimated mu: ", condensed$statistics["mu0", "Mean"]),
 #             paste("observed mean:", mean(y, na.rm=T))))
-write.csv(chains, pathOutChains, row.names=FALSE)
+# dsChains <- as.data.frame(chains)
+# write.csv(chains, pathOutChains, row.names=FALSE)
 elapsed
+
+
+#Coda & DIC on JAGS: http://sourceforge.net/p/mcmc-jags/discussion/610037/thread/ea46dc43

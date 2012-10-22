@@ -55,7 +55,8 @@ startTime <- Sys.time()
 jagsModel <- jags.model(file=pathModel, data=jagsData, n.chains=countChains)#, inits=inits)
 #print(jagsModel)
 #update(jagsModel, 1000) #modifies the original object and returns NULL
-# dic <- dic.samples(jagsModel, n.iter=countIterations) 
+dic <- dic.samples(jagsModel, n.iter=countIterations) 
+dic
 #mcarray <- jags.samples(model=jagsModel, c('mu'), n.iter=countIterations) #If I understand correctly, the following line is similar, but better
 chains <- coda.samples(jagsModel, variable.names=parametersToTrack, n.iter=countIterations)# updates the model, and coerces the output to a single mcmc.list object. 
 elapsed  <- Sys.time() - startTime

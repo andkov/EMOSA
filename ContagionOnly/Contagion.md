@@ -8,6 +8,7 @@
 
 
 ### Cohort: 1980
+Andrey -write something here.
 
 ```r
 cohortYear <- 1980
@@ -91,7 +92,7 @@ parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI")
 # parametersToTrack <- c('Tgi', 'Tga', 'Tig', 'Tia', 'Tag', 'Tai',
 # 'sigmaG', 'sigmaI') #For Gauss
 
-countChains <- 3  #3 #6
+countChains <- 6  #3 #6
 countIterations <- 1e+05
 
 startTime <- Sys.time()
@@ -110,7 +111,18 @@ jagsModel <- jags.model(file = pathModel, data = jagsData, n.chains = countChain
 
 ```r
 # print(jagsModel) update(jagsModel, 1000) #modifies the original object
-# and returns NULL dic <- dic.samples(jagsModel, n.iter=countIterations)
+# and returns NULL
+dic <- dic.samples(jagsModel, n.iter = countIterations)
+dic
+```
+
+```
+## Mean deviance:  -87.2 
+## penalty 4.72 
+## Penalized deviance: -82.5
+```
+
+```r
 # mcarray <- jags.samples(model=jagsModel, c('mu'),
 # n.iter=countIterations) #If I understand correctly, the following line
 # is similar, but better
@@ -121,35 +133,35 @@ elapsed <- Sys.time() - startTime
 
 ```
 ## 
-## Iterations = 1001:101000
+## Iterations = 101001:201000
 ## Thinning interval = 1 
-## Number of chains = 3 
+## Number of chains = 6 
 ## Sample size per chain = 1e+05 
 ## 
 ## 1. Empirical mean and standard deviation for each variable,
 ##    plus standard error of the mean:
 ## 
 ##          Mean      SD Naive SE Time-series SE
-## Tag     0.535   0.263 0.000480        0.00461
-## Tai     0.459   0.263 0.000481        0.00802
-## Tga     0.479   0.263 0.000480        0.00470
-## Tgi     0.583   0.271 0.000495        0.00331
-## Tia     0.524   0.264 0.000482        0.00802
-## Tig     0.425   0.272 0.000496        0.00325
-## sumG  801.557 378.382 0.690827        1.09110
-## sumI 1124.501 534.509 0.975875        1.65086
+## Tag     0.528   0.264 0.000341        0.00333
+## Tai     0.477   0.265 0.000342        0.00551
+## Tga     0.474   0.264 0.000341        0.00324
+## Tgi     0.580   0.269 0.000348        0.00229
+## Tia     0.540   0.265 0.000342        0.00546
+## Tig     0.426   0.272 0.000351        0.00231
+## sumG  802.696 379.542 0.489987        0.83712
+## sumI 1120.319 530.855 0.685331        1.17684
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%     25%      50%      75%    97.5%
-## Tag    0.0524   0.324    0.544    0.753    0.969
-## Tai    0.0286   0.235    0.453    0.677    0.932
-## Tga    0.0319   0.261    0.476    0.690    0.951
-## Tgi    0.0516   0.372    0.617    0.814    0.981
-## Tia    0.0613   0.305    0.522    0.747    0.969
-## Tig    0.0197   0.192    0.396    0.637    0.951
-## sumG 241.7673 525.199  742.185 1015.111 1695.064
-## sumI 335.4756 734.459 1040.166 1422.216 2393.084
+## Tag    0.0502   0.316    0.535    0.748    0.968
+## Tai    0.0311   0.253    0.477    0.696    0.940
+## Tga    0.0314   0.255    0.471    0.687    0.951
+## Tgi    0.0536   0.371    0.608    0.809    0.981
+## Tia    0.0656   0.322    0.545    0.766    0.972
+## Tig    0.0195   0.193    0.398    0.640    0.950
+## sumG 240.7764 525.423  743.150 1015.293 1699.975
+## sumI 334.2983 732.611 1036.994 1417.416 2375.531
 ```
 
 ```r
@@ -182,7 +194,7 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 
 ```
 ##    Tag    Tai    Tga    Tgi    Tia    Tig   sumG   sumI 
-##   3374   1324   3422   6979   1309   6998 119629 108951
+##   6713   2728   6919  14088   2748  14025 234793 226439
 ```
 
 ```r
@@ -204,7 +216,7 @@ elapsed
 ```
 
 ```
-## Time difference of 1.033 mins
+## Time difference of 10.36 mins
 ```
 
 
@@ -266,7 +278,7 @@ parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI")
 # parametersToTrack <- c('Tgi', 'Tga', 'Tig', 'Tia', 'Tag', 'Tai',
 # 'sigmaG', 'sigmaI') #For Gauss
 
-countChains <- 3  #3 #6
+countChains <- 6  #3 #6
 countIterations <- 1e+05
 
 startTime <- Sys.time()
@@ -285,7 +297,18 @@ jagsModel <- jags.model(file = pathModel, data = jagsData, n.chains = countChain
 
 ```r
 # print(jagsModel) update(jagsModel, 1000) #modifies the original object
-# and returns NULL dic <- dic.samples(jagsModel, n.iter=countIterations)
+# and returns NULL
+dic <- dic.samples(jagsModel, n.iter = countIterations)
+dic
+```
+
+```
+## Mean deviance:  -91.1 
+## penalty 5.4 
+## Penalized deviance: -85.7
+```
+
+```r
 # mcarray <- jags.samples(model=jagsModel, c('mu'),
 # n.iter=countIterations) #If I understand correctly, the following line
 # is similar, but better
@@ -296,35 +319,35 @@ elapsed <- Sys.time() - startTime
 
 ```
 ## 
-## Iterations = 1001:101000
+## Iterations = 101001:201000
 ## Thinning interval = 1 
-## Number of chains = 3 
+## Number of chains = 6 
 ## Sample size per chain = 1e+05 
 ## 
 ## 1. Empirical mean and standard deviation for each variable,
 ##    plus standard error of the mean:
 ## 
 ##          Mean      SD Naive SE Time-series SE
-## Tag     0.529   0.261 0.000476        0.00602
-## Tai     0.430   0.251 0.000458        0.00700
-## Tga     0.463   0.265 0.000483        0.00608
-## Tgi     0.618   0.251 0.000458        0.00415
-## Tia     0.570   0.252 0.000459        0.00720
-## Tig     0.385   0.252 0.000460        0.00385
-## sumG 1269.252 643.517 1.174896        3.57145
-## sumI 1358.536 648.964 1.184841        2.25184
+## Tag     0.537   0.263 0.000340        0.00422
+## Tai     0.428   0.254 0.000328        0.00513
+## Tga     0.470   0.263 0.000340        0.00420
+## Tgi     0.627   0.249 0.000322        0.00288
+## Tia     0.569   0.254 0.000328        0.00508
+## Tig     0.392   0.253 0.000327        0.00284
+## sumG 1270.318 644.671 0.832266        2.58216
+## sumI 1355.672 649.259 0.838190        1.72464
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%     25%      50%      75%    97.5%
-## Tag    0.0566   0.320    0.533    0.744    0.969
-## Tai    0.0236   0.217    0.423    0.633    0.889
-## Tga    0.0297   0.239    0.456    0.676    0.945
-## Tgi    0.0917   0.437    0.650    0.828    0.982
-## Tia    0.1073   0.368    0.576    0.784    0.977
-## Tig    0.0182   0.175    0.352    0.566    0.914
-## sumG 357.0384 801.531 1155.086 1614.291 2825.531
-## sumI 402.9858 884.168 1255.115 1720.357 2900.138
+## Tag    0.0577   0.325    0.543    0.757    0.971
+## Tai    0.0225   0.211    0.420    0.633    0.897
+## Tga    0.0299   0.250    0.466    0.683    0.944
+## Tgi    0.0933   0.451    0.663    0.834    0.983
+## Tia    0.1040   0.364    0.575    0.786    0.978
+## Tig    0.0184   0.180    0.363    0.578    0.915
+## sumG 355.9969 801.075 1156.084 1614.215 2830.819
+## sumI 400.4664 881.336 1252.698 1719.134 2893.510
 ```
 
 ```r
@@ -337,14 +360,14 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ## Potential scale reduction factors:
 ## 
 ##      Point est. Upper C.I.
-## Tag           1       1.00
-## Tai           1       1.01
-## Tga           1       1.00
-## Tgi           1       1.00
-## Tia           1       1.00
-## Tig           1       1.00
-## sumG          1       1.00
-## sumI          1       1.00
+## Tag           1          1
+## Tai           1          1
+## Tga           1          1
+## Tgi           1          1
+## Tia           1          1
+## Tig           1          1
+## sumG          1          1
+## sumI          1          1
 ## 
 ## Multivariate psrf
 ## 
@@ -356,8 +379,8 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 ```
 
 ```
-##   Tag   Tai   Tga   Tgi   Tia   Tig  sumG  sumI 
-##  2057  1513  2087  4196  1456  4225 36275 91456
+##    Tag    Tai    Tga    Tgi    Tia    Tig   sumG   sumI 
+##   3937   2849   4141   8466   2878   8458  70463 177294
 ```
 
 ```r
@@ -379,7 +402,7 @@ elapsed
 ```
 
 ```
-## Time difference of 59.71 secs
+## Time difference of 10.15 mins
 ```
 
 
@@ -440,7 +463,7 @@ parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI")
 # parametersToTrack <- c('Tgi', 'Tga', 'Tig', 'Tia', 'Tag', 'Tai',
 # 'sigmaG', 'sigmaI') #For Gauss
 
-countChains <- 3  #3 #6
+countChains <- 6  #3 #6
 countIterations <- 1e+05
 
 startTime <- Sys.time()
@@ -459,7 +482,18 @@ jagsModel <- jags.model(file = pathModel, data = jagsData, n.chains = countChain
 
 ```r
 # print(jagsModel) update(jagsModel, 1000) #modifies the original object
-# and returns NULL dic <- dic.samples(jagsModel, n.iter=countIterations)
+# and returns NULL
+dic <- dic.samples(jagsModel, n.iter = countIterations)
+dic
+```
+
+```
+## Mean deviance:  -77.3 
+## penalty 5.08 
+## Penalized deviance: -72.2
+```
+
+```r
 # mcarray <- jags.samples(model=jagsModel, c('mu'),
 # n.iter=countIterations) #If I understand correctly, the following line
 # is similar, but better
@@ -470,35 +504,35 @@ elapsed <- Sys.time() - startTime
 
 ```
 ## 
-## Iterations = 1001:101000
+## Iterations = 101001:201000
 ## Thinning interval = 1 
-## Number of chains = 3 
+## Number of chains = 6 
 ## Sample size per chain = 1e+05 
 ## 
 ## 1. Empirical mean and standard deviation for each variable,
 ##    plus standard error of the mean:
 ## 
 ##         Mean      SD Naive SE Time-series SE
-## Tag    0.562   0.257 0.000469        0.00299
-## Tai    0.405   0.242 0.000443        0.00544
-## Tga    0.449   0.257 0.000470        0.00286
-## Tgi    0.674   0.234 0.000428        0.00219
-## Tia    0.598   0.242 0.000443        0.00543
-## Tig    0.322   0.233 0.000425        0.00229
-## sumG 301.767 144.736 0.264251        0.41035
-## sumI 972.275 471.991 0.861734        1.61241
+## Tag    0.557   0.257 0.000332        0.00204
+## Tai    0.404   0.239 0.000308        0.00353
+## Tga    0.443   0.257 0.000332        0.00197
+## Tgi    0.678   0.233 0.000300        0.00161
+## Tia    0.599   0.239 0.000308        0.00356
+## Tig    0.324   0.233 0.000301        0.00167
+## sumG 300.958 143.208 0.184881        0.34134
+## sumI 970.219 466.860 0.602714        1.09634
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%     25%     50%      75%    97.5%
-## Tag    0.0755   0.360   0.572    0.777    0.975
-## Tai    0.0204   0.197   0.399    0.601    0.856
-## Tga    0.0268   0.233   0.444    0.652    0.927
-## Tgi    0.1390   0.519   0.717    0.868    0.987
-## Tia    0.1441   0.404   0.606    0.808    0.981
-## Tig    0.0127   0.130   0.278    0.473    0.860
-## sumG  89.9482 196.728 278.197  381.681  646.121
-## sumI 283.7792 627.237 895.623 1235.619 2094.526
+## Tag    0.0753   0.354   0.566    0.774    0.975
+## Tai    0.0209   0.202   0.398    0.593    0.854
+## Tga    0.0258   0.227   0.435    0.646    0.926
+## Tgi    0.1403   0.528   0.723    0.869    0.987
+## Tia    0.1483   0.410   0.607    0.801    0.980
+## Tig    0.0129   0.132   0.280    0.475    0.861
+## sumG  90.3496 196.348 278.130  380.804  641.713
+## sumI 283.9154 628.988 896.126 1230.747 2079.039
 ```
 
 ```r
@@ -511,14 +545,14 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ## Potential scale reduction factors:
 ## 
 ##      Point est. Upper C.I.
-## Tag           1          1
-## Tai           1          1
-## Tga           1          1
-## Tgi           1          1
-## Tia           1          1
-## Tig           1          1
-## sumG          1          1
-## sumI          1          1
+## Tag           1       1.00
+## Tai           1       1.01
+## Tga           1       1.00
+## Tgi           1       1.00
+## Tia           1       1.01
+## Tig           1       1.00
+## sumG          1       1.00
+## sumI          1       1.00
 ## 
 ## Multivariate psrf
 ## 
@@ -531,7 +565,7 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 
 ```
 ##    Tag    Tai    Tga    Tgi    Tia    Tig   sumG   sumI 
-##   7617   2071   7857  10516   2097  10493 103839  86311
+##  15085   4510  15445  20639   4504  20245 215865 181863
 ```
 
 ```r
@@ -553,7 +587,7 @@ elapsed
 ```
 
 ```
-## Time difference of 1.042 mins
+## Time difference of 10.64 mins
 ```
 
 
@@ -614,7 +648,7 @@ parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI")
 # parametersToTrack <- c('Tgi', 'Tga', 'Tig', 'Tia', 'Tag', 'Tai',
 # 'sigmaG', 'sigmaI') #For Gauss
 
-countChains <- 3  #3 #6
+countChains <- 6  #3 #6
 countIterations <- 1e+05
 
 startTime <- Sys.time()
@@ -633,7 +667,18 @@ jagsModel <- jags.model(file = pathModel, data = jagsData, n.chains = countChain
 
 ```r
 # print(jagsModel) update(jagsModel, 1000) #modifies the original object
-# and returns NULL dic <- dic.samples(jagsModel, n.iter=countIterations)
+# and returns NULL
+dic <- dic.samples(jagsModel, n.iter = countIterations)
+dic
+```
+
+```
+## Mean deviance:  -78.4 
+## penalty 5.25 
+## Penalized deviance: -73.2
+```
+
+```r
 # mcarray <- jags.samples(model=jagsModel, c('mu'),
 # n.iter=countIterations) #If I understand correctly, the following line
 # is similar, but better
@@ -644,35 +689,35 @@ elapsed <- Sys.time() - startTime
 
 ```
 ## 
-## Iterations = 1001:101000
+## Iterations = 101001:201000
 ## Thinning interval = 1 
-## Number of chains = 3 
+## Number of chains = 6 
 ## Sample size per chain = 1e+05 
 ## 
 ## 1. Empirical mean and standard deviation for each variable,
 ##    plus standard error of the mean:
 ## 
 ##         Mean      SD Naive SE Time-series SE
-## Tag    0.545   0.259 0.000472        0.00452
-## Tai    0.385   0.226 0.000413        0.00348
-## Tga    0.444   0.257 0.000469        0.00458
-## Tgi    0.771   0.184 0.000336        0.00176
-## Tia    0.621   0.225 0.000411        0.00356
-## Tig    0.227   0.182 0.000332        0.00159
-## sumG 643.573 317.786 0.580194        1.26783
-## sumI 534.751 255.989 0.467369        0.83936
+## Tag    0.551   0.259 0.000334        0.00313
+## Tai    0.381   0.228 0.000295        0.00241
+## Tga    0.450   0.259 0.000334        0.00309
+## Tgi    0.772   0.183 0.000236        0.00110
+## Tia    0.616   0.228 0.000294        0.00242
+## Tig    0.229   0.184 0.000237        0.00113
+## sumG 642.919 318.624 0.411342        0.76626
+## sumI 533.813 255.921 0.330393        0.57703
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%      25%     50%     75%    97.5%
-## Tag  7.55e-02   0.3363   0.548   0.764    0.973
-## Tai  2.07e-02   0.1952   0.379   0.563    0.812
-## Tga  2.56e-02   0.2265   0.438   0.652    0.919
-## Tgi  3.16e-01   0.6681   0.815   0.917    0.992
-## Tia  1.95e-01   0.4430   0.629   0.811    0.981
-## Tig  7.63e-03   0.0829   0.184   0.328    0.679
-## sumG 1.85e+02 411.8049 590.508 817.643 1405.063
-## sumI 1.58e+02 347.3548 494.476 677.363 1145.073
+## Tag  7.78e-02   0.3413   0.555   0.770    0.974
+## Tai  1.86e-02   0.1876   0.372   0.562    0.813
+## Tga  2.59e-02   0.2303   0.446   0.660    0.923
+## Tgi  3.19e-01   0.6698   0.816   0.917    0.992
+## Tia  1.87e-01   0.4368   0.622   0.810    0.981
+## Tig  7.71e-03   0.0834   0.186   0.333    0.685
+## sumG 1.85e+02 411.1096 588.845 815.688 1408.590
+## sumI 1.58e+02 346.7457 493.026 676.468 1142.176
 ```
 
 ```r
@@ -685,14 +730,14 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ## Potential scale reduction factors:
 ## 
 ##      Point est. Upper C.I.
-## Tag           1       1.00
-## Tai           1       1.00
-## Tga           1       1.01
-## Tgi           1       1.00
-## Tia           1       1.00
-## Tig           1       1.00
-## sumG          1       1.00
-## sumI          1       1.00
+## Tag           1          1
+## Tai           1          1
+## Tga           1          1
+## Tgi           1          1
+## Tia           1          1
+## Tig           1          1
+## sumG          1          1
+## sumI          1          1
 ## 
 ## Multivariate psrf
 ## 
@@ -704,8 +749,8 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 ```
 
 ```
-##   Tag   Tai   Tga   Tgi   Tia   Tig  sumG  sumI 
-##  3560  4525  3534 13418  4566 13627 65443 97176
+##    Tag    Tai    Tga    Tgi    Tia    Tig   sumG   sumI 
+##   7188   8795   7225  27496   8666  28439 145804 199644
 ```
 
 ```r
@@ -727,7 +772,7 @@ elapsed
 ```
 
 ```
-## Time difference of 1.038 mins
+## Time difference of 10.54 mins
 ```
 
 
@@ -789,7 +834,7 @@ parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI")
 # parametersToTrack <- c('Tgi', 'Tga', 'Tig', 'Tia', 'Tag', 'Tai',
 # 'sigmaG', 'sigmaI') #For Gauss
 
-countChains <- 3  #3 #6
+countChains <- 6  #3 #6
 countIterations <- 1e+05
 
 startTime <- Sys.time()
@@ -808,7 +853,18 @@ jagsModel <- jags.model(file = pathModel, data = jagsData, n.chains = countChain
 
 ```r
 # print(jagsModel) update(jagsModel, 1000) #modifies the original object
-# and returns NULL dic <- dic.samples(jagsModel, n.iter=countIterations)
+# and returns NULL
+dic <- dic.samples(jagsModel, n.iter = countIterations)
+dic
+```
+
+```
+## Mean deviance:  -75 
+## penalty 5.49 
+## Penalized deviance: -69.5
+```
+
+```r
 # mcarray <- jags.samples(model=jagsModel, c('mu'),
 # n.iter=countIterations) #If I understand correctly, the following line
 # is similar, but better
@@ -819,35 +875,35 @@ elapsed <- Sys.time() - startTime
 
 ```
 ## 
-## Iterations = 1001:101000
+## Iterations = 101001:201000
 ## Thinning interval = 1 
-## Number of chains = 3 
+## Number of chains = 6 
 ## Sample size per chain = 1e+05 
 ## 
 ## 1. Empirical mean and standard deviation for each variable,
 ##    plus standard error of the mean:
 ## 
 ##         Mean      SD Naive SE Time-series SE
-## Tag    0.521   0.268 0.000490        0.00402
-## Tai    0.381   0.230 0.000420        0.00365
-## Tga    0.486   0.269 0.000492        0.00401
-## Tgi    0.763   0.175 0.000320        0.00134
-## Tia    0.613   0.230 0.000420        0.00355
-## Tig    0.236   0.175 0.000319        0.00134
-## sumG 443.940 223.857 0.408705        0.81616
-## sumI 507.060 243.556 0.444670        0.70328
+## Tag    0.517   0.266 0.000344       0.002712
+## Tai    0.382   0.229 0.000296       0.002532
+## Tga    0.481   0.267 0.000344       0.002734
+## Tgi    0.765   0.175 0.000226       0.001061
+## Tia    0.614   0.230 0.000296       0.002547
+## Tig    0.237   0.176 0.000227       0.000971
+## sumG 444.231 224.028 0.289219       0.593782
+## sumI 505.607 242.577 0.313165       0.513103
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%      25%     50%     75%    97.5%
-## Tag    0.0501   0.2960   0.526   0.747    0.968
-## Tai    0.0181   0.1826   0.371   0.567    0.806
-## Tga    0.0321   0.2570   0.487   0.711    0.951
-## Tgi    0.3543   0.6541   0.796   0.905    0.991
-## Tia    0.1924   0.4263   0.616   0.810    0.981
-## Tig    0.0091   0.0955   0.204   0.343    0.647
-## sumG 126.0952 280.9856 404.769 562.841  986.765
-## sumI 149.6080 328.7176 467.767 642.939 1086.074
+## Tag  5.12e-02   0.2966   0.517   0.740    0.967
+## Tai  1.84e-02   0.1846   0.375   0.566    0.805
+## Tga  3.29e-02   0.2574   0.478   0.702    0.949
+## Tgi  3.55e-01   0.6574   0.799   0.906    0.991
+## Tia  1.93e-01   0.4290   0.620   0.810    0.981
+## Tig  9.05e-03   0.0948   0.204   0.345    0.649
+## sumG 1.27e+02 281.6904 404.509 563.829  986.262
+## sumI 1.49e+02 328.1356 466.555 640.945 1082.837
 ```
 
 ```r
@@ -880,7 +936,7 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 
 ```
 ##    Tag    Tai    Tga    Tgi    Tia    Tig   sumG   sumI 
-##   4695   4510   4633  16813   4537  17531  73982 111467
+##   9367   9111   9376  34387   8995  34571 149410 221573
 ```
 
 ```r
@@ -902,7 +958,7 @@ elapsed
 ```
 
 ```
-## Time difference of 1.044 mins
+## Time difference of 10.69 mins
 ```
 
 
