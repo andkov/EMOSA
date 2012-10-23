@@ -4,8 +4,6 @@ cohortYear <- 1984 #1980, 1981, 1982, 1983, 1984
 ## @knitr GoDogGo
 require(rjags)
 
-
-
 if( Sys.info()["nodename"] == "MICKEY" ) 
   pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA"
   #pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion"
