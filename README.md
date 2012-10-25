@@ -10,6 +10,7 @@ Most of these links are from the primary developer, and are focused on a specifi
 https://github.com/OuhscCcanMiechvEvaluation/MReporting/blob/master/DocumentationGlobal/ResourcesOfficial.md
 
 ### Opinions
+THis is my opinion.
 Theis collection of articles, blogs, and unofficial documentation should help provide context for what we're trying to do with our workflow. 
 https://github.com/OuhscCcanMiechvEvaluation/MReporting/blob/master/DocumentationGlobal/ResourcesOpinions.md
 
