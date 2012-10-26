@@ -22,6 +22,9 @@ cohortYear <- 1980
 ### Cohort: 1981
 ```{r}
 cohortYear <- 1981
+a<-5
+sqrt(a)
+
 ```
 ```{r GoDogGo, fig.keep='all', fig.path='figure/Cohort1981'}
 ```
