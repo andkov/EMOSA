@@ -33,7 +33,7 @@ dsWide <- dsWide[, colnames(dsWide) != "bmonth"]
 summary(dsWide)
 
 #Transform the wide dataset into a long dataset
-dsLong <- melt(dsWide, id.vars=c("id", "byear"))
+dsLong <- reshape2::melt(dsWide, id.vars=c("id", "byear"))  ## id.vars declares MEASURED variables (as opposed to RESPONSE variable)
 dsLong <- dsLong[order(dsLong$id, dsLong$variable), ] #Sort for the sake of visual inspection.
 
 #Convert the year variable from a character to a number
