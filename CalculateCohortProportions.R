@@ -2,11 +2,13 @@ rm(list=ls(all=TRUE)) #Clear all the variables from previous runs
 require(plyr)
 require(reshape2)
 
-if( Sys.info()["nodename"] == "MICKEY" ) 
-  pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/Data"
-#pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EmosaFork/EMOSA/Data"
-if( Sys.info()["nodename"] == "MERKANEZ-PC" ) 
-  pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy" #Change this directory location
+# if( Sys.info()["nodename"] == "MICKEY" ) 
+#   pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/Data"
+# #pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EmosaFork/EMOSA/Data"
+# if( Sys.info()["nodename"] == "MERKANEZ-PC" ) 
+#   pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy" #Change this directory location
+pathDirectory <- file.path(getwd(), "Data")
+
 
 pathInData <- file.path(pathDirectory, "subject_data_emosa_nonmiss.csv") #The name of the file to read in.
 pathOutData <- file.path(pathDirectory, "SummaryBirthYearByTime.csv") #The name of the file to write to.
