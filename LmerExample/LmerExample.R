@@ -35,3 +35,6 @@ fixef(m4)
 
 #For example of graphing, look at the 'Day2' files in this directory.  I used it when I taught 
 #   a few lectures in Rodgers' EDA class.  It shows how to pull out the coefficients to graph lines.
+
+#Of course, attendance should be blindly treated as a continuous/interval variables, as I did.  
+#   This is more to provide an example of lmer with a dataset you're familiar with.
