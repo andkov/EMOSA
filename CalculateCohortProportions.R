@@ -54,6 +54,7 @@ SummarizeBYearTime <- function( df ) {#df stands for 'data.frame'
   
   #Calculate the proportions
   cellCount <- dsResult$TotalGoers + dsResult$TotalIrregulars + dsResult$TotalAbsentees
+#   print(length(cellCount))
   #Equivalent way: cellCount <- apply(dsResult[, c('TotalGoers', 'TotalIrregulars', 'TotalAbsentees')], 1, sum)
   dsResult$ProportionGoers <- dsResult$TotalGoers / cellCount
   dsResult$ProportionIrregulars <- dsResult$TotalIrregulars / cellCount
