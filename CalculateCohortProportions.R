@@ -11,7 +11,8 @@ pathDirectory <- file.path(getwd(), "Data")
 
 
 pathInData <- file.path(pathDirectory, "subject_data_emosa_nonmiss.csv") #The name of the file to read in.
-pathOutData <- file.path(pathDirectory, "SummaryBirthYearByTime.csv") #The name of the file to write to.
+pathOutDataLong <- file.path(pathDirectory, "Long.csv") #The name of the file to write to.
+pathOutDataSummarized <- file.path(pathDirectory, "SummaryBirthYearByTime.csv") #The name of the file to write to.
 
 dsWide <- read.csv(pathInData, stringsAsFactors=FALSE)
 
@@ -42,6 +43,8 @@ dsLong$variable <- as.integer(dsLong$variable) #Convert to a number.
 dsLong <- plyr::rename(dsLong, replace=c(variable="time", value="attendence"))
 summary(dsLong)
 head(dsLong, 20)
+
+write.csv(dsLong, pathOutDataLong, row.names=FALSE)
 
 #Create a function to summarize each byear*time cell
 SummarizeBYearTime <- function( df ) {#df stands for 'data.frame'
@@ -76,4 +79,4 @@ dsSummarized <- plyr::ddply(dsLong, .variables=c("byear", "time"), .fun=Summariz
 summary(dsSummarized)
 head(dsSummarized, 10)
 
-write.csv(dsSummarized, pathOutData, row.names=FALSE)
+write.csv(pathOutDataSummarized, pathOutData, row.names=FALSE)
