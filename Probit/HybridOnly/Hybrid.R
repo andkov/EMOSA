@@ -7,7 +7,7 @@ require(rjags)
 rjags::load.module("dic") # load a few useful modules (JAGS is modular in design): https://sites.google.com/site/autocatalysis/bayesian-methods-using-jags
 
 pathDirectory <- file.path(getwd())
-pathModel <- file.path(pathDirectory, "HybridOnly/HybridBeta.bugs")
+pathModel <- file.path(pathDirectory, "Probit/HybridOnly/HybridProbit.bugs")
 pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
 pathOutChains <- file.path(pathDirectory, paste0("Data/ChainsHybrid", cohortYear, ".csv"))
   
@@ -34,7 +34,12 @@ if( length(pi) != timeCount) stop("The proportions have a different number of ti
 if( length(pa) != timeCount) stop("The proportions have a different number of time points.")
 mean(c(pg, pi, pa))
 
-jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount)
+zg <- qnorm(pg)
+zi <- qnorm(pi)
+za <- qnorm(pa)
+
+#jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount)
+jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount, "zg"=zg)#, "zi"=zi, "za"=za)
 
 
 parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", 
