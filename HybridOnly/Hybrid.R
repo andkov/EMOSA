@@ -6,12 +6,7 @@ require(rjags)
 # require(coda)
 rjags::load.module("dic") # load a few useful modules (JAGS is modular in design): https://sites.google.com/site/autocatalysis/bayesian-methods-using-jags
 
-if( Sys.info()["nodename"] == "MICKEY" ) 
-  pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA"
-  #pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion"
-if( Sys.info()["nodename"] == "MERKANEZ-PC" ) 
-  pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy" #Change this directory location
-
+pathDirectory <- file.path(getwd())
 pathModel <- file.path(pathDirectory, "HybridOnly/HybridBeta.bugs")
 pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
 pathOutChains <- file.path(pathDirectory, paste0("Data/ChainsHybrid", cohortYear, ".csv"))
@@ -59,8 +54,8 @@ startTime <- Sys.time()
 jagsModel <- jags.model(file=pathModel, data=jagsData, n.chains=countChains)#, inits=inits)
 #print(jagsModel)
 #update(jagsModel, 1000) #modifies the original object and returns NULL
-# dic <- dic.samples(jagsModel, n.iter=countIterations) 
-# dic
+dic <- dic.samples(jagsModel, n.iter=countIterations) 
+dic
 # mcarray <- jags.samples(model=jagsModel, variable.names=parametersToTrackWithDic, n.iter=countIterations ) #If I understand correctly, the following line is similar, but better
 # as.mcmc.list(mcarray$Cag)
 # mcarray <- mcmc(mcarray)
@@ -70,8 +65,8 @@ jagsModel <- jags.model(file=pathModel, data=jagsData, n.chains=countChains)#, i
 # class(mcarray)
 # summary(mcarray)
 
-#chains <- coda.samples(jagsModel, variable.names=parametersToTrack, n.iter=countIterations)# updates the model, and coerces the output to a single mcmc.list object. 
-chains <- coda.samples(jagsModel, variable.names=parametersToTrackWithDic, n.iter=countIterations)# updates the model, and coerces the output to a single mcmc.list object.
+chains <- coda.samples(jagsModel, variable.names=parametersToTrack, n.iter=countIterations)# updates the model, and coerces the output to a single mcmc.list object. 
+# chains <- coda.samples(jagsModel, variable.names=parametersToTrackWithDic, n.iter=countIterations)# updates the model, and coerces the output to a single mcmc.list object.
 # class(chains)
 elapsed  <- Sys.time() - startTime
 (condensed <- summary(chains))

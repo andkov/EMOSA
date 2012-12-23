@@ -44,7 +44,7 @@ parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai",
                        "sumG", "sumI"
 ) #For Beta
 # parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sigmaG", "sigmaI") #For Gauss
-#parametersToTrackWithDic <- c("pD", "deviance", parametersToTrack) #Must first execute 'rjags::load.module("dic")'
+# parametersToTrackWithDic <- c("pD", "deviance", parametersToTrack) #Must first execute 'rjags::load.module("dic")'
 parametersToTrackWithDic <- c("pD", parametersToTrack) #Must first execute 'rjags::load.module("dic")'
 # inits <- function(){ list(Kgi=rnorm(1), Kga=rnorm(1), Kig=rnorm(1), Kia=rnorm(1), Kag=rnorm(1), Kai=rnorm(1)) }
 
@@ -56,8 +56,8 @@ startTime <- Sys.time()
 jagsModel <- jags.model(file=pathModel, data=jagsData, n.chains=countChains)#, inits=inits)
 #print(jagsModel)
 #update(jagsModel, 1000) #modifies the original object and returns NULL
-# dic <- dic.samples(jagsModel, n.iter=countIterations) 
-# dic
+dic <- dic.samples(jagsModel, n.iter=countIterations) 
+dic
 # mcarray <- jags.samples(model=jagsModel, variable.names=parametersToTrackWithDic, n.iter=countIterations ) #If I understand correctly, the following line is similar, but better
 # as.mcmc.list(mcarray$Cag)
 # mcarray <- mcmc(mcarray)
@@ -67,8 +67,8 @@ jagsModel <- jags.model(file=pathModel, data=jagsData, n.chains=countChains)#, i
 # class(mcarray)
 # summary(mcarray)
 
-#chains <- coda.samples(jagsModel, variable.names=parametersToTrack, n.iter=countIterations)# updates the model, and coerces the output to a single mcmc.list object. 
-chains <- coda.samples(jagsModel, variable.names=parametersToTrackWithDic, n.iter=countIterations)# updates the model, and coerces the output to a single mcmc.list object.
+chains <- coda.samples(jagsModel, variable.names=parametersToTrack, n.iter=countIterations)# updates the model, and coerces the output to a single mcmc.list object. 
+# chains <- coda.samples(jagsModel, variable.names=parametersToTrackWithDic, n.iter=countIterations)# updates the model, and coerces the output to a single mcmc.list object.
 # class(chains)
 elapsed  <- Sys.time() - startTime
 (condensed <- summary(chains))
