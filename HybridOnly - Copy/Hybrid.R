@@ -1,17 +1,20 @@
 rm(list=ls(all=TRUE)) #Clear out variables from previous runs.
 cohortYear <- 1984 #1980, 1981, 1982, 1983, 1984
-library(rjags)
 
 ## @knitr GoDogGo
 require(rjags)
 # require(coda)
 rjags::load.module("dic") # load a few useful modules (JAGS is modular in design): https://sites.google.com/site/autocatalysis/bayesian-methods-using-jags
 
-pathDirectory <- file.path(getwd())
+if( Sys.info()["nodename"] == "MICKEY" ) 
+  pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA"
+  #pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion"
+if( Sys.info()["nodename"] == "MERKANEZ-PC" ) 
+  pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy" #Change this directory location
 
-pathModel <- file.path(pathDirectory, "HybridFixedC/HybridFixedCBeta1984.bugs")
+pathModel <- file.path(pathDirectory, "HybridOnly/HybridBeta.bugs")
 pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
-pathOutChains <- file.path(pathDirectory, paste0("Data/ChainsHybrid", cohortYear, ".csv")) # ?
+pathOutChains <- file.path(pathDirectory, paste0("Data/ChainsHybrid", cohortYear, ".csv"))
   
   # curve(dbeta(x, 1,1))
 # curve(dbeta(x, 10,10))
