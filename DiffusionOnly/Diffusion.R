@@ -3,6 +3,8 @@ cohortYear <- 1984 #1980, 1981, 1982, 1983, 1984
 
 ## @knitr GoDogGo
 require(rjags)
+# require(coda)
+rjags::load.module("dic") # load a few useful modules (JAGS is modular in design): https://sites.google.com/site/autocatalysis/bayesian-methods-using-jags
 
 if( Sys.info()["nodename"] == "MICKEY" ) 
   pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA"
@@ -43,10 +45,11 @@ jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount)
 parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sumG", "sumI")#, "sumA")
 # parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sumG", "sumI", "sumA")
 #parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sigmaG", "sigmaI")
+parametersToTrackWithDic <- c("pD", parametersToTrack) #Must first execute 'rjags::load.module("dic")'
 # inits <- function(){ list(Kgi=rnorm(1), Kga=rnorm(1), Kig=rnorm(1), Kia=rnorm(1), Kag=rnorm(1), Kai=rnorm(1)) }
 
 countChains <- 6#3 #6
-countIterations <- 100000
+countIterations <- 100#000
 
 startTime <- Sys.time()
 
@@ -57,6 +60,7 @@ dic <- dic.samples(jagsModel, n.iter=countIterations)
 dic
 #mcarray <- jags.samples(model=jagsModel, c('mu'), n.iter=countIterations) #If I understand correctly, the following line is similar, but better
 chains <- coda.samples(jagsModel, variable.names=parametersToTrack, n.iter=countIterations)# updates the model, and coerces the output to a single mcmc.list object. 
+# chains <- coda.samples(jagsModel, variable.names=parametersToTrackWithDic, n.iter=countIterations)# updates the model, and coerces the output to a single mcmc.list object. 
 elapsed  <- Sys.time() - startTime
 (condensed <- summary(chains))
 
