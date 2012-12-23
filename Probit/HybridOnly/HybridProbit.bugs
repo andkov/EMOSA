@@ -12,7 +12,7 @@ model {
 			- (Tig * pi[i] * pow(pg[i], Cig))  
 			- (Tia * pi[i] * pow(pa[i], Cia))
 				
-#		paHat[i+1] <- 1 - pgHat[i+1] - piHat[i+1]
+		#paHat[i+1] <- 1 - pgHat[i+1] - piHat[i+1]
 		
 		#pgAlpha[i+1] <- pgHat[i+1] * sumG
 		#pgBeta[i+1] <- (1 - pgHat[i+1]) * sumG
@@ -29,7 +29,11 @@ model {
 		
 		#zgHat[i+1] <- qnorm(pgHat[i+1], 0, 1)
 		#zg[i+1] ~ dnorm(zgHat[i+1], 1)
+
+
 		zg[i+1] ~ dnorm(pgHat[i+1], .001) #WARNING: just for testing
+#		zgHat[i+1] ~  dnorm(zg[i+1], .001)#WARNING: just for testing
+#		zgHat[i+1] ~  dnorm(pgHat[i+1], .001)#WARNING: just for testing
 		
 		piAlpha[i+1] <- piHat[i+1] * sumI
 		piBeta[i+1] <- (1 - piHat[i+1]) * sumI
