@@ -17,32 +17,24 @@ model {
 		#pgAlpha[i+1] <- pgHat[i+1] * sumG
 		#pgBeta[i+1] <- (1 - pgHat[i+1]) * sumG
 		#pg[i+1] ~ dbeta(pgAlpha[i+1], pgBeta[i+1])
-		#pg[i+1] <- phi(pgHat[i+1])
-		
-		#zgHat[i+1] <- probit(pgHat[i+1]) #Problem: link function cannot be used on right hand side
-		#phi(zgHat[i+1]) <- pgHat[i+1] 
-		#probit(pgHat[i+1]) <- zgHat[i+1] #Error: Unknown parameter zgHat
-		#pg[i+1] <- phi(zg[i+1])
-		#probit(pg[i+1]) <- zg[i+1]
-		#probit(pg[i+1]) ~ dnorm(zgHat[i+1], .001)
-		#pg[i+1] ~ phi(dnorm(zgHat[i+1], .001))
 		
 		pgHatBounded[i+1] <- max(.0001, min(.9999, pgHat[i+1]))
 		zgHat[i+1] <- qnorm(pgHatBounded[i+1], 0, 1)
 		zg[i+1] ~ dnorm(zgHat[i+1], .0001)
 
+		piHatBounded[i+1] <- max(.0001, min(.9999, piHat[i+1]))
+		ziHat[i+1] <- qnorm(piHatBounded[i+1], 0, 1)
+		zi[i+1] ~ dnorm(ziHat[i+1], .0001)
 
-#		zg[i+1] ~ dnorm(pgHat[i+1], .001) #WARNING: just for testing
-#		zgHat[i+1] ~  dnorm(zg[i+1], .001)#WARNING: just for testing
-#		zgHat[i+1] ~  dnorm(pgHat[i+1], .001)#WARNING: just for testing
+
 		
-		piAlpha[i+1] <- piHat[i+1] * sumI
-		piBeta[i+1] <- (1 - piHat[i+1]) * sumI
-		pi[i+1] ~ dbeta(piAlpha[i+1], piBeta[i+1])
+#		piAlpha[i+1] <- piHat[i+1] * sumI
+#		piBeta[i+1] <- (1 - piHat[i+1]) * sumI
+#		pi[i+1] ~ dbeta(piAlpha[i+1], piBeta[i+1])
 	}
 
-	sumG ~ dunif(0, 100000)
-	sumI ~ dunif(0, 100000)
+#	sumG ~ dunif(0, 100000)
+#	sumI ~ dunif(0, 100000)
 #	sumA ~ dunif(0, 100000)
 		
 	alpha <- 1
