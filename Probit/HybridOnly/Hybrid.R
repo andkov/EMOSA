@@ -45,7 +45,7 @@ jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount, "zg"=zg)#, "z
 parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", 
                        "Cgi", "Cga", "Cig", "Cia", "Cag", "Cai",                       
                        "sumG", "sumI"
-                       ,"paHat"
+                       #,"paHat"
 ) #For Beta
 # parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sigmaG", "sigmaI") #For Gauss
 #parametersToTrackWithDic <- c("pD", "deviance", parametersToTrack) #Must first execute 'rjags::load.module("dic")'
