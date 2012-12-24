@@ -43,9 +43,11 @@ jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount, "zg"=zg)#, "z
 
 
 parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai"
-                       , "Cgi", "Cga", "Cig", "Cia", "Cag", "Cai"
-                      #, "sumG", "sumI"
-                       #,"paHat"
+                      #,"ZTgiBounded", "ZTgi"
+                      #, "mu", "sd"
+                      , "Cgi", "Cga", "Cig", "Cia", "Cag", "Cai"
+                      #,"sumG", "sumI"
+                      #,"paHat"
 ) #For Beta
 # parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sigmaG", "sigmaI") #For Gauss
 #parametersToTrackWithDic <- c("pD", "deviance", parametersToTrack) #Must first execute 'rjags::load.module("dic")'
@@ -84,6 +86,13 @@ effectiveSize(chains) #Sample size adjusted for autocorrelation
 
 xyplot(chains) #Needs at least two parameters; else throws an error.
 densityplot(chains)
+# head(chains)
+# chains[[2]]["Tgi"]
+# str(chains[[2]])
+# chains[[2]][2]
+# names(chains[[2]])
+
+
 # gelman.plot(chains)
 # print(rbind(paste("estimated mu: ", condensed$statistics["mu0", "Mean"]),
 #             paste("observed mean:", mean(y, na.rm=T))))
