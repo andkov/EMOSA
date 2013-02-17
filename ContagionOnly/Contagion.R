@@ -4,7 +4,7 @@ cohortYear <- 1980 #1980, 1981, 1982, 1983, 1984
 ## @knitr GoDogGo
 require(rjags)
 
-
+model<-"Contagion"
 
 pathDirectory <-file.path(getwd()) 
 # pathModel <- file.path(pathDirectory, "ContagionOnly/ContagionGauss.bugs")
@@ -36,7 +36,7 @@ parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI")
 # parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sigmaG", "sigmaI") #For Gauss
 
 countChains <- 6#3 #6
-countIterations <- 100#000
+countIterations <- 1000#00
 
 startTime <- Sys.time()
 
@@ -54,7 +54,15 @@ elapsed  <- Sys.time() - startTime
 gelman.diag(chains, autoburnin=FALSE) #This is R-hat; the burnin period is manually specified above, so turn off the auto argument. 
 effectiveSize(chains) #Sample size adjusted for autocorrelation
 
-xyplot(chains) #Needs at least two parameters; else throws an error.
-densityplot(chains)
+xyplot<-xyplot(chains) #Needs at least two parameters; else throws an error.
+density<-densityplot(chains)
 # gelman.plot(chains)
 elapsed
+
+pathOutData <- file.path(pathDirectory,"ContagionOnly/figure") # where to put images
+modnum<-paste(model,as.character(cohortYear),".png") 
+pathFileOut<-file.path(pathOutData,modnum)
+png(filename = pathFileOut,
+    width =912, height =960 , units = "px")  # the resolution should be decided based on where to use the graphs
+plot(density, main="some title")
+dev.off()
