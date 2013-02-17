@@ -1,13 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <!-- saved from url=(0014)about:internet -->
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
 <title>Contagion results</title>
-
-<base target="_blank"/>
 
 <style type="text/css">
 body, td {
@@ -53,13 +50,14 @@ pre {
    margin-top: 0;
    max-width: 95%;
    border: 1px solid #ccc;
+   white-space: pre-wrap;
 }
 
 pre code {
    display: block; padding: 0.5em;
 }
 
-code.r {
+code.r, code.cpp {
    background-color: #F8F8F8;
 }
 
@@ -184,7 +182,7 @@ hljs.initHighlightingOnLoad();
 
 <h1>Contagion results</h1>
 
-<p><strong>Report Goal</strong>:  Provide a minimalistic report prototype for future reports.<br/>
+<p><strong>Report Goal</strong>:  Provide a minimalistic report prototype for future reports.
 <strong>Report Description</strong>: This is a prototype of a simple report.  It should represent the one side of the spectrum of MIECHV automated reports..</p>
 
 <!-- Point knitr to the underlying code file so it knows where to look for the chunks. -->
@@ -202,37 +200,40 @@ hljs.initHighlightingOnLoad();
 <pre><code>## Loading required package: rjags
 </code></pre>
 
-<pre><code>## Warning: there is no package called &#39;rjags&#39;
+<pre><code>## Loading required package: coda
+</code></pre>
+
+<pre><code>## Loading required package: lattice
+</code></pre>
+
+<pre><code>## linking to JAGS 3.3.0
+</code></pre>
+
+<pre><code>## module basemod loaded
+</code></pre>
+
+<pre><code>## module bugs loaded
 </code></pre>
 
 <pre><code class="r">
+model &lt;- &quot;Contagion&quot;
 
-
-if (Sys.info()[&quot;nodename&quot;] == &quot;MICKEY&quot;) pathDirectory &lt;- &quot;F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA&quot;
-# pathDirectory &lt;-
-# &#39;F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion&#39;
-if (Sys.info()[&quot;nodename&quot;] == &quot;MERKANEZ-PC&quot;) pathDirectory &lt;- &quot;F:/Users/wibeasley/Documents/SSuccess/InterimStudy&quot;  #Change this directory location
-
+pathDirectory &lt;- file.path(getwd())
 # pathModel &lt;- file.path(pathDirectory,
 # &#39;ContagionOnly/ContagionGauss.bugs&#39;)
 pathModel &lt;- file.path(pathDirectory, &quot;ContagionOnly/ContagionBeta.bugs&quot;)
-</code></pre>
+pathData &lt;- file.path(pathDirectory, &quot;Data/SummaryBirthYearByTime.csv&quot;)
 
-<pre><code>## Error: object &#39;pathDirectory&#39; not found
-</code></pre>
-
-<pre><code class="r">pathData &lt;- file.path(pathDirectory, &quot;Data/SummaryBirthYearByTime.csv&quot;)
-</code></pre>
-
-<pre><code>## Error: object &#39;pathDirectory&#39; not found
-</code></pre>
-
-<pre><code class="r">
 
 ds &lt;- read.csv(pathData, stringsAsFactors = FALSE)
 </code></pre>
 
-<pre><code>## Error: object &#39;pathData&#39; not found
+<pre><code>## Warning: cannot open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/Data/SummaryBirthYearByTime.csv&#39;:
+## No such file or directory
+</code></pre>
+
+<pre><code>## Error: cannot open the connection
 </code></pre>
 
 <pre><code class="r">ds &lt;- ds[ds$byear == cohortYear, ]  #Select only the desired cohort
@@ -312,14 +313,20 @@ parametersToTrack &lt;- c(&quot;Tgi&quot;, &quot;Tga&quot;, &quot;Tig&quot;, &qu
 # &#39;sigmaG&#39;, &#39;sigmaI&#39;) #For Gauss
 
 countChains &lt;- 6  #3 #6
-countIterations &lt;- 1e+05
+countIterations &lt;- 1000  #00
 
 startTime &lt;- Sys.time()
 
 jagsModel &lt;- jags.model(file = pathModel, data = jagsData, n.chains = countChains)  #, inits=inits)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;jags.model&quot;
+<pre><code>## Warning: cannot open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs&#39;:
+## No such file or directory
+</code></pre>
+
+<pre><code>## Error: Cannot open model file
+## &quot;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs&quot;
 </code></pre>
 
 <pre><code class="r"># print(jagsModel) update(jagsModel, 1000) #modifies the original object
@@ -327,7 +334,7 @@ jagsModel &lt;- jags.model(file = pathModel, data = jagsData, n.chains = countCh
 dic &lt;- dic.samples(jagsModel, n.iter = countIterations)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;dic.samples&quot;
+<pre><code>## Error: object &#39;jagsModel&#39; not found
 </code></pre>
 
 <pre><code class="r">dic
@@ -342,7 +349,7 @@ dic &lt;- dic.samples(jagsModel, n.iter = countIterations)
 chains &lt;- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter = countIterations)  # updates the model, and coerces the output to a single mcmc.list object.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;coda.samples&quot;
+<pre><code>## Error: object &#39;jagsModel&#39; not found
 </code></pre>
 
 <pre><code class="r">elapsed &lt;- Sys.time() - startTime
@@ -357,33 +364,64 @@ chains &lt;- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter 
 gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is manually specified above, so turn off the auto argument.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;gelman.diag&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r">effectiveSize(chains)  #Sample size adjusted for autocorrelation
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;effectiveSize&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r">
-xyplot(chains)  #Needs at least two parameters; else throws an error.
+xyplot &lt;- xyplot(chains)  #Needs at least two parameters; else throws an error.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;xyplot&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
-<pre><code class="r">densityplot(chains)
+<pre><code class="r">density &lt;- densityplot(chains)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;densityplot&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r"># gelman.plot(chains)
 elapsed
 </code></pre>
 
-<pre><code>## Time difference of 0.014 secs
+<pre><code>## Time difference of 0.007 secs
+</code></pre>
+
+<pre><code class="r">
+pathOutData &lt;- file.path(pathDirectory, &quot;ContagionOnly/figure&quot;)  # where to put images
+modnum &lt;- paste(model, as.character(cohortYear), &quot;.png&quot;)
+pathFileOut &lt;- file.path(pathOutData, modnum)
+png(filename = pathFileOut, width = 912, height = 960, units = &quot;px&quot;)  # the resolution should be decided based on where to use the graphs
+</code></pre>
+
+<pre><code>## Warning: Unable to open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/figure/Contagion
+## 1980 .png&#39; for writing
+</code></pre>
+
+<pre><code>## Warning: opening device failed
+</code></pre>
+
+<pre><code>## Error: unable to start png() device
+</code></pre>
+
+<pre><code class="r">plot(density, main = &quot;some title&quot;)
+</code></pre>
+
+<pre><code>## Error: &#39;expr&#39; did not evaluate to an object of length &#39;n&#39;
+</code></pre>
+
+<pre><code class="r">dev.off()
+</code></pre>
+
+<pre><code>## pdf 
+##   2
 </code></pre>
 
 <h3>Cohort: 1981</h3>
@@ -397,42 +435,25 @@ sqrt(a)
 </code></pre>
 
 <pre><code class="r">require(rjags)
-</code></pre>
 
-<pre><code>## Loading required package: rjags
-</code></pre>
+model &lt;- &quot;Contagion&quot;
 
-<pre><code>## Warning: there is no package called &#39;rjags&#39;
-</code></pre>
-
-<pre><code class="r">
-
-
-if (Sys.info()[&quot;nodename&quot;] == &quot;MICKEY&quot;) pathDirectory &lt;- &quot;F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA&quot;
-# pathDirectory &lt;-
-# &#39;F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion&#39;
-if (Sys.info()[&quot;nodename&quot;] == &quot;MERKANEZ-PC&quot;) pathDirectory &lt;- &quot;F:/Users/wibeasley/Documents/SSuccess/InterimStudy&quot;  #Change this directory location
-
+pathDirectory &lt;- file.path(getwd())
 # pathModel &lt;- file.path(pathDirectory,
 # &#39;ContagionOnly/ContagionGauss.bugs&#39;)
 pathModel &lt;- file.path(pathDirectory, &quot;ContagionOnly/ContagionBeta.bugs&quot;)
-</code></pre>
+pathData &lt;- file.path(pathDirectory, &quot;Data/SummaryBirthYearByTime.csv&quot;)
 
-<pre><code>## Error: object &#39;pathDirectory&#39; not found
-</code></pre>
-
-<pre><code class="r">pathData &lt;- file.path(pathDirectory, &quot;Data/SummaryBirthYearByTime.csv&quot;)
-</code></pre>
-
-<pre><code>## Error: object &#39;pathDirectory&#39; not found
-</code></pre>
-
-<pre><code class="r">
 
 ds &lt;- read.csv(pathData, stringsAsFactors = FALSE)
 </code></pre>
 
-<pre><code>## Error: object &#39;pathData&#39; not found
+<pre><code>## Warning: cannot open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/Data/SummaryBirthYearByTime.csv&#39;:
+## No such file or directory
+</code></pre>
+
+<pre><code>## Error: cannot open the connection
 </code></pre>
 
 <pre><code class="r">ds &lt;- ds[ds$byear == cohortYear, ]  #Select only the desired cohort
@@ -512,14 +533,20 @@ parametersToTrack &lt;- c(&quot;Tgi&quot;, &quot;Tga&quot;, &quot;Tig&quot;, &qu
 # &#39;sigmaG&#39;, &#39;sigmaI&#39;) #For Gauss
 
 countChains &lt;- 6  #3 #6
-countIterations &lt;- 1e+05
+countIterations &lt;- 1000  #00
 
 startTime &lt;- Sys.time()
 
 jagsModel &lt;- jags.model(file = pathModel, data = jagsData, n.chains = countChains)  #, inits=inits)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;jags.model&quot;
+<pre><code>## Warning: cannot open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs&#39;:
+## No such file or directory
+</code></pre>
+
+<pre><code>## Error: Cannot open model file
+## &quot;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs&quot;
 </code></pre>
 
 <pre><code class="r"># print(jagsModel) update(jagsModel, 1000) #modifies the original object
@@ -527,7 +554,7 @@ jagsModel &lt;- jags.model(file = pathModel, data = jagsData, n.chains = countCh
 dic &lt;- dic.samples(jagsModel, n.iter = countIterations)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;dic.samples&quot;
+<pre><code>## Error: object &#39;jagsModel&#39; not found
 </code></pre>
 
 <pre><code class="r">dic
@@ -542,7 +569,7 @@ dic &lt;- dic.samples(jagsModel, n.iter = countIterations)
 chains &lt;- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter = countIterations)  # updates the model, and coerces the output to a single mcmc.list object.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;coda.samples&quot;
+<pre><code>## Error: object &#39;jagsModel&#39; not found
 </code></pre>
 
 <pre><code class="r">elapsed &lt;- Sys.time() - startTime
@@ -557,33 +584,64 @@ chains &lt;- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter 
 gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is manually specified above, so turn off the auto argument.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;gelman.diag&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r">effectiveSize(chains)  #Sample size adjusted for autocorrelation
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;effectiveSize&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r">
-xyplot(chains)  #Needs at least two parameters; else throws an error.
+xyplot &lt;- xyplot(chains)  #Needs at least two parameters; else throws an error.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;xyplot&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
-<pre><code class="r">densityplot(chains)
+<pre><code class="r">density &lt;- densityplot(chains)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;densityplot&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r"># gelman.plot(chains)
 elapsed
 </code></pre>
 
-<pre><code>## Time difference of 0.014 secs
+<pre><code>## Time difference of 0.006 secs
+</code></pre>
+
+<pre><code class="r">
+pathOutData &lt;- file.path(pathDirectory, &quot;ContagionOnly/figure&quot;)  # where to put images
+modnum &lt;- paste(model, as.character(cohortYear), &quot;.png&quot;)
+pathFileOut &lt;- file.path(pathOutData, modnum)
+png(filename = pathFileOut, width = 912, height = 960, units = &quot;px&quot;)  # the resolution should be decided based on where to use the graphs
+</code></pre>
+
+<pre><code>## Warning: Unable to open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/figure/Contagion
+## 1981 .png&#39; for writing
+</code></pre>
+
+<pre><code>## Warning: opening device failed
+</code></pre>
+
+<pre><code>## Error: unable to start png() device
+</code></pre>
+
+<pre><code class="r">plot(density, main = &quot;some title&quot;)
+</code></pre>
+
+<pre><code>## Error: &#39;expr&#39; did not evaluate to an object of length &#39;n&#39;
+</code></pre>
+
+<pre><code class="r">dev.off()
+</code></pre>
+
+<pre><code>## pdf 
+##   2
 </code></pre>
 
 <h3>Cohort: 1982</h3>
@@ -592,42 +650,25 @@ elapsed
 </code></pre>
 
 <pre><code class="r">require(rjags)
-</code></pre>
 
-<pre><code>## Loading required package: rjags
-</code></pre>
+model &lt;- &quot;Contagion&quot;
 
-<pre><code>## Warning: there is no package called &#39;rjags&#39;
-</code></pre>
-
-<pre><code class="r">
-
-
-if (Sys.info()[&quot;nodename&quot;] == &quot;MICKEY&quot;) pathDirectory &lt;- &quot;F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA&quot;
-# pathDirectory &lt;-
-# &#39;F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion&#39;
-if (Sys.info()[&quot;nodename&quot;] == &quot;MERKANEZ-PC&quot;) pathDirectory &lt;- &quot;F:/Users/wibeasley/Documents/SSuccess/InterimStudy&quot;  #Change this directory location
-
+pathDirectory &lt;- file.path(getwd())
 # pathModel &lt;- file.path(pathDirectory,
 # &#39;ContagionOnly/ContagionGauss.bugs&#39;)
 pathModel &lt;- file.path(pathDirectory, &quot;ContagionOnly/ContagionBeta.bugs&quot;)
-</code></pre>
+pathData &lt;- file.path(pathDirectory, &quot;Data/SummaryBirthYearByTime.csv&quot;)
 
-<pre><code>## Error: object &#39;pathDirectory&#39; not found
-</code></pre>
-
-<pre><code class="r">pathData &lt;- file.path(pathDirectory, &quot;Data/SummaryBirthYearByTime.csv&quot;)
-</code></pre>
-
-<pre><code>## Error: object &#39;pathDirectory&#39; not found
-</code></pre>
-
-<pre><code class="r">
 
 ds &lt;- read.csv(pathData, stringsAsFactors = FALSE)
 </code></pre>
 
-<pre><code>## Error: object &#39;pathData&#39; not found
+<pre><code>## Warning: cannot open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/Data/SummaryBirthYearByTime.csv&#39;:
+## No such file or directory
+</code></pre>
+
+<pre><code>## Error: cannot open the connection
 </code></pre>
 
 <pre><code class="r">ds &lt;- ds[ds$byear == cohortYear, ]  #Select only the desired cohort
@@ -707,14 +748,20 @@ parametersToTrack &lt;- c(&quot;Tgi&quot;, &quot;Tga&quot;, &quot;Tig&quot;, &qu
 # &#39;sigmaG&#39;, &#39;sigmaI&#39;) #For Gauss
 
 countChains &lt;- 6  #3 #6
-countIterations &lt;- 1e+05
+countIterations &lt;- 1000  #00
 
 startTime &lt;- Sys.time()
 
 jagsModel &lt;- jags.model(file = pathModel, data = jagsData, n.chains = countChains)  #, inits=inits)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;jags.model&quot;
+<pre><code>## Warning: cannot open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs&#39;:
+## No such file or directory
+</code></pre>
+
+<pre><code>## Error: Cannot open model file
+## &quot;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs&quot;
 </code></pre>
 
 <pre><code class="r"># print(jagsModel) update(jagsModel, 1000) #modifies the original object
@@ -722,7 +769,7 @@ jagsModel &lt;- jags.model(file = pathModel, data = jagsData, n.chains = countCh
 dic &lt;- dic.samples(jagsModel, n.iter = countIterations)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;dic.samples&quot;
+<pre><code>## Error: object &#39;jagsModel&#39; not found
 </code></pre>
 
 <pre><code class="r">dic
@@ -737,7 +784,7 @@ dic &lt;- dic.samples(jagsModel, n.iter = countIterations)
 chains &lt;- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter = countIterations)  # updates the model, and coerces the output to a single mcmc.list object.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;coda.samples&quot;
+<pre><code>## Error: object &#39;jagsModel&#39; not found
 </code></pre>
 
 <pre><code class="r">elapsed &lt;- Sys.time() - startTime
@@ -752,33 +799,64 @@ chains &lt;- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter 
 gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is manually specified above, so turn off the auto argument.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;gelman.diag&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r">effectiveSize(chains)  #Sample size adjusted for autocorrelation
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;effectiveSize&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r">
-xyplot(chains)  #Needs at least two parameters; else throws an error.
+xyplot &lt;- xyplot(chains)  #Needs at least two parameters; else throws an error.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;xyplot&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
-<pre><code class="r">densityplot(chains)
+<pre><code class="r">density &lt;- densityplot(chains)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;densityplot&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r"># gelman.plot(chains)
 elapsed
 </code></pre>
 
-<pre><code>## Time difference of 0.027 secs
+<pre><code>## Time difference of 0.006 secs
+</code></pre>
+
+<pre><code class="r">
+pathOutData &lt;- file.path(pathDirectory, &quot;ContagionOnly/figure&quot;)  # where to put images
+modnum &lt;- paste(model, as.character(cohortYear), &quot;.png&quot;)
+pathFileOut &lt;- file.path(pathOutData, modnum)
+png(filename = pathFileOut, width = 912, height = 960, units = &quot;px&quot;)  # the resolution should be decided based on where to use the graphs
+</code></pre>
+
+<pre><code>## Warning: Unable to open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/figure/Contagion
+## 1982 .png&#39; for writing
+</code></pre>
+
+<pre><code>## Warning: opening device failed
+</code></pre>
+
+<pre><code>## Error: unable to start png() device
+</code></pre>
+
+<pre><code class="r">plot(density, main = &quot;some title&quot;)
+</code></pre>
+
+<pre><code>## Error: &#39;expr&#39; did not evaluate to an object of length &#39;n&#39;
+</code></pre>
+
+<pre><code class="r">dev.off()
+</code></pre>
+
+<pre><code>## pdf 
+##   2
 </code></pre>
 
 <h3>Cohort: 1983</h3>
@@ -787,42 +865,25 @@ elapsed
 </code></pre>
 
 <pre><code class="r">require(rjags)
-</code></pre>
 
-<pre><code>## Loading required package: rjags
-</code></pre>
+model &lt;- &quot;Contagion&quot;
 
-<pre><code>## Warning: there is no package called &#39;rjags&#39;
-</code></pre>
-
-<pre><code class="r">
-
-
-if (Sys.info()[&quot;nodename&quot;] == &quot;MICKEY&quot;) pathDirectory &lt;- &quot;F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA&quot;
-# pathDirectory &lt;-
-# &#39;F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion&#39;
-if (Sys.info()[&quot;nodename&quot;] == &quot;MERKANEZ-PC&quot;) pathDirectory &lt;- &quot;F:/Users/wibeasley/Documents/SSuccess/InterimStudy&quot;  #Change this directory location
-
+pathDirectory &lt;- file.path(getwd())
 # pathModel &lt;- file.path(pathDirectory,
 # &#39;ContagionOnly/ContagionGauss.bugs&#39;)
 pathModel &lt;- file.path(pathDirectory, &quot;ContagionOnly/ContagionBeta.bugs&quot;)
-</code></pre>
+pathData &lt;- file.path(pathDirectory, &quot;Data/SummaryBirthYearByTime.csv&quot;)
 
-<pre><code>## Error: object &#39;pathDirectory&#39; not found
-</code></pre>
-
-<pre><code class="r">pathData &lt;- file.path(pathDirectory, &quot;Data/SummaryBirthYearByTime.csv&quot;)
-</code></pre>
-
-<pre><code>## Error: object &#39;pathDirectory&#39; not found
-</code></pre>
-
-<pre><code class="r">
 
 ds &lt;- read.csv(pathData, stringsAsFactors = FALSE)
 </code></pre>
 
-<pre><code>## Error: object &#39;pathData&#39; not found
+<pre><code>## Warning: cannot open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/Data/SummaryBirthYearByTime.csv&#39;:
+## No such file or directory
+</code></pre>
+
+<pre><code>## Error: cannot open the connection
 </code></pre>
 
 <pre><code class="r">ds &lt;- ds[ds$byear == cohortYear, ]  #Select only the desired cohort
@@ -902,14 +963,20 @@ parametersToTrack &lt;- c(&quot;Tgi&quot;, &quot;Tga&quot;, &quot;Tig&quot;, &qu
 # &#39;sigmaG&#39;, &#39;sigmaI&#39;) #For Gauss
 
 countChains &lt;- 6  #3 #6
-countIterations &lt;- 1e+05
+countIterations &lt;- 1000  #00
 
 startTime &lt;- Sys.time()
 
 jagsModel &lt;- jags.model(file = pathModel, data = jagsData, n.chains = countChains)  #, inits=inits)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;jags.model&quot;
+<pre><code>## Warning: cannot open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs&#39;:
+## No such file or directory
+</code></pre>
+
+<pre><code>## Error: Cannot open model file
+## &quot;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs&quot;
 </code></pre>
 
 <pre><code class="r"># print(jagsModel) update(jagsModel, 1000) #modifies the original object
@@ -917,7 +984,7 @@ jagsModel &lt;- jags.model(file = pathModel, data = jagsData, n.chains = countCh
 dic &lt;- dic.samples(jagsModel, n.iter = countIterations)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;dic.samples&quot;
+<pre><code>## Error: object &#39;jagsModel&#39; not found
 </code></pre>
 
 <pre><code class="r">dic
@@ -932,7 +999,7 @@ dic &lt;- dic.samples(jagsModel, n.iter = countIterations)
 chains &lt;- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter = countIterations)  # updates the model, and coerces the output to a single mcmc.list object.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;coda.samples&quot;
+<pre><code>## Error: object &#39;jagsModel&#39; not found
 </code></pre>
 
 <pre><code class="r">elapsed &lt;- Sys.time() - startTime
@@ -947,33 +1014,64 @@ chains &lt;- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter 
 gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is manually specified above, so turn off the auto argument.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;gelman.diag&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r">effectiveSize(chains)  #Sample size adjusted for autocorrelation
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;effectiveSize&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r">
-xyplot(chains)  #Needs at least two parameters; else throws an error.
+xyplot &lt;- xyplot(chains)  #Needs at least two parameters; else throws an error.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;xyplot&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
-<pre><code class="r">densityplot(chains)
+<pre><code class="r">density &lt;- densityplot(chains)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;densityplot&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r"># gelman.plot(chains)
 elapsed
 </code></pre>
 
-<pre><code>## Time difference of 0.024 secs
+<pre><code>## Time difference of 0.006001 secs
+</code></pre>
+
+<pre><code class="r">
+pathOutData &lt;- file.path(pathDirectory, &quot;ContagionOnly/figure&quot;)  # where to put images
+modnum &lt;- paste(model, as.character(cohortYear), &quot;.png&quot;)
+pathFileOut &lt;- file.path(pathOutData, modnum)
+png(filename = pathFileOut, width = 912, height = 960, units = &quot;px&quot;)  # the resolution should be decided based on where to use the graphs
+</code></pre>
+
+<pre><code>## Warning: Unable to open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/figure/Contagion
+## 1983 .png&#39; for writing
+</code></pre>
+
+<pre><code>## Warning: opening device failed
+</code></pre>
+
+<pre><code>## Error: unable to start png() device
+</code></pre>
+
+<pre><code class="r">plot(density, main = &quot;some title&quot;)
+</code></pre>
+
+<pre><code>## Error: &#39;expr&#39; did not evaluate to an object of length &#39;n&#39;
+</code></pre>
+
+<pre><code class="r">dev.off()
+</code></pre>
+
+<pre><code>## pdf 
+##   2
 </code></pre>
 
 <h3>Cohort: 1984</h3>
@@ -982,42 +1080,25 @@ elapsed
 </code></pre>
 
 <pre><code class="r">require(rjags)
-</code></pre>
 
-<pre><code>## Loading required package: rjags
-</code></pre>
+model &lt;- &quot;Contagion&quot;
 
-<pre><code>## Warning: there is no package called &#39;rjags&#39;
-</code></pre>
-
-<pre><code class="r">
-
-
-if (Sys.info()[&quot;nodename&quot;] == &quot;MICKEY&quot;) pathDirectory &lt;- &quot;F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA&quot;
-# pathDirectory &lt;-
-# &#39;F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion&#39;
-if (Sys.info()[&quot;nodename&quot;] == &quot;MERKANEZ-PC&quot;) pathDirectory &lt;- &quot;F:/Users/wibeasley/Documents/SSuccess/InterimStudy&quot;  #Change this directory location
-
+pathDirectory &lt;- file.path(getwd())
 # pathModel &lt;- file.path(pathDirectory,
 # &#39;ContagionOnly/ContagionGauss.bugs&#39;)
 pathModel &lt;- file.path(pathDirectory, &quot;ContagionOnly/ContagionBeta.bugs&quot;)
-</code></pre>
+pathData &lt;- file.path(pathDirectory, &quot;Data/SummaryBirthYearByTime.csv&quot;)
 
-<pre><code>## Error: object &#39;pathDirectory&#39; not found
-</code></pre>
-
-<pre><code class="r">pathData &lt;- file.path(pathDirectory, &quot;Data/SummaryBirthYearByTime.csv&quot;)
-</code></pre>
-
-<pre><code>## Error: object &#39;pathDirectory&#39; not found
-</code></pre>
-
-<pre><code class="r">
 
 ds &lt;- read.csv(pathData, stringsAsFactors = FALSE)
 </code></pre>
 
-<pre><code>## Error: object &#39;pathData&#39; not found
+<pre><code>## Warning: cannot open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/Data/SummaryBirthYearByTime.csv&#39;:
+## No such file or directory
+</code></pre>
+
+<pre><code>## Error: cannot open the connection
 </code></pre>
 
 <pre><code class="r">ds &lt;- ds[ds$byear == cohortYear, ]  #Select only the desired cohort
@@ -1097,14 +1178,20 @@ parametersToTrack &lt;- c(&quot;Tgi&quot;, &quot;Tga&quot;, &quot;Tig&quot;, &qu
 # &#39;sigmaG&#39;, &#39;sigmaI&#39;) #For Gauss
 
 countChains &lt;- 6  #3 #6
-countIterations &lt;- 1e+05
+countIterations &lt;- 1000  #00
 
 startTime &lt;- Sys.time()
 
 jagsModel &lt;- jags.model(file = pathModel, data = jagsData, n.chains = countChains)  #, inits=inits)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;jags.model&quot;
+<pre><code>## Warning: cannot open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs&#39;:
+## No such file or directory
+</code></pre>
+
+<pre><code>## Error: Cannot open model file
+## &quot;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs&quot;
 </code></pre>
 
 <pre><code class="r"># print(jagsModel) update(jagsModel, 1000) #modifies the original object
@@ -1112,7 +1199,7 @@ jagsModel &lt;- jags.model(file = pathModel, data = jagsData, n.chains = countCh
 dic &lt;- dic.samples(jagsModel, n.iter = countIterations)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;dic.samples&quot;
+<pre><code>## Error: object &#39;jagsModel&#39; not found
 </code></pre>
 
 <pre><code class="r">dic
@@ -1127,7 +1214,7 @@ dic &lt;- dic.samples(jagsModel, n.iter = countIterations)
 chains &lt;- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter = countIterations)  # updates the model, and coerces the output to a single mcmc.list object.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;coda.samples&quot;
+<pre><code>## Error: object &#39;jagsModel&#39; not found
 </code></pre>
 
 <pre><code class="r">elapsed &lt;- Sys.time() - startTime
@@ -1142,33 +1229,64 @@ chains &lt;- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter 
 gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is manually specified above, so turn off the auto argument.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;gelman.diag&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r">effectiveSize(chains)  #Sample size adjusted for autocorrelation
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;effectiveSize&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r">
-xyplot(chains)  #Needs at least two parameters; else throws an error.
+xyplot &lt;- xyplot(chains)  #Needs at least two parameters; else throws an error.
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;xyplot&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
-<pre><code class="r">densityplot(chains)
+<pre><code class="r">density &lt;- densityplot(chains)
 </code></pre>
 
-<pre><code>## Error: could not find function &quot;densityplot&quot;
+<pre><code>## Error: object &#39;chains&#39; not found
 </code></pre>
 
 <pre><code class="r"># gelman.plot(chains)
 elapsed
 </code></pre>
 
-<pre><code>## Time difference of 0.015 secs
+<pre><code>## Time difference of 0.007 secs
+</code></pre>
+
+<pre><code class="r">
+pathOutData &lt;- file.path(pathDirectory, &quot;ContagionOnly/figure&quot;)  # where to put images
+modnum &lt;- paste(model, as.character(cohortYear), &quot;.png&quot;)
+pathFileOut &lt;- file.path(pathOutData, modnum)
+png(filename = pathFileOut, width = 912, height = 960, units = &quot;px&quot;)  # the resolution should be decided based on where to use the graphs
+</code></pre>
+
+<pre><code>## Warning: Unable to open file
+## &#39;C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/figure/Contagion
+## 1984 .png&#39; for writing
+</code></pre>
+
+<pre><code>## Warning: opening device failed
+</code></pre>
+
+<pre><code>## Error: unable to start png() device
+</code></pre>
+
+<pre><code class="r">plot(density, main = &quot;some title&quot;)
+</code></pre>
+
+<pre><code>## Error: &#39;expr&#39; did not evaluate to an object of length &#39;n&#39;
+</code></pre>
+
+<pre><code class="r">dev.off()
+</code></pre>
+
+<pre><code>## pdf 
+##   2
 </code></pre>
 
 </body>

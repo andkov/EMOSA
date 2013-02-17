@@ -59,8 +59,9 @@ density<-densityplot(chains)
 # gelman.plot(chains)
 elapsed
 
+particularity<-"both removed"
 pathOutData <- file.path(pathDirectory,"ContagionOnly/figure") # where to put images
-modnum<-paste(model,as.character(cohortYear),".png") 
+modnum<-paste(model,as.character(cohortYear),particularity,".png") 
 pathFileOut<-file.path(pathOutData,modnum)
 png(filename = pathFileOut,
     width =912, height =960 , units = "px")  # the resolution should be decided based on where to use the graphs

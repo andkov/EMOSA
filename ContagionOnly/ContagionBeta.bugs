@@ -11,7 +11,7 @@ model {
 			+ (Tai * pa[i] * pi[i]) 
 			- (Tig * pi[i] * pg[i]) 
 			- (Tia * pi[i] * pa[i])
-				
+# We use beta-distribution to create this retriction 1=pg+pi+pa				
 #		paHat[i+1] <- pa[i] + (Tga * pg[i] * pa[i]) + (Tia * pi[i] * pa[i]) - (Tag * pa[i] * pg[i]) - (Tai * pa[i] * pi[i])
 #		paHat[i+1] <- 1 - pgHat[i+1] - piHat[i+1]
 		

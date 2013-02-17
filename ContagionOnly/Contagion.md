@@ -24,43 +24,47 @@ require(rjags)
 ```
 
 ```
-## Warning: there is no package called 'rjags'
+## Loading required package: coda
+```
+
+```
+## Loading required package: lattice
+```
+
+```
+## linking to JAGS 3.3.0
+```
+
+```
+## module basemod loaded
+```
+
+```
+## module bugs loaded
 ```
 
 ```r
 
+model <- "Contagion"
 
-
-if (Sys.info()["nodename"] == "MICKEY") pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA"
-# pathDirectory <-
-# 'F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion'
-if (Sys.info()["nodename"] == "MERKANEZ-PC") pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy"  #Change this directory location
-
+pathDirectory <- file.path(getwd())
 # pathModel <- file.path(pathDirectory,
 # 'ContagionOnly/ContagionGauss.bugs')
 pathModel <- file.path(pathDirectory, "ContagionOnly/ContagionBeta.bugs")
-```
-
-```
-## Error: object 'pathDirectory' not found
-```
-
-```r
 pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
-```
-
-```
-## Error: object 'pathDirectory' not found
-```
-
-```r
 
 
 ds <- read.csv(pathData, stringsAsFactors = FALSE)
 ```
 
 ```
-## Error: object 'pathData' not found
+## Warning: cannot open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/Data/SummaryBirthYearByTime.csv':
+## No such file or directory
+```
+
+```
+## Error: cannot open the connection
 ```
 
 ```r
@@ -161,7 +165,7 @@ parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI")
 # 'sigmaG', 'sigmaI') #For Gauss
 
 countChains <- 6  #3 #6
-countIterations <- 1e+05
+countIterations <- 1000  #00
 
 startTime <- Sys.time()
 
@@ -169,7 +173,14 @@ jagsModel <- jags.model(file = pathModel, data = jagsData, n.chains = countChain
 ```
 
 ```
-## Error: could not find function "jags.model"
+## Warning: cannot open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs':
+## No such file or directory
+```
+
+```
+## Error: Cannot open model file
+## "C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs"
 ```
 
 ```r
@@ -179,7 +190,7 @@ dic <- dic.samples(jagsModel, n.iter = countIterations)
 ```
 
 ```
-## Error: could not find function "dic.samples"
+## Error: object 'jagsModel' not found
 ```
 
 ```r
@@ -198,7 +209,7 @@ chains <- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter = c
 ```
 
 ```
-## Error: could not find function "coda.samples"
+## Error: object 'jagsModel' not found
 ```
 
 ```r
@@ -217,7 +228,7 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ```
 
 ```
-## Error: could not find function "gelman.diag"
+## Error: object 'chains' not found
 ```
 
 ```r
@@ -225,24 +236,24 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 ```
 
 ```
-## Error: could not find function "effectiveSize"
+## Error: object 'chains' not found
 ```
 
 ```r
 
-xyplot(chains)  #Needs at least two parameters; else throws an error.
+xyplot <- xyplot(chains)  #Needs at least two parameters; else throws an error.
 ```
 
 ```
-## Error: could not find function "xyplot"
+## Error: object 'chains' not found
 ```
 
 ```r
-densityplot(chains)
+density <- densityplot(chains)
 ```
 
 ```
-## Error: could not find function "densityplot"
+## Error: object 'chains' not found
 ```
 
 ```r
@@ -251,7 +262,46 @@ elapsed
 ```
 
 ```
-## Time difference of 0.014 secs
+## Time difference of 0.007 secs
+```
+
+```r
+
+pathOutData <- file.path(pathDirectory, "ContagionOnly/figure")  # where to put images
+modnum <- paste(model, as.character(cohortYear), ".png")
+pathFileOut <- file.path(pathOutData, modnum)
+png(filename = pathFileOut, width = 912, height = 960, units = "px")  # the resolution should be decided based on where to use the graphs
+```
+
+```
+## Warning: Unable to open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/figure/Contagion
+## 1980 .png' for writing
+```
+
+```
+## Warning: opening device failed
+```
+
+```
+## Error: unable to start png() device
+```
+
+```r
+plot(density, main = "some title")
+```
+
+```
+## Error: 'expr' did not evaluate to an object of length 'n'
+```
+
+```r
+dev.off()
+```
+
+```
+## pdf 
+##   2
 ```
 
 
@@ -271,50 +321,27 @@ sqrt(a)
 
 ```r
 require(rjags)
-```
 
-```
-## Loading required package: rjags
-```
+model <- "Contagion"
 
-```
-## Warning: there is no package called 'rjags'
-```
-
-```r
-
-
-
-if (Sys.info()["nodename"] == "MICKEY") pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA"
-# pathDirectory <-
-# 'F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion'
-if (Sys.info()["nodename"] == "MERKANEZ-PC") pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy"  #Change this directory location
-
+pathDirectory <- file.path(getwd())
 # pathModel <- file.path(pathDirectory,
 # 'ContagionOnly/ContagionGauss.bugs')
 pathModel <- file.path(pathDirectory, "ContagionOnly/ContagionBeta.bugs")
-```
-
-```
-## Error: object 'pathDirectory' not found
-```
-
-```r
 pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
-```
-
-```
-## Error: object 'pathDirectory' not found
-```
-
-```r
 
 
 ds <- read.csv(pathData, stringsAsFactors = FALSE)
 ```
 
 ```
-## Error: object 'pathData' not found
+## Warning: cannot open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/Data/SummaryBirthYearByTime.csv':
+## No such file or directory
+```
+
+```
+## Error: cannot open the connection
 ```
 
 ```r
@@ -415,7 +442,7 @@ parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI")
 # 'sigmaG', 'sigmaI') #For Gauss
 
 countChains <- 6  #3 #6
-countIterations <- 1e+05
+countIterations <- 1000  #00
 
 startTime <- Sys.time()
 
@@ -423,7 +450,14 @@ jagsModel <- jags.model(file = pathModel, data = jagsData, n.chains = countChain
 ```
 
 ```
-## Error: could not find function "jags.model"
+## Warning: cannot open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs':
+## No such file or directory
+```
+
+```
+## Error: Cannot open model file
+## "C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs"
 ```
 
 ```r
@@ -433,7 +467,7 @@ dic <- dic.samples(jagsModel, n.iter = countIterations)
 ```
 
 ```
-## Error: could not find function "dic.samples"
+## Error: object 'jagsModel' not found
 ```
 
 ```r
@@ -452,7 +486,7 @@ chains <- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter = c
 ```
 
 ```
-## Error: could not find function "coda.samples"
+## Error: object 'jagsModel' not found
 ```
 
 ```r
@@ -471,7 +505,7 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ```
 
 ```
-## Error: could not find function "gelman.diag"
+## Error: object 'chains' not found
 ```
 
 ```r
@@ -479,24 +513,24 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 ```
 
 ```
-## Error: could not find function "effectiveSize"
+## Error: object 'chains' not found
 ```
 
 ```r
 
-xyplot(chains)  #Needs at least two parameters; else throws an error.
+xyplot <- xyplot(chains)  #Needs at least two parameters; else throws an error.
 ```
 
 ```
-## Error: could not find function "xyplot"
+## Error: object 'chains' not found
 ```
 
 ```r
-densityplot(chains)
+density <- densityplot(chains)
 ```
 
 ```
-## Error: could not find function "densityplot"
+## Error: object 'chains' not found
 ```
 
 ```r
@@ -505,7 +539,46 @@ elapsed
 ```
 
 ```
-## Time difference of 0.014 secs
+## Time difference of 0.006 secs
+```
+
+```r
+
+pathOutData <- file.path(pathDirectory, "ContagionOnly/figure")  # where to put images
+modnum <- paste(model, as.character(cohortYear), ".png")
+pathFileOut <- file.path(pathOutData, modnum)
+png(filename = pathFileOut, width = 912, height = 960, units = "px")  # the resolution should be decided based on where to use the graphs
+```
+
+```
+## Warning: Unable to open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/figure/Contagion
+## 1981 .png' for writing
+```
+
+```
+## Warning: opening device failed
+```
+
+```
+## Error: unable to start png() device
+```
+
+```r
+plot(density, main = "some title")
+```
+
+```
+## Error: 'expr' did not evaluate to an object of length 'n'
+```
+
+```r
+dev.off()
+```
+
+```
+## pdf 
+##   2
 ```
 
 
@@ -518,50 +591,27 @@ cohortYear <- 1982
 
 ```r
 require(rjags)
-```
 
-```
-## Loading required package: rjags
-```
+model <- "Contagion"
 
-```
-## Warning: there is no package called 'rjags'
-```
-
-```r
-
-
-
-if (Sys.info()["nodename"] == "MICKEY") pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA"
-# pathDirectory <-
-# 'F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion'
-if (Sys.info()["nodename"] == "MERKANEZ-PC") pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy"  #Change this directory location
-
+pathDirectory <- file.path(getwd())
 # pathModel <- file.path(pathDirectory,
 # 'ContagionOnly/ContagionGauss.bugs')
 pathModel <- file.path(pathDirectory, "ContagionOnly/ContagionBeta.bugs")
-```
-
-```
-## Error: object 'pathDirectory' not found
-```
-
-```r
 pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
-```
-
-```
-## Error: object 'pathDirectory' not found
-```
-
-```r
 
 
 ds <- read.csv(pathData, stringsAsFactors = FALSE)
 ```
 
 ```
-## Error: object 'pathData' not found
+## Warning: cannot open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/Data/SummaryBirthYearByTime.csv':
+## No such file or directory
+```
+
+```
+## Error: cannot open the connection
 ```
 
 ```r
@@ -662,7 +712,7 @@ parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI")
 # 'sigmaG', 'sigmaI') #For Gauss
 
 countChains <- 6  #3 #6
-countIterations <- 1e+05
+countIterations <- 1000  #00
 
 startTime <- Sys.time()
 
@@ -670,7 +720,14 @@ jagsModel <- jags.model(file = pathModel, data = jagsData, n.chains = countChain
 ```
 
 ```
-## Error: could not find function "jags.model"
+## Warning: cannot open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs':
+## No such file or directory
+```
+
+```
+## Error: Cannot open model file
+## "C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs"
 ```
 
 ```r
@@ -680,7 +737,7 @@ dic <- dic.samples(jagsModel, n.iter = countIterations)
 ```
 
 ```
-## Error: could not find function "dic.samples"
+## Error: object 'jagsModel' not found
 ```
 
 ```r
@@ -699,7 +756,7 @@ chains <- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter = c
 ```
 
 ```
-## Error: could not find function "coda.samples"
+## Error: object 'jagsModel' not found
 ```
 
 ```r
@@ -718,7 +775,7 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ```
 
 ```
-## Error: could not find function "gelman.diag"
+## Error: object 'chains' not found
 ```
 
 ```r
@@ -726,24 +783,24 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 ```
 
 ```
-## Error: could not find function "effectiveSize"
+## Error: object 'chains' not found
 ```
 
 ```r
 
-xyplot(chains)  #Needs at least two parameters; else throws an error.
+xyplot <- xyplot(chains)  #Needs at least two parameters; else throws an error.
 ```
 
 ```
-## Error: could not find function "xyplot"
+## Error: object 'chains' not found
 ```
 
 ```r
-densityplot(chains)
+density <- densityplot(chains)
 ```
 
 ```
-## Error: could not find function "densityplot"
+## Error: object 'chains' not found
 ```
 
 ```r
@@ -752,7 +809,46 @@ elapsed
 ```
 
 ```
-## Time difference of 0.027 secs
+## Time difference of 0.006 secs
+```
+
+```r
+
+pathOutData <- file.path(pathDirectory, "ContagionOnly/figure")  # where to put images
+modnum <- paste(model, as.character(cohortYear), ".png")
+pathFileOut <- file.path(pathOutData, modnum)
+png(filename = pathFileOut, width = 912, height = 960, units = "px")  # the resolution should be decided based on where to use the graphs
+```
+
+```
+## Warning: Unable to open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/figure/Contagion
+## 1982 .png' for writing
+```
+
+```
+## Warning: opening device failed
+```
+
+```
+## Error: unable to start png() device
+```
+
+```r
+plot(density, main = "some title")
+```
+
+```
+## Error: 'expr' did not evaluate to an object of length 'n'
+```
+
+```r
+dev.off()
+```
+
+```
+## pdf 
+##   2
 ```
 
 
@@ -765,50 +861,27 @@ cohortYear <- 1983
 
 ```r
 require(rjags)
-```
 
-```
-## Loading required package: rjags
-```
+model <- "Contagion"
 
-```
-## Warning: there is no package called 'rjags'
-```
-
-```r
-
-
-
-if (Sys.info()["nodename"] == "MICKEY") pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA"
-# pathDirectory <-
-# 'F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion'
-if (Sys.info()["nodename"] == "MERKANEZ-PC") pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy"  #Change this directory location
-
+pathDirectory <- file.path(getwd())
 # pathModel <- file.path(pathDirectory,
 # 'ContagionOnly/ContagionGauss.bugs')
 pathModel <- file.path(pathDirectory, "ContagionOnly/ContagionBeta.bugs")
-```
-
-```
-## Error: object 'pathDirectory' not found
-```
-
-```r
 pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
-```
-
-```
-## Error: object 'pathDirectory' not found
-```
-
-```r
 
 
 ds <- read.csv(pathData, stringsAsFactors = FALSE)
 ```
 
 ```
-## Error: object 'pathData' not found
+## Warning: cannot open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/Data/SummaryBirthYearByTime.csv':
+## No such file or directory
+```
+
+```
+## Error: cannot open the connection
 ```
 
 ```r
@@ -909,7 +982,7 @@ parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI")
 # 'sigmaG', 'sigmaI') #For Gauss
 
 countChains <- 6  #3 #6
-countIterations <- 1e+05
+countIterations <- 1000  #00
 
 startTime <- Sys.time()
 
@@ -917,7 +990,14 @@ jagsModel <- jags.model(file = pathModel, data = jagsData, n.chains = countChain
 ```
 
 ```
-## Error: could not find function "jags.model"
+## Warning: cannot open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs':
+## No such file or directory
+```
+
+```
+## Error: Cannot open model file
+## "C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs"
 ```
 
 ```r
@@ -927,7 +1007,7 @@ dic <- dic.samples(jagsModel, n.iter = countIterations)
 ```
 
 ```
-## Error: could not find function "dic.samples"
+## Error: object 'jagsModel' not found
 ```
 
 ```r
@@ -946,7 +1026,7 @@ chains <- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter = c
 ```
 
 ```
-## Error: could not find function "coda.samples"
+## Error: object 'jagsModel' not found
 ```
 
 ```r
@@ -965,7 +1045,7 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ```
 
 ```
-## Error: could not find function "gelman.diag"
+## Error: object 'chains' not found
 ```
 
 ```r
@@ -973,24 +1053,24 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 ```
 
 ```
-## Error: could not find function "effectiveSize"
+## Error: object 'chains' not found
 ```
 
 ```r
 
-xyplot(chains)  #Needs at least two parameters; else throws an error.
+xyplot <- xyplot(chains)  #Needs at least two parameters; else throws an error.
 ```
 
 ```
-## Error: could not find function "xyplot"
+## Error: object 'chains' not found
 ```
 
 ```r
-densityplot(chains)
+density <- densityplot(chains)
 ```
 
 ```
-## Error: could not find function "densityplot"
+## Error: object 'chains' not found
 ```
 
 ```r
@@ -999,7 +1079,46 @@ elapsed
 ```
 
 ```
-## Time difference of 0.024 secs
+## Time difference of 0.006001 secs
+```
+
+```r
+
+pathOutData <- file.path(pathDirectory, "ContagionOnly/figure")  # where to put images
+modnum <- paste(model, as.character(cohortYear), ".png")
+pathFileOut <- file.path(pathOutData, modnum)
+png(filename = pathFileOut, width = 912, height = 960, units = "px")  # the resolution should be decided based on where to use the graphs
+```
+
+```
+## Warning: Unable to open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/figure/Contagion
+## 1983 .png' for writing
+```
+
+```
+## Warning: opening device failed
+```
+
+```
+## Error: unable to start png() device
+```
+
+```r
+plot(density, main = "some title")
+```
+
+```
+## Error: 'expr' did not evaluate to an object of length 'n'
+```
+
+```r
+dev.off()
+```
+
+```
+## pdf 
+##   2
 ```
 
 
@@ -1013,50 +1132,27 @@ cohortYear <- 1984
 
 ```r
 require(rjags)
-```
 
-```
-## Loading required package: rjags
-```
+model <- "Contagion"
 
-```
-## Warning: there is no package called 'rjags'
-```
-
-```r
-
-
-
-if (Sys.info()["nodename"] == "MICKEY") pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA"
-# pathDirectory <-
-# 'F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion'
-if (Sys.info()["nodename"] == "MERKANEZ-PC") pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy"  #Change this directory location
-
+pathDirectory <- file.path(getwd())
 # pathModel <- file.path(pathDirectory,
 # 'ContagionOnly/ContagionGauss.bugs')
 pathModel <- file.path(pathDirectory, "ContagionOnly/ContagionBeta.bugs")
-```
-
-```
-## Error: object 'pathDirectory' not found
-```
-
-```r
 pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
-```
-
-```
-## Error: object 'pathDirectory' not found
-```
-
-```r
 
 
 ds <- read.csv(pathData, stringsAsFactors = FALSE)
 ```
 
 ```
-## Error: object 'pathData' not found
+## Warning: cannot open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/Data/SummaryBirthYearByTime.csv':
+## No such file or directory
+```
+
+```
+## Error: cannot open the connection
 ```
 
 ```r
@@ -1157,7 +1253,7 @@ parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI")
 # 'sigmaG', 'sigmaI') #For Gauss
 
 countChains <- 6  #3 #6
-countIterations <- 1e+05
+countIterations <- 1000  #00
 
 startTime <- Sys.time()
 
@@ -1165,7 +1261,14 @@ jagsModel <- jags.model(file = pathModel, data = jagsData, n.chains = countChain
 ```
 
 ```
-## Error: could not find function "jags.model"
+## Warning: cannot open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs':
+## No such file or directory
+```
+
+```
+## Error: Cannot open model file
+## "C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/ContagionBeta.bugs"
 ```
 
 ```r
@@ -1175,7 +1278,7 @@ dic <- dic.samples(jagsModel, n.iter = countIterations)
 ```
 
 ```
-## Error: could not find function "dic.samples"
+## Error: object 'jagsModel' not found
 ```
 
 ```r
@@ -1194,7 +1297,7 @@ chains <- coda.samples(jagsModel, variable.names = parametersToTrack, n.iter = c
 ```
 
 ```
-## Error: could not find function "coda.samples"
+## Error: object 'jagsModel' not found
 ```
 
 ```r
@@ -1213,7 +1316,7 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ```
 
 ```
-## Error: could not find function "gelman.diag"
+## Error: object 'chains' not found
 ```
 
 ```r
@@ -1221,24 +1324,24 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 ```
 
 ```
-## Error: could not find function "effectiveSize"
+## Error: object 'chains' not found
 ```
 
 ```r
 
-xyplot(chains)  #Needs at least two parameters; else throws an error.
+xyplot <- xyplot(chains)  #Needs at least two parameters; else throws an error.
 ```
 
 ```
-## Error: could not find function "xyplot"
+## Error: object 'chains' not found
 ```
 
 ```r
-densityplot(chains)
+density <- densityplot(chains)
 ```
 
 ```
-## Error: could not find function "densityplot"
+## Error: object 'chains' not found
 ```
 
 ```r
@@ -1247,7 +1350,46 @@ elapsed
 ```
 
 ```
-## Time difference of 0.015 secs
+## Time difference of 0.007 secs
+```
+
+```r
+
+pathOutData <- file.path(pathDirectory, "ContagionOnly/figure")  # where to put images
+modnum <- paste(model, as.character(cohortYear), ".png")
+pathFileOut <- file.path(pathOutData, modnum)
+png(filename = pathFileOut, width = 912, height = 960, units = "px")  # the resolution should be decided based on where to use the graphs
+```
+
+```
+## Warning: Unable to open file
+## 'C:/Users/inspirion/Documents/GitHub/EMOSA/ContagionOnly/ContagionOnly/figure/Contagion
+## 1984 .png' for writing
+```
+
+```
+## Warning: opening device failed
+```
+
+```
+## Error: unable to start png() device
+```
+
+```r
+plot(density, main = "some title")
+```
+
+```
+## Error: 'expr' did not evaluate to an object of length 'n'
+```
+
+```r
+dev.off()
+```
+
+```
+## pdf 
+##   2
 ```
 
 
