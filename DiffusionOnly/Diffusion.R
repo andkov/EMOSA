@@ -6,12 +6,8 @@ require(rjags)
 # require(coda)
 rjags::load.module("dic") # load a few useful modules (JAGS is modular in design): https://sites.google.com/site/autocatalysis/bayesian-methods-using-jags
 
-if( Sys.info()["nodename"] == "MICKEY" ) 
-  pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA"
-  #pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion"
-if( Sys.info()["nodename"] == "MERKANEZ-PC" ) 
-  pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy" #Change this directory location
 
+  pathDirectory <-file.path(getwd()) 
 # pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionGauss.bugs")
 # pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionLogit.bugs")
 pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionBeta.bugs")
