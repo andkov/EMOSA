@@ -6,12 +6,7 @@ require(rjags)
 
 
 
-if( Sys.info()["nodename"] == "MICKEY" ) 
-  pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA"
-  #pathDirectory <- "F:/Users/wibeasley/Documents/Consulting/EmosaMcmc/Dev/EMOSA/OneShot_Only1984Diffusion"
-if( Sys.info()["nodename"] == "MERKANEZ-PC" ) 
-  pathDirectory <- "F:/Users/wibeasley/Documents/SSuccess/InterimStudy" #Change this directory location
-
+pathDirectory <-file.path(getwd()) 
 # pathModel <- file.path(pathDirectory, "ContagionOnly/ContagionGauss.bugs")
 pathModel <- file.path(pathDirectory, "ContagionOnly/ContagionBeta.bugs")
 pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
@@ -41,7 +36,7 @@ parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sumG", "sumI")
 # parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sigmaG", "sigmaI") #For Gauss
 
 countChains <- 6#3 #6
-countIterations <- 100000
+countIterations <- 100#000
 
 startTime <- Sys.time()
 
