@@ -6,19 +6,14 @@ require(rjags)
 # require(coda)
 rjags::load.module("dic") # load a few useful modules (JAGS is modular in design): https://sites.google.com/site/autocatalysis/bayesian-methods-using-jags
 
-
-  pathDirectory <-file.path(getwd()) 
-
 { #This bracket permits the 'else' clause (because it's located on the top layer of the code.)
     if( basename(getwd()) == "EMOSA" ) {#This clause executes when run from the *.R file.
-#       pathDirectoryCode <- file.path(getwd(), "Dal", "GpavSurveyExtractor.R")
-      pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionBeta.bugs")
-      pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
+      pathModel <- file.path(getwd(), "DiffusionOnly/DiffusionBeta.bugs")
+      pathData <- file.path(getwd(), "Data/SummaryBirthYearByTime.csv")
     }
     else if( basename(getwd()) == "DiffusionOnly" ) { #This clause executes when run from the *.Rmd/Rnw file.
-#       pathDirectoryCode <- file.path(dirname(dirname(getwd())), "Dal", "GpavSurveyExtractor.R")
-      pathModel <- file.path(dirname(pathDirectory), "DiffusionOnly/DiffusionBeta.bugs")
-      pathData <- file.path(dirname(pathDirectory), "Data/SummaryBirthYearByTime.csv")      
+      pathModel <- file.path(dirname(getwd()), "DiffusionOnly/DiffusionBeta.bugs")
+      pathData <- file.path(dirname(getwd()), "Data/SummaryBirthYearByTime.csv")      
     }
     else {
       stop(paste0("The working directory '", basename(getwd()),"' was not anticiapted.  If appropriate, please go near the top of the 'OchaReport1.R' code and add this new location."))

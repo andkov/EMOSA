@@ -50,22 +50,16 @@ rjags::load.module("dic")  # load a few useful modules (JAGS is modular in desig
 
 ```r
 
-
-pathDirectory <- file.path(getwd())
-
 {
     #This bracket permits the 'else' clause (because it's located on the top layer of the code.)
     if (basename(getwd()) == "EMOSA") {
         #This clause executes when run from the *.R file.
-        # pathDirectoryCode <- file.path(getwd(), 'Dal', 'GpavSurveyExtractor.R')
-        pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionBeta.bugs")
-        pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
+        pathModel <- file.path(getwd(), "DiffusionOnly/DiffusionBeta.bugs")
+        pathData <- file.path(getwd(), "Data/SummaryBirthYearByTime.csv")
     } else if (basename(getwd()) == "DiffusionOnly") {
         #This clause executes when run from the *.Rmd/Rnw file.
-        # pathDirectoryCode <- file.path(dirname(dirname(getwd())), 'Dal',
-        # 'GpavSurveyExtractor.R')
-        pathModel <- file.path(dirname(pathDirectory), "DiffusionOnly/DiffusionBeta.bugs")
-        pathData <- file.path(dirname(pathDirectory), "Data/SummaryBirthYearByTime.csv")
+        pathModel <- file.path(dirname(getwd()), "DiffusionOnly/DiffusionBeta.bugs")
+        pathData <- file.path(dirname(getwd()), "Data/SummaryBirthYearByTime.csv")
     } else {
         stop(paste0("The working directory '", basename(getwd()), "' was not anticiapted.  If appropriate, please go near the top of the 'OchaReport1.R' code and add this new location."))
     }
@@ -143,9 +137,9 @@ dic
 ```
 
 ```
-## Mean deviance:  -97.7 
-## penalty 7.17 
-## Penalized deviance: -90.5
+## Mean deviance:  -96.7 
+## penalty 8.27 
+## Penalized deviance: -88.4
 ```
 
 ```r
@@ -171,26 +165,26 @@ elapsed <- Sys.time() - startTime
 ##    plus standard error of the mean:
 ## 
 ##          Mean       SD Naive SE Time-series SE
-## Kag     0.203 5.46e-02  0.00223        0.00454
-## Kai     0.116 7.77e-02  0.00317        0.00576
-## Kga     0.483 2.69e-01  0.01100        0.02263
-## Kgi     0.548 1.85e-01  0.00754        0.02340
-## Kia     0.373 2.13e-01  0.00868        0.01498
-## Kig     0.210 7.18e-02  0.00293        0.01575
-## sumG 2096.812 1.08e+03 44.02193       64.14448
-## sumI 1508.384 7.12e+02 29.06857       43.06495
+## Kag  1.30e-01 6.64e-02  0.00271        0.00696
+## Kai  9.54e-02 6.34e-02  0.00259        0.00643
+## Kga  3.89e-01 2.09e-01  0.00853        0.01649
+## Kgi  5.86e-01 2.23e-01  0.00912        0.02035
+## Kia  2.40e-01 1.14e-01  0.00466        0.01313
+## Kig  3.24e-01 9.14e-02  0.00373        0.01303
+## sumG 1.96e+03 1.01e+03 41.12499       61.41710
+## sumI 1.72e+03 8.39e+02 34.23734       50.30133
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%      25%      50%      75%    97.5%
-## Kag  9.87e-02 1.70e-01    0.202    0.236    0.322
-## Kai  1.55e-03 2.98e-02    0.127    0.181    0.245
-## Kga  6.43e-02 2.82e-01    0.410    0.682    0.967
-## Kgi  1.92e-01 3.75e-01    0.579    0.683    0.853
-## Kia  7.67e-02 1.92e-01    0.335    0.534    0.821
-## Kig  2.09e-02 1.87e-01    0.221    0.254    0.324
-## sumG 4.82e+02 1.30e+03 1925.391 2711.102 4627.498
-## sumI 4.20e+02 1.01e+03 1401.795 1943.472 3250.692
+## Kag  6.82e-03 7.92e-02 1.45e-01    0.183    0.239
+## Kai  3.92e-03 4.38e-02 9.13e-02    0.132    0.229
+## Kga  1.19e-01 2.34e-01 3.03e-01    0.573    0.853
+## Kgi  2.78e-01 3.43e-01 5.84e-01    0.776    0.930
+## Kia  4.52e-02 1.36e-01 2.48e-01    0.341    0.426
+## Kig  2.02e-01 2.59e-01 3.00e-01    0.353    0.541
+## sumG 5.14e+02 1.19e+03 1.83e+03 2509.426 4293.170
+## sumI 5.44e+02 1.09e+03 1.55e+03 2176.845 3706.417
 ```
 
 ```r
@@ -203,18 +197,18 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ## Potential scale reduction factors:
 ## 
 ##      Point est. Upper C.I.
-## Kag        3.40       5.55
-## Kai        3.89       6.75
-## Kga        3.89       6.30
-## Kgi        2.83       4.48
-## Kia        4.48       7.39
-## Kig        1.68       2.59
-## sumG       1.05       1.12
-## sumI       1.08       1.19
+## Kag        3.43       5.60
+## Kai        3.15       5.22
+## Kga        3.80       6.49
+## Kgi        4.26       7.67
+## Kia        2.61       4.32
+## Kig        2.84       4.74
+## sumG       1.11       1.26
+## sumI       1.04       1.10
 ## 
 ## Multivariate psrf
 ## 
-## 4.57
+## 4.1
 ```
 
 ```r
@@ -223,7 +217,7 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 
 ```
 ##    Kag    Kai    Kga    Kgi    Kia    Kig   sumG   sumI 
-##  26.55  47.95  18.60  13.62  24.70  19.86 293.58 277.12
+##  18.18  34.68  30.58  25.82  29.66  16.94 259.83 285.22
 ```
 
 ```r
@@ -247,7 +241,7 @@ elapsed
 ```
 
 ```
-## Time difference of 2.304 secs
+## Time difference of 1.915 secs
 ```
 
 
@@ -264,22 +258,16 @@ require(rjags)
 # require(coda)
 rjags::load.module("dic")  # load a few useful modules (JAGS is modular in design): https://sites.google.com/site/autocatalysis/bayesian-methods-using-jags
 
-
-pathDirectory <- file.path(getwd())
-
 {
     #This bracket permits the 'else' clause (because it's located on the top layer of the code.)
     if (basename(getwd()) == "EMOSA") {
         #This clause executes when run from the *.R file.
-        # pathDirectoryCode <- file.path(getwd(), 'Dal', 'GpavSurveyExtractor.R')
-        pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionBeta.bugs")
-        pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
+        pathModel <- file.path(getwd(), "DiffusionOnly/DiffusionBeta.bugs")
+        pathData <- file.path(getwd(), "Data/SummaryBirthYearByTime.csv")
     } else if (basename(getwd()) == "DiffusionOnly") {
         #This clause executes when run from the *.Rmd/Rnw file.
-        # pathDirectoryCode <- file.path(dirname(dirname(getwd())), 'Dal',
-        # 'GpavSurveyExtractor.R')
-        pathModel <- file.path(dirname(pathDirectory), "DiffusionOnly/DiffusionBeta.bugs")
-        pathData <- file.path(dirname(pathDirectory), "Data/SummaryBirthYearByTime.csv")
+        pathModel <- file.path(dirname(getwd()), "DiffusionOnly/DiffusionBeta.bugs")
+        pathData <- file.path(dirname(getwd()), "Data/SummaryBirthYearByTime.csv")
     } else {
         stop(paste0("The working directory '", basename(getwd()), "' was not anticiapted.  If appropriate, please go near the top of the 'OchaReport1.R' code and add this new location."))
     }
@@ -358,8 +346,8 @@ dic
 
 ```
 ## Mean deviance:  -101 
-## penalty 7.17 
-## Penalized deviance: -94.1
+## penalty 6.74 
+## Penalized deviance: -94.6
 ```
 
 ```r
@@ -385,26 +373,26 @@ elapsed <- Sys.time() - startTime
 ##    plus standard error of the mean:
 ## 
 ##          Mean       SD Naive SE Time-series SE
-## Kag  1.38e-01 3.28e-02  0.00134       5.36e-03
-## Kai  5.28e-02 3.27e-02  0.00133       4.83e-03
-## Kga  2.52e-01 1.10e-01  0.00448       9.43e-03
-## Kgi  4.47e-01 8.76e-02  0.00357       1.31e-02
-## Kia  2.13e-01 8.43e-02  0.00344       1.61e-02
-## Kig  2.47e-01 4.34e-02  0.00177       7.12e-03
-## sumG 3.34e+03 1.66e+03 67.77040       1.05e+02
-## sumI 1.97e+03 9.14e+02 37.31368       6.41e+01
+## Kag  1.32e-01 2.46e-02  0.00100       4.34e-03
+## Kai  4.09e-02 3.16e-02  0.00129       4.84e-03
+## Kga  2.83e-01 1.29e-01  0.00525       1.03e-02
+## Kgi  3.13e-01 9.09e-02  0.00371       1.48e-02
+## Kia  1.59e-01 1.05e-01  0.00428       8.98e-03
+## Kig  1.79e-01 8.43e-02  0.00344       1.06e-02
+## sumG 3.30e+03 1.58e+03 64.63333       1.02e+02
+## sumI 1.88e+03 8.27e+02 33.77644       5.48e+01
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%      25%      50%      75%    97.5%
-## Kag  6.69e-02 1.14e-01 1.40e-01 1.65e-01    0.189
-## Kai  6.84e-03 2.83e-02 4.45e-02 7.35e-02    0.125
-## Kga  3.27e-02 2.03e-01 2.66e-01 3.22e-01    0.436
-## Kgi  3.15e-01 3.93e-01 4.30e-01 4.82e-01    0.670
-## Kia  7.03e-02 1.62e-01 2.00e-01 2.38e-01    0.408
-## Kig  1.52e-01 2.20e-01 2.49e-01 2.77e-01    0.328
-## sumG 1.06e+03 2.14e+03 3.04e+03 4.19e+03 7533.544
-## sumI 6.07e+02 1.24e+03 1.84e+03 2.51e+03 3988.165
+## Kag  8.20e-02 1.16e-01 1.33e-01 1.47e-01    0.182
+## Kai  2.20e-03 1.65e-02 3.56e-02 5.91e-02    0.134
+## Kga  1.38e-02 2.18e-01 2.92e-01 3.87e-01    0.478
+## Kgi  1.17e-01 2.79e-01 3.33e-01 3.67e-01    0.470
+## Kia  9.86e-03 6.90e-02 1.48e-01 2.30e-01    0.361
+## Kig  4.91e-02 9.90e-02 1.72e-01 2.42e-01    0.327
+## sumG 1.02e+03 2.15e+03 3.00e+03 4.17e+03 6970.579
+## sumI 6.38e+02 1.25e+03 1.73e+03 2.39e+03 3725.059
 ```
 
 ```r
@@ -417,18 +405,18 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ## Potential scale reduction factors:
 ## 
 ##      Point est. Upper C.I.
-## Kag        1.78       2.66
-## Kai        1.73       2.57
-## Kga        3.06       4.96
-## Kgi        2.21       3.39
-## Kia        1.56       2.34
-## Kig        1.55       2.17
-## sumG       1.08       1.19
-## sumI       1.01       1.03
+## Kag        1.32       1.73
+## Kai        1.53       2.16
+## Kga        3.40       5.43
+## Kgi        2.14       3.85
+## Kia        3.03       5.12
+## Kig        2.88       4.73
+## sumG       1.02       1.05
+## sumI       1.03       1.07
 ## 
 ## Multivariate psrf
 ## 
-## 3.46
+## 3.65
 ```
 
 ```r
@@ -437,7 +425,7 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 
 ```
 ##    Kag    Kai    Kga    Kgi    Kia    Kig   sumG   sumI 
-##  23.22  34.06  35.51  16.67  26.17  28.07 342.77 341.36
+##  26.09  32.28  26.56  32.44  47.48  22.59 342.20 261.93
 ```
 
 ```r
@@ -461,7 +449,7 @@ elapsed
 ```
 
 ```
-## Time difference of 1.896 secs
+## Time difference of 1.913 secs
 ```
 
 
@@ -477,22 +465,16 @@ require(rjags)
 # require(coda)
 rjags::load.module("dic")  # load a few useful modules (JAGS is modular in design): https://sites.google.com/site/autocatalysis/bayesian-methods-using-jags
 
-
-pathDirectory <- file.path(getwd())
-
 {
     #This bracket permits the 'else' clause (because it's located on the top layer of the code.)
     if (basename(getwd()) == "EMOSA") {
         #This clause executes when run from the *.R file.
-        # pathDirectoryCode <- file.path(getwd(), 'Dal', 'GpavSurveyExtractor.R')
-        pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionBeta.bugs")
-        pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
+        pathModel <- file.path(getwd(), "DiffusionOnly/DiffusionBeta.bugs")
+        pathData <- file.path(getwd(), "Data/SummaryBirthYearByTime.csv")
     } else if (basename(getwd()) == "DiffusionOnly") {
         #This clause executes when run from the *.Rmd/Rnw file.
-        # pathDirectoryCode <- file.path(dirname(dirname(getwd())), 'Dal',
-        # 'GpavSurveyExtractor.R')
-        pathModel <- file.path(dirname(pathDirectory), "DiffusionOnly/DiffusionBeta.bugs")
-        pathData <- file.path(dirname(pathDirectory), "Data/SummaryBirthYearByTime.csv")
+        pathModel <- file.path(dirname(getwd()), "DiffusionOnly/DiffusionBeta.bugs")
+        pathData <- file.path(dirname(getwd()), "Data/SummaryBirthYearByTime.csv")
     } else {
         stop(paste0("The working directory '", basename(getwd()), "' was not anticiapted.  If appropriate, please go near the top of the 'OchaReport1.R' code and add this new location."))
     }
@@ -570,9 +552,9 @@ dic
 ```
 
 ```
-## Mean deviance:  -92.8 
-## penalty 6.91 
-## Penalized deviance: -85.9
+## Mean deviance:  -93.5 
+## penalty 6.56 
+## Penalized deviance: -87
 ```
 
 ```r
@@ -598,26 +580,26 @@ elapsed <- Sys.time() - startTime
 ##    plus standard error of the mean:
 ## 
 ##          Mean       SD Naive SE Time-series SE
-## Kag  6.23e-02 4.34e-02  0.00177        0.00594
-## Kai  5.24e-02 2.91e-02  0.00119        0.00324
-## Kga  2.00e-01 1.17e-01  0.00477        0.01374
-## Kgi  7.32e-01 1.14e-01  0.00467        0.00940
-## Kia  1.29e-01 7.93e-02  0.00324        0.01016
-## Kig  5.78e-01 1.16e-01  0.00473        0.01069
-## sumG 7.82e+02 4.43e+02 18.08437       42.28144
-## sumI 2.63e+03 1.32e+03 54.00885       81.14247
+## Kag  8.95e-02 4.20e-02 1.71e-03        0.00508
+## Kai  3.99e-02 2.31e-02 9.43e-04        0.00489
+## Kga  1.69e-01 1.04e-01 4.26e-03        0.02251
+## Kgi  6.53e-01 1.18e-01 4.82e-03        0.01481
+## Kia  1.86e-01 1.11e-01 4.51e-03        0.00829
+## Kig  4.35e-01 1.57e-01 6.40e-03        0.00904
+## sumG 7.63e+02 3.63e+02 1.48e+01       23.16124
+## sumI 2.88e+03 1.35e+03 5.53e+01       90.13211
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%      25%      50%      75%    97.5%
-## Kag  2.07e-03 2.59e-02 5.77e-02 8.81e-02    0.163
-## Kai  3.04e-03 2.89e-02 5.53e-02 7.27e-02    0.107
-## Kga  1.53e-02 1.12e-01 1.91e-01 2.75e-01    0.455
-## Kgi  5.73e-01 6.27e-01 7.17e-01 8.42e-01    0.938
-## Kia  4.11e-03 6.65e-02 1.26e-01 1.91e-01    0.293
-## Kig  3.15e-01 4.74e-01 6.06e-01 6.66e-01    0.743
-## sumG 2.32e+02 5.03e+02 6.89e+02 9.42e+02 1889.459
-## sumI 8.01e+02 1.64e+03 2.39e+03 3.37e+03 5706.037
+## Kag  1.33e-02 5.60e-02 9.28e-02 1.23e-01 1.61e-01
+## Kai  3.09e-03 2.05e-02 3.92e-02 5.47e-02 9.44e-02
+## Kga  1.38e-02 8.02e-02 1.57e-01 2.47e-01 3.99e-01
+## Kgi  4.57e-01 5.60e-01 6.29e-01 7.13e-01 9.18e-01
+## Kia  3.85e-02 1.10e-01 1.64e-01 2.14e-01 4.29e-01
+## Kig  1.33e-01 3.73e-01 4.33e-01 5.63e-01 6.75e-01
+## sumG 2.51e+02 5.02e+02 6.82e+02 9.58e+02 1.68e+03
+## sumI 8.91e+02 1.88e+03 2.67e+03 3.66e+03 5.94e+03
 ```
 
 ```r
@@ -630,18 +612,18 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ## Potential scale reduction factors:
 ## 
 ##      Point est. Upper C.I.
-## Kag        1.83       2.67
-## Kai        1.84       2.77
-## Kga        1.98       2.96
-## Kgi        3.54       5.88
-## Kia        2.15       3.28
-## Kig        3.88       6.45
-## sumG       1.06       1.10
-## sumI       1.08       1.18
+## Kag        1.82       2.71
+## Kai        1.14       1.33
+## Kga        1.30       1.74
+## Kgi        2.73       4.33
+## Kia        3.69       5.89
+## Kig        4.97       8.60
+## sumG       1.02       1.06
+## sumI       1.05       1.12
 ## 
 ## Multivariate psrf
 ## 
-## 3.71
+## 4.86
 ```
 
 ```r
@@ -650,7 +632,7 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 
 ```
 ##    Kag    Kai    Kga    Kgi    Kia    Kig   sumG   sumI 
-##  33.10  38.14  37.92  27.75  28.57  25.93 319.43 328.69
+##  45.31  20.85  26.60  21.73  32.04  28.25 260.13 247.40
 ```
 
 ```r
@@ -674,7 +656,7 @@ elapsed
 ```
 
 ```
-## Time difference of 2.386 secs
+## Time difference of 1.953 secs
 ```
 
 
@@ -690,22 +672,16 @@ require(rjags)
 # require(coda)
 rjags::load.module("dic")  # load a few useful modules (JAGS is modular in design): https://sites.google.com/site/autocatalysis/bayesian-methods-using-jags
 
-
-pathDirectory <- file.path(getwd())
-
 {
     #This bracket permits the 'else' clause (because it's located on the top layer of the code.)
     if (basename(getwd()) == "EMOSA") {
         #This clause executes when run from the *.R file.
-        # pathDirectoryCode <- file.path(getwd(), 'Dal', 'GpavSurveyExtractor.R')
-        pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionBeta.bugs")
-        pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
+        pathModel <- file.path(getwd(), "DiffusionOnly/DiffusionBeta.bugs")
+        pathData <- file.path(getwd(), "Data/SummaryBirthYearByTime.csv")
     } else if (basename(getwd()) == "DiffusionOnly") {
         #This clause executes when run from the *.Rmd/Rnw file.
-        # pathDirectoryCode <- file.path(dirname(dirname(getwd())), 'Dal',
-        # 'GpavSurveyExtractor.R')
-        pathModel <- file.path(dirname(pathDirectory), "DiffusionOnly/DiffusionBeta.bugs")
-        pathData <- file.path(dirname(pathDirectory), "Data/SummaryBirthYearByTime.csv")
+        pathModel <- file.path(dirname(getwd()), "DiffusionOnly/DiffusionBeta.bugs")
+        pathData <- file.path(dirname(getwd()), "Data/SummaryBirthYearByTime.csv")
     } else {
         stop(paste0("The working directory '", basename(getwd()), "' was not anticiapted.  If appropriate, please go near the top of the 'OchaReport1.R' code and add this new location."))
     }
@@ -783,9 +759,9 @@ dic
 ```
 
 ```
-## Mean deviance:  -106 
-## penalty 8.24 
-## Penalized deviance: -98
+## Mean deviance:  -107 
+## penalty 7.57 
+## Penalized deviance: -99
 ```
 
 ```r
@@ -811,26 +787,26 @@ elapsed <- Sys.time() - startTime
 ##    plus standard error of the mean:
 ## 
 ##          Mean       SD Naive SE Time-series SE
-## Kag  7.19e-02 1.74e-02 7.08e-04       1.61e-03
-## Kai  9.31e-02 4.73e-02 1.93e-03       1.22e-02
-## Kga  5.22e-02 5.05e-02 2.06e-03       4.77e-03
-## Kgi  3.17e-01 4.16e-02 1.70e-03       5.26e-03
-## Kia  3.67e-01 1.11e-01 4.52e-03       2.00e-02
-## Kig  8.56e-02 4.97e-02 2.03e-03       4.23e-03
-## sumG 9.27e+03 4.96e+03 2.02e+02       3.69e+02
-## sumI 1.14e+03 5.63e+02 2.30e+01       3.49e+01
+## Kag  7.71e-02 1.48e-02 6.05e-04       1.61e-03
+## Kai  1.01e-01 6.13e-02 2.50e-03       1.19e-02
+## Kga  8.43e-02 5.46e-02 2.23e-03       6.95e-03
+## Kgi  2.87e-01 6.09e-02 2.49e-03       9.18e-03
+## Kia  3.66e-01 1.13e-01 4.63e-03       2.15e-02
+## Kig  7.68e-02 3.75e-02 1.53e-03       5.07e-03
+## sumG 1.05e+04 4.96e+03 2.03e+02       3.47e+02
+## sumI 9.18e+02 4.55e+02 1.86e+01       3.26e+01
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%      25%      50%      75%    97.5%
-## Kag  2.59e-02 6.51e-02 7.44e-02 8.30e-02 9.84e-02
-## Kai  1.52e-02 5.62e-02 9.09e-02 1.29e-01 1.87e-01
-## Kga  1.61e-03 1.53e-02 3.48e-02 6.62e-02 1.70e-01
-## Kgi  2.23e-01 2.90e-01 3.27e-01 3.49e-01 3.79e-01
-## Kia  1.03e-01 2.99e-01 3.70e-01 4.34e-01 5.61e-01
-## Kig  1.48e-02 4.64e-02 8.24e-02 1.05e-01 2.14e-01
-## sumG 2.36e+03 5.50e+03 8.23e+03 1.25e+04 2.12e+04
-## sumI 3.22e+02 7.31e+02 1.06e+03 1.46e+03 2.46e+03
+## Kag  5.07e-02 6.75e-02 7.72e-02 8.43e-02 1.07e-01
+## Kai  7.40e-03 5.30e-02 9.28e-02 1.47e-01 2.31e-01
+## Kga  3.67e-03 4.19e-02 7.54e-02 1.21e-01 1.91e-01
+## Kgi  1.54e-01 2.46e-01 2.97e-01 3.32e-01 3.83e-01
+## Kia  1.76e-01 2.70e-01 3.63e-01 4.58e-01 5.64e-01
+## Kig  6.07e-03 5.63e-02 7.33e-02 1.04e-01 1.45e-01
+## sumG 3.25e+03 6.68e+03 9.66e+03 1.33e+04 2.20e+04
+## sumI 2.91e+02 5.72e+02 8.30e+02 1.18e+03 1.95e+03
 ```
 
 ```r
@@ -843,18 +819,18 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ## Potential scale reduction factors:
 ## 
 ##      Point est. Upper C.I.
-## Kag        2.33       3.89
-## Kai        1.14       1.34
-## Kga        2.80       4.50
-## Kgi        2.00       3.00
-## Kia        1.57       2.21
-## Kig        3.17       5.67
-## sumG       1.05       1.13
-## sumI       1.04       1.09
+## Kag        2.20       3.40
+## Kai        1.47       2.07
+## Kga        2.62       4.33
+## Kgi        2.30       3.61
+## Kia        1.31       1.73
+## Kig        2.27       3.88
+## sumG       1.06       1.15
+## sumI       1.08       1.19
 ## 
 ## Multivariate psrf
 ## 
-## 3.63
+## 2.56
 ```
 
 ```r
@@ -863,7 +839,7 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 
 ```
 ##    Kag    Kai    Kga    Kgi    Kia    Kig   sumG   sumI 
-##  46.01  18.74  32.66  31.14  26.18  50.69 228.89 256.82
+##  39.13  23.60  20.91  17.44  21.67  28.90 204.43 440.75
 ```
 
 ```r
@@ -887,7 +863,7 @@ elapsed
 ```
 
 ```
-## Time difference of 1.919 secs
+## Time difference of 1.874 secs
 ```
 
 
@@ -904,22 +880,16 @@ require(rjags)
 # require(coda)
 rjags::load.module("dic")  # load a few useful modules (JAGS is modular in design): https://sites.google.com/site/autocatalysis/bayesian-methods-using-jags
 
-
-pathDirectory <- file.path(getwd())
-
 {
     #This bracket permits the 'else' clause (because it's located on the top layer of the code.)
     if (basename(getwd()) == "EMOSA") {
         #This clause executes when run from the *.R file.
-        # pathDirectoryCode <- file.path(getwd(), 'Dal', 'GpavSurveyExtractor.R')
-        pathModel <- file.path(pathDirectory, "DiffusionOnly/DiffusionBeta.bugs")
-        pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
+        pathModel <- file.path(getwd(), "DiffusionOnly/DiffusionBeta.bugs")
+        pathData <- file.path(getwd(), "Data/SummaryBirthYearByTime.csv")
     } else if (basename(getwd()) == "DiffusionOnly") {
         #This clause executes when run from the *.Rmd/Rnw file.
-        # pathDirectoryCode <- file.path(dirname(dirname(getwd())), 'Dal',
-        # 'GpavSurveyExtractor.R')
-        pathModel <- file.path(dirname(pathDirectory), "DiffusionOnly/DiffusionBeta.bugs")
-        pathData <- file.path(dirname(pathDirectory), "Data/SummaryBirthYearByTime.csv")
+        pathModel <- file.path(dirname(getwd()), "DiffusionOnly/DiffusionBeta.bugs")
+        pathData <- file.path(dirname(getwd()), "Data/SummaryBirthYearByTime.csv")
     } else {
         stop(paste0("The working directory '", basename(getwd()), "' was not anticiapted.  If appropriate, please go near the top of the 'OchaReport1.R' code and add this new location."))
     }
@@ -997,9 +967,9 @@ dic
 ```
 
 ```
-## Mean deviance:  -83.4 
-## penalty 7.49 
-## Penalized deviance: -75.9
+## Mean deviance:  -83.9 
+## penalty 7.34 
+## Penalized deviance: -76.6
 ```
 
 ```r
@@ -1025,26 +995,26 @@ elapsed <- Sys.time() - startTime
 ##    plus standard error of the mean:
 ## 
 ##          Mean       SD Naive SE Time-series SE
-## Kag    0.0414   0.0229 9.33e-04        0.00273
-## Kai    0.0816   0.0457 1.87e-03        0.00563
-## Kga    0.0964   0.0596 2.43e-03        0.01136
-## Kgi    0.2158   0.0472 1.93e-03        0.00865
-## Kia    0.2600   0.1005 4.10e-03        0.01569
-## Kig    0.0850   0.0623 2.54e-03        0.01049
-## sumG 945.7184 472.5041 1.93e+01       31.14998
-## sumI 726.3369 368.6794 1.51e+01       27.19234
+## Kag  4.76e-02   0.0216 8.82e-04        0.00311
+## Kai  6.38e-02   0.0397 1.62e-03        0.00661
+## Kga  9.14e-02   0.0565 2.31e-03        0.00557
+## Kgi  2.09e-01   0.0527 2.15e-03        0.00656
+## Kia  2.41e-01   0.0885 3.61e-03        0.01210
+## Kig  6.17e-02   0.0477 1.95e-03        0.00646
+## sumG 1.03e+03 480.9211 1.96e+01       29.87578
+## sumI 6.80e+02 307.8533 1.26e+01       18.27033
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##          2.5%      25%      50%      75%    97.5%
-## Kag  3.23e-03   0.0249   0.0413 5.57e-02 9.32e-02
-## Kai  8.93e-03   0.0444   0.0790 1.10e-01 1.85e-01
-## Kga  6.56e-03   0.0504   0.0919 1.34e-01 2.26e-01
-## Kgi  1.22e-01   0.1845   0.2181 2.48e-01 3.03e-01
-## Kia  7.85e-02   0.1845   0.2522 3.26e-01 4.70e-01
-## Kig  2.18e-03   0.0310   0.0741 1.25e-01 2.13e-01
-## sumG 2.72e+02 626.9900 845.6184 1.20e+03 2.25e+03
-## sumI 1.78e+02 474.4458 671.6071 8.96e+02 1.57e+03
+## Kag  5.30e-03   0.0335   0.0484 6.30e-02    0.092
+## Kai  3.48e-03   0.0329   0.0600 9.04e-02    0.150
+## Kga  4.64e-03   0.0451   0.0868 1.29e-01    0.207
+## Kgi  1.04e-01   0.1760   0.2089 2.49e-01    0.308
+## Kia  8.14e-02   0.1822   0.2373 2.92e-01    0.434
+## Kig  2.61e-03   0.0243   0.0479 9.21e-02    0.174
+## sumG 2.99e+02 644.8013 956.6461 1.36e+03 2083.150
+## sumI 2.07e+02 458.3689 631.4558 8.69e+02 1414.697
 ```
 
 ```r
@@ -1057,18 +1027,18 @@ gelman.diag(chains, autoburnin = FALSE)  #This is R-hat; the burnin period is ma
 ## Potential scale reduction factors:
 ## 
 ##      Point est. Upper C.I.
-## Kag        1.29       1.66
-## Kai        1.70       2.45
-## Kga        1.14       1.34
-## Kgi        1.08       1.19
-## Kia        1.46       1.97
-## Kig        1.71       2.66
-## sumG       1.06       1.16
-## sumI       1.08       1.17
+## Kag        1.19       1.46
+## Kai        1.19       1.45
+## Kga        1.51       2.12
+## Kgi        1.50       2.07
+## Kia        1.35       1.79
+## Kig        1.47       2.00
+## sumG       1.06       1.14
+## sumI       1.02       1.05
 ## 
 ## Multivariate psrf
 ## 
-## 1.68
+## 1.54
 ```
 
 ```r
@@ -1077,7 +1047,7 @@ effectiveSize(chains)  #Sample size adjusted for autocorrelation
 
 ```
 ##    Kag    Kai    Kga    Kgi    Kia    Kig   sumG   sumI 
-##  56.65  40.01  40.12  35.26  27.78  28.91 281.09 252.94
+##  77.19  36.40  83.93  48.27  37.66  48.54 276.47 295.45
 ```
 
 ```r
@@ -1101,6 +1071,6 @@ elapsed
 ```
 
 ```
-## Time difference of 2.039 secs
+## Time difference of 1.984 secs
 ```
 
