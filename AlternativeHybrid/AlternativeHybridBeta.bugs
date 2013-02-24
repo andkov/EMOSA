@@ -1,19 +1,17 @@
 model {
 	for( i in 1:(timeCount-1) ) {
 		pgHat[i+1] <- pg[i] 
-			+ (Tig  * pg[i]) 
-			+ (Tag  * pg[i]) 
-			- (Tgi * pi[i]) 
-			- (Tga * pa[i])
+			+ (Tig * pow(pi[i],1-cig) * pow(pg[i], cig)) 
+			+ (Tag * pow(pa[i],1-cag) * pow(pg[i], cag)) 
+			- (Tgi * pow(pg[i],1-cgi) * pow(pi[i], cgi)) 
+			- (Tga * pow(pg[i],1-cga) * pow(pa[i], cga))
 		
 		piHat[i+1] <- pi[i] 
-			+ (Tgi  * pi[i]) 
-			+ (Tai  * pi[i]) 
-			- (Tig  * pg[i]) 
-			- (Tia  * pa[i])
+			+ (Tgi * pow(pg[i],1-cgi) * pow(pi[i], cgi)) 
+			+ (Tai * pow(pi[i],1-cai) * pow(pa[i], cai)) 
+			- (Tig * pow(pi[i],1-cig) * pow(pg[i], cig))  
+			- (Tia * pow(pi[i],1-cia) * pow(pa[i], cia))				
 		
-		
-#		paHat[i+1] <- pa[i] + (Tga * pg[i] * pa[i]) + (Tia * pi[i] * pa[i]) - (Tag * pa[i] * pg[i]) - (Tai * pa[i] * pi[i])
 		paHat[i+1] <- 1 - pgHat[i+1] - piHat[i+1]
 		
 		pgAlpha[i+1] <- pgHat[i+1] * sumG
@@ -23,32 +21,30 @@ model {
 		piAlpha[i+1] <- piHat[i+1] * sumI
 		piBeta[i+1] <- (1 - piHat[i+1]) * sumI
 		pi[i+1] ~ dbeta(piAlpha[i+1], piBeta[i+1])
-		
-#		paAlpha[i+1] <- paHat[i+1] * sumA
-#		paBeta[i+1] <- (1 - paHat[i+1]) * sumA
-#		pa[i+1] ~ dbeta(paAlpha[i+1], paBeta[i+1])
-						
 	}
 
 	sumG ~ dunif(0, 100000)
 	sumI ~ dunif(0, 100000)
 #	sumA ~ dunif(0, 100000)
-	
-	#precG <- pow(sigmaG, -2)
-	#precI <- pow(sigmaI, -2)
-	#precA <- pow(sigmaA, -2)
-
-	#sigmaG ~ dunif(0, 1000)
-	#sigmaI ~ dunif(0, 1000)
-	#sigmaA ~ dunif(0, 1000)
 		
 	alpha <- 1
 	beta <- 1
+	
+	cig ~ dbeta(alpha, beta)
+	cag ~ dbeta(alpha, beta)
+	cgi ~ dbeta(alpha, beta)
+	cga ~ dbeta(alpha, beta)
+	cai ~ dbeta(alpha, beta)
+	cia ~ dbeta(alpha, beta)
+	
 	Tgi ~ dbeta(alpha, beta)
 	Tga ~ dbeta(alpha, beta)	
 	Tig ~ dbeta(alpha, beta)
 	Tia ~ dbeta(alpha, beta)
 	Tag ~ dbeta(alpha, beta)
 	Tai ~ dbeta(alpha, beta)
+
+
+	
 }	
 	

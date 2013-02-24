@@ -56,7 +56,7 @@ parametersToTrackWithDic <- c("pD", parametersToTrack) #Must first execute 'rjag
 # inits <- function(){ list(Kgi=rnorm(1), Kga=rnorm(1), Kig=rnorm(1), Kia=rnorm(1), Kag=rnorm(1), Kai=rnorm(1)) }
 
 countChains <- 6#3 #6
-countIterations <- 100#000
+countIterations <- 100000
 
 startTime <- Sys.time()
 

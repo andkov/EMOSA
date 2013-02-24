@@ -1,17 +1,17 @@
 <!-- Specify the report's official name, goal & description. -->
-# Diffusion results
+# Hybrid results
 **Report Goal**:  Provide a minimalistic report prototype for future reports.
 **Report Description**: This is a prototype of a simple report.  It should represent the one side of the spectrum of MIECHV automated reports..
 
 <!-- Point knitr to the underlying code file so it knows where to look for the chunks. -->
 ```{r, echo=FALSE}
-pathSourceCode <- file.path(getwd(), "Diffusion.R")
+pathSourceCode <- file.path(getwd(), "AdditiveContagion.R")
 #This allows knitr to call chunks tagged in the underlying PrototypeCode.R file.
 read_chunk(pathSourceCode) 
 ```
 
 ### Cohort: 1980
-Additive Contagion
+Andrey -write something here.
 ```{r}
 cohortYear <- 1980
 ```
@@ -47,3 +47,4 @@ cohortYear <- 1984
 ```
 ```{r GoDogGo, fig.keep='all', fig.path='figure/Cohort1984'}
 ```
+
