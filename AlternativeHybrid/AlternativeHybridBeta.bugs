@@ -8,7 +8,7 @@ model {
 		
 		piHat[i+1] <- pi[i] 
 			+ (Tgi * pow(pg[i],1-cgi) * pow(pi[i], cgi)) 
-			+ (Tai * pow(pi[i],1-cai) * pow(pa[i], cai)) 
+			+ (Tai * pow(pa[i],1-cai) * pow(pi[i], cai)) 
 			- (Tig * pow(pi[i],1-cig) * pow(pg[i], cig))  
 			- (Tia * pow(pi[i],1-cia) * pow(pa[i], cia))				
 		

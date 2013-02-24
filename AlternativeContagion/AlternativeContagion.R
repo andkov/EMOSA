@@ -55,7 +55,6 @@ jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount)
 
 
 parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", 
-                       "cgi", "cga", "cig", "cia", "cag", "cai",
                        "sumG", "sumI"
                        # parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", 
                        #                        "Cgi", "Cga", "Cig", "Cia", "Cag", "Cai",                       
@@ -67,7 +66,7 @@ parametersToTrackWithDic <- c("pD", parametersToTrack) #Must first execute 'rjag
 # inits <- function(){ list(Kgi=rnorm(1), Kga=rnorm(1), Kig=rnorm(1), Kia=rnorm(1), Kag=rnorm(1), Kai=rnorm(1)) }
 
 countChains <- 6#3 #6
-countIterations <- 100000#00
+countIterations <- 1000#00#00
 
 startTime <- Sys.time()
 

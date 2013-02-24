@@ -1,8 +1,18 @@
 model {
 	for( i in 1:(timeCount-1) ) {
-		pgHat[i+1] <- pg[i] + (Kig * pi[i]) + (Kag*pa[i]) - (Kgi*pg[i]) - (Kga*pg[i])
-		piHat[i+1] <- pi[i] + (Kgi * pg[i]) + (Kai*pa[i]) - (Kig*pi[i]) - (Kia*pi[i])
-#		paHat[i+1] <- pa[i] + (Kga * pg[i]) + (Kia*pi[i]) - (Kag*pa[i]) - (Kai*pa[i])
+		pgHat[i+1] <- pg[i] 
+			+ (Kig * pi[i]) 
+			+ (Kag * pa[i]) 
+			- (Kgi * pg[i]) 
+			- (Kga * pg[i])
+	
+		piHat[i+1] <- pi[i] 
+			+ (Kgi * pg[i]) 
+			+ (Kai * pa[i]) 
+			- (Kig * pi[i]) 
+			- (Kia * pi[i])
+		
+#		paHat[i+1] <- pa[i] + (Kga * pg[i]) + (Kia * pi[i]) - (Kag * pa[i]) - (Kai * pa[i])
 #		paHat[i+1] <- 1 - pgHat[i+1] - piHat[i+1]
 		
 #		pg[i+1] ~ dnorm(pgHat[i+1], precG)
