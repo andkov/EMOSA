@@ -1,16 +1,16 @@
 model {
 	for( i in 1:(timeCount-1) ) {
 		pgHat[i+1] <- pg[i] 
-			+ (Tig  * pg[i]) 
-			+ (Tag  * pg[i]) 
-			- (Tgi * pi[i]) 
-			- (Tga * pa[i])
-		
+			+ (Tig * pi[i] * pg[i]) 
+			+ (Tag * pa[i] * pg[i]) 
+			- (Tgi * pg[i] * pi[i]) 
+			- (Tga * pg[i] * pa[i])
+
 		piHat[i+1] <- pi[i] 
-			+ (Tgi  * pi[i]) 
-			+ (Tai  * pi[i]) 
-			- (Tig  * pg[i]) 
-			- (Tia  * pa[i])
+			+ (Tgi * pg[i] * pi[i]) 
+			+ (Tai * pa[i] * pi[i]) 
+			- (Tig * pi[i] * pg[i]) 
+			- (Tia * pi[i] * pa[i])
 		
 		
 #		paHat[i+1] <- pa[i] + (Tga * pg[i] * pa[i]) + (Tia * pi[i] * pa[i]) - (Tag * pa[i] * pg[i]) - (Tai * pa[i] * pi[i])
