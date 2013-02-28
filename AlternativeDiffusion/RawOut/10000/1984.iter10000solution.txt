@@ -1,0 +1,57 @@
+[1] "Gauss"
+[1] "AlternativeDiffusion"
+[1] 10000
+[1] 1984
+Mean deviance:  -78.5 
+penalty 10.69 
+Penalized deviance: -67.81 
+
+Iterations = 11001:21000
+Thinning interval = 1 
+Number of chains = 6 
+Sample size per chain = 10000 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+          Mean       SD  Naive SE Time-series SE
+Kag    0.04876 0.029984 1.224e-04      0.0004542
+Kai    0.11176 0.076701 3.131e-04      0.0023945
+Kga    0.11640 0.082857 3.383e-04      0.0018636
+Kgi    0.20612 0.077635 3.169e-04      0.0018420
+Kia    0.31219 0.173805 7.096e-04      0.0060664
+Kig    0.08121 0.064486 2.633e-04      0.0014239
+sigmaG 0.02145 0.009317 3.804e-05      0.0001138
+sigmaI 0.02645 0.010770 4.397e-05      0.0001360
+
+2. Quantiles for each variable:
+
+           2.5%     25%     50%     75%   97.5%
+Kag    0.003214 0.02610 0.04603 0.06709 0.11497
+Kai    0.006759 0.05311 0.09890 0.15477 0.29254
+Kga    0.005639 0.05068 0.10255 0.16666 0.30536
+Kgi    0.044846 0.15554 0.21008 0.25843 0.35155
+Kia    0.035611 0.18239 0.29115 0.41971 0.70514
+Kig    0.002771 0.02997 0.06665 0.11822 0.23531
+sigmaG 0.010988 0.01554 0.01927 0.02478 0.04436
+sigmaI 0.013762 0.01929 0.02394 0.03059 0.05412
+
+Potential scale reduction factors:
+
+       Point est. Upper C.I.
+Kag             1       1.00
+Kai             1       1.00
+Kga             1       1.00
+Kgi             1       1.00
+Kia             1       1.00
+Kig             1       1.01
+sigmaG          1       1.00
+sigmaI          1       1.00
+
+Multivariate psrf
+
+1
+      Kag       Kai       Kga       Kgi       Kia       Kig 
+4485.6470 1048.7164 2032.0127 1779.8542  834.5167 2096.9205 
+   sigmaG    sigmaI 
+7443.1732 6634.2871 

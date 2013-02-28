@@ -12,7 +12,7 @@ model {
 			- (Tig * pg[i]) 
 			- (Tia * pa[i])
 		
-		paHat[i+1] <- 1 - pgHat[i+1] - piHat[i+1]
+#		paHat[i+1] <- 1 - pgHat[i+1] - piHat[i+1]
 		
 		pgAlpha[i+1] <- pgHat[i+1] * sumG
 		pgBeta[i+1] <- (1 - pgHat[i+1]) * sumG

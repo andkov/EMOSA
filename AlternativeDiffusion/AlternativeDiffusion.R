@@ -7,21 +7,21 @@ require(rjags)
 # require(coda)
 rjags::load.module("dic") # load a few useful modules (JAGS is modular in design): https://sites.google.com/site/autocatalysis/bayesian-methods-using-jags
 
-model<-"AlternativeContagion"
+model<-"AlternativeDiffusion"
 distribution<-"Gauss"
 
 pathDirectory <- file.path(getwd())
-# pathModel <- file.path(pathDirectory, paste(model),"AlternativeContagionBeta.bugs")
+# pathModel <- file.path(pathDirectory, paste(model),"AlternativeDiffusionBeta.bugs")
 # pathData <- file.path(pathDirectory, "Data/SummaryBirthYearByTime.csv")
-# pathOutChains <- file.path(pathDirectory, paste0("Data/ChainsHybrid", cohortYear, ".csv"))
+# pathOutChains <- file.path(pathDirectory, paste0("Data/ChainsDiffusion", cohortYear, ".csv"))
 
 { #This bracket permits the 'else' clause (because it's located on the top layer of the code.)
   if( basename(getwd()) == "EMOSA" ) {#This clause executes when run from the *.R file.
-    pathModel <- file.path(getwd(),paste(model),"AlternativeContagionGauss.bugs")
+    pathModel <- file.path(getwd(),paste(model),"AlternativeDiffusionGauss.bugs")
     pathData <- file.path(getwd(), "Data/SummaryBirthYearByTime.csv")
   }
   else if( basename(getwd()) == paste(model) ) { #This clause executes when run from the *.Rmd/Rnw file.
-    pathModel <- file.path(dirname(getwd()), paste(model), "AlternativeContagionGauss.bugs")
+    pathModel <- file.path(dirname(getwd()), paste(model), "AlternativeDiffusionGauss.bugs")
     pathData <- file.path(dirname(getwd()), "Data/SummaryBirthYearByTime.csv")      
   }
   else {
@@ -56,14 +56,14 @@ jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount)
 
 
 #parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai","sumG", "sumI") ) #For Beta
-parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sigmaG", "sigmaI") #For Gauss
+parametersToTrack <- c("Kgi", "Kga", "Kig", "Kia", "Kag", "Kai", "sigmaG", "sigmaI") #For Gauss
 
 #parametersToTrackWithDic <- c("pD", "deviance", parametersToTrack) #Must first execute 'rjags::load.module("dic")'
 parametersToTrackWithDic <- c("pD", parametersToTrack) #Must first execute 'rjags::load.module("dic")'
 # inits <- function(){ list(Kgi=rnorm(1), Kga=rnorm(1), Kig=rnorm(1), Kia=rnorm(1), Kag=rnorm(1), Kai=rnorm(1)) }
 
 countChains <- 6#3 #6
-countIterations <- 100000#00#00
+countIterations <- 100000
 
 startTime <- Sys.time()
 
@@ -136,7 +136,7 @@ rhat
 effSize
 sink()
 # THis file to be read and processed by "examining the results of the Alternative Hibrid from WINBUGS.xlsx"  
-# located in the same folder "GitHub/EMOSA/AlternativeHybrid"
+# located in the same folder "GitHub/EMOSA/AlternativeDiffusion"
 
 
 

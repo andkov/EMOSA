@@ -8,6 +8,7 @@ require(rjags)
 rjags::load.module("dic") # load a few useful modules (JAGS is modular in design): https://sites.google.com/site/autocatalysis/bayesian-methods-using-jags
 
 model<-"AlternativeHybrid"
+distribution<-"Gauss"
 
 pathDirectory <- file.path(getwd())
 # pathModel <- file.path(pathDirectory, paste(model),"AlternativeHybridBeta.bugs")
@@ -16,11 +17,11 @@ pathDirectory <- file.path(getwd())
 
 { #This bracket permits the 'else' clause (because it's located on the top layer of the code.)
   if( basename(getwd()) == "EMOSA" ) {#This clause executes when run from the *.R file.
-    pathModel <- file.path(getwd(),paste(model),"AlternativeHybridBeta.bugs")
+    pathModel <- file.path(getwd(),paste(model),"AlternativeHybridGauss.bugs")
     pathData <- file.path(getwd(), "Data/SummaryBirthYearByTime.csv")
   }
   else if( basename(getwd()) == paste(model) ) { #This clause executes when run from the *.Rmd/Rnw file.
-    pathModel <- file.path(dirname(getwd()), paste(model), "AlternativeHybridBeta.bugs")
+    pathModel <- file.path(dirname(getwd()), paste(model), "AlternativeHybridGauss.bugs")
     pathData <- file.path(dirname(getwd()), "Data/SummaryBirthYearByTime.csv")      
   }
   else {
@@ -54,20 +55,20 @@ mean(c(pg, pi, pa))
 jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount)
 
 
+# parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", 
+#                        "cgi", "cga", "cig", "cia", "cag", "cai",
+#                        "sumG", "sumI") #For Beta
+
 parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", 
                        "cgi", "cga", "cig", "cia", "cag", "cai",
-                       "sumG", "sumI"
-                       # parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", 
-                       #                        "Cgi", "Cga", "Cig", "Cia", "Cag", "Cai",                       
-                       #                        "sumG", "sumI"
-) #For Beta
-# parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", "sigmaG", "sigmaI") #For Gauss
+                       "sigmaG", "sigmaI") #For Beta
+
 #parametersToTrackWithDic <- c("pD", "deviance", parametersToTrack) #Must first execute 'rjags::load.module("dic")'
 parametersToTrackWithDic <- c("pD", parametersToTrack) #Must first execute 'rjags::load.module("dic")'
 # inits <- function(){ list(Kgi=rnorm(1), Kga=rnorm(1), Kig=rnorm(1), Kia=rnorm(1), Kag=rnorm(1), Kai=rnorm(1)) }
 
 countChains <- 6#3 #6
-countIterations <- 1000#00
+countIterations <- 100000
 
 startTime <- Sys.time()
 
@@ -93,8 +94,8 @@ elapsed  <- Sys.time() - startTime
 # head(chains, 20)
 
 # windows() # dev.off()
-rhat<-gelman.diag(chains, autoburnin=FALSE) #This is R-hat; the burnin period is manually specified above, so turn off the auto argument. 
-effSize<-effectiveSize(chains) #Sample size adjusted for autocorrelation
+(rhat<-gelman.diag(chains, autoburnin=FALSE)) #This is R-hat; the burnin period is manually specified above, so turn off the auto argument. 
+(effSize<-effectiveSize(chains)) #Sample size adjusted for autocorrelation
 xyplot<-xyplot(chains) #Needs at least two parameters; else throws an error.
 density<-densityplot(chains)
 
@@ -128,8 +129,9 @@ dev.off()
 
 
 
-fileSink<-file.path(pathDirectory,paste(model),"RawOut",paste0(cohortYear,countIterations,"solution.txt"))
+fileSink<-file.path(pathDirectory,paste(model),"RawOut",paste0(cohortYear,".iter",countIterations,"solution.txt"))
 sink(fileSink)
+distribution
 model
 particularity
 cohortYear
