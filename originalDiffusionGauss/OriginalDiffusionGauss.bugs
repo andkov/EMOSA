@@ -1,0 +1,41 @@
+model {
+	for( i in 1:(timeCount-1) ) {
+		pgHat[i+1] <- pg[i] 
+			+ (Tig * pow(pi[i],1) ) 
+			+ (Tag * pow(pa[i],1) ) 
+			- (Tgi * pow(pg[i],1) ) 
+			- (Tga * pow(pg[i],1) )
+		
+		piHat[i+1] <- pi[i] 
+			+ (Tgi * pow(pg[i],1) ) 
+			+ (Tai * pow(pa[i],1) ) 
+			- (Tig * pow(pi[i],1) )  
+			- (Tia * pow(pi[i],1) )				
+		
+		paHat[i+1] <- 1 - pgHat[i+1] - piHat[i+1]
+		
+		pg[i+1] ~ dnorm(pgHat[i+1], precG)
+		pi[i+1] ~ dnorm(piHat[i+1], precI)
+		#pa[i+1] ~ dnorm(paHat[i+1], precA)
+	}
+
+	precG <- pow(sigmaG, -2)
+	precI <- pow(sigmaI, -2)
+	#precA <- pow(sigmaA, -2)
+
+	sigmaG ~ dunif(0, 1000)
+	sigmaI ~ dunif(0, 1000)
+	#sigmaA ~ dunif(0, 1000)
+		
+	alpha <- 1
+	beta <- 1
+	
+	Tgi ~ dbeta(alpha, beta)
+	Tga ~ dbeta(alpha, beta)	
+	Tig ~ dbeta(alpha, beta)
+	Tia ~ dbeta(alpha, beta)
+	Tag ~ dbeta(alpha, beta)
+	Tai ~ dbeta(alpha, beta)
+	
+}	
+	

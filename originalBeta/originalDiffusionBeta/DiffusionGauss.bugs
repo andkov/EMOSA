@@ -1,0 +1,45 @@
+model {
+	for( i in 1:(timeCount-1) ) {
+		pgHat[i+1] <- pg[i] + (Kig * pi[i]) + (Kag*pa[i]) - (Kgi*pg[i]) - (Kga*pg[i])
+		piHat[i+1] <-  pi[i] + (Kgi * pg[i]) + (Kai*pa[i]) - (Kig*pi[i]) - (Kia*pi[i])
+		#paHat[i+1] <-  pa[i] + (Kga * pg[i]) + (Kia*pi[i]) - (Kag*pa[i]) - (Kai*pa[i])
+		
+		pg[i+1] ~ dnorm(pgHat[i+1], precG)
+		pi[i+1] ~ dnorm(piHat[i+1], precI)
+		#pa[i+1] ~ dnorm(paHat[i+1], precA)
+						
+	}
+
+	precG <- pow(sigmaG, -2)
+	precI <- pow(sigmaI, -2)
+	#precA <- pow(sigmaA, -2)
+
+	sigmaG ~ dunif(0, 1000)
+	sigmaI ~ dunif(0, 1000)
+	#sigmaA ~ dunif(0, 1000)
+		
+	alpha <- 1
+	beta <- 1
+	Kgi ~ dbeta(alpha, beta)
+	Kga ~ dbeta(alpha, beta)	
+	Kig ~ dbeta(alpha, beta)
+	Kia ~ dbeta(alpha, beta)
+	Kag ~ dbeta(alpha, beta)
+	Kai ~ dbeta(alpha, beta)
+}	
+	
+#mu ~ dnorm(0, .0001)
+
+#pg[i+1] ~ dlogis(pgHat[i+1], scaleG)
+#pi[i+1] ~ dlogis(piHat[i+1], scaleI)
+#pa[i+1] ~ dlogis(paHat[i+1], scaleA)
+			
+	
+#	mean <- .5
+#	precision <- .0001
+#	Kgi ~ dnorm(mean, precision)
+#	Kga ~ dnorm(mean, precision)	
+#	Kig ~ dnorm(mean, precision)
+#	Kia ~ dnorm(mean, precision)
+#	Kag ~ dnorm(mean, precision)
+#	Kai ~ dnorm(mean, precision)

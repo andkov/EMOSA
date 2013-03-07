@@ -1,0 +1,141 @@
+clear all;
+
+pg = [0.401088929	0.340290381	0.249546279	0.218693285	0.180580762	0.167876588	0.157894737	0.158802178]';
+pi = [0.233212341	0.256805808	0.288566243	0.305807623	0.27676951	0.270417423	0.229582577	0.250453721]';
+pn = [0.36569873	0.402903811	0.461887477	0.475499093	0.542649728	0.561705989	0.612522686	0.590744102]';
+pgo =[0.340290381	0.249546279	0.218693285	0.180580762	0.167876588	0.157894737	0.158802178	0.161524501]';
+pio= [0.256805808	0.288566243	0.305807623	0.27676951	0.270417423	0.229582577	0.250453721	0.237749546]';
+pno= [0.402903811	0.461887477	0.475499093	0.542649728	0.561705989	0.612522686	0.590744102	0.600725953]';
+pgnew=[0 0 0 0 0 0 0 0]';
+pinew=[0 0 0 0 0 0 0 0]';
+pnnew=[0 0 0 0 0 0 0 0]';
+
+Min=[0 0 0 0 0 0]';
+Max=[1 1 1 1 1 1]';
+cmin=[0 0 0 0 0 0]';
+cmax=[1 1 1 1 1 1]';
+par=Min+rand(6,1);
+c=[0 0 0 0 0 0];
+
+pgnew=pg-par(1)*pg.*(pi.^c(1))-par(2)*pg.*(pn.^c(4))+par(3)*pi.*(pg.^c(2))+par(4)*pn.*(pg.^c(3));
+pinew=pi-par(3)*pi.*(pg.^c(2))-par(5)*pi.*(pn.^c(5))+par(1)*pg.*(pi.^c(1))+par(6)*pn.*(pi.^c(6));
+pnnew=1-pinew-pgnew;
+P=[pgnew;pinew;pnnew];
+Po=[pgo;pio;pno];
+dj1=2*var(pgo);
+dj2=2*var(pio);
+dj3=2*var(pno);
+J(1)=(norm((pgnew-pgo)))^2;
+J(2)=(norm((pinew-pio)))^2;
+J(3)=(norm((pnnew-pno)))^2;
+J_old=(J(1)/dj1 + J(2)/dj2 + J(3)/dj3);
+
+par_old=par;
+c_old=c;
+randSeed=clock;                    
+rand('seed', randSeed(6));        
+pg_keep=[0 0 0 0 0 0 0 0]';
+pn_keep=[0 0 0 0 0 0 0 0]';
+pi_keep=[0 0 0 0 0 0 0 0]';
+Parameters_keep= [0 0 0 0 0 0]';
+c_keep=[0 0 0 0 0 0]';
+nsimu=500000;                   
+keep_count=1;
+allow=5;
+L_P=length(par); 
+L_P1=length(c);
+
+for simu=1:nsimu
+	while true
+        par_new = par_old+(rand(6,1)-0.5)/allow;
+        Logic=par_new>Min&par_new<Max;
+        c_new=c_old;
+
+         if sum(Logic)==L_P 
+             break;
+         end
+        end
+    par_rec(:,keep_count)=par_old; 
+    J_rec(:,keep_count)=J_old;
+   
+	
+    pgnew=pg-par_new(1)*pg.*(pi.^c_new(1))-par_new(2)*pg.*(pn.^c_new(4))+par_new(3)*pi.*(pg.^c_new(2))+par_new(4)*pn.*(pg.^c_new(3));
+    pinew=pi-par_new(3)*pi.*(pg.^c_new(2))-par_new(5)*pi.*(pn.^c_new(5))+par_new(1)*pg.*(pi.^c_new(1))+par_new(6)*pn.*(pi.^c_new(6));
+    pnnew=1-pinew-pgnew;
+    J(1)=(norm((pgnew-pgo)))^2;
+    J(2)=(norm((pinew-pio)))^2;
+    J(3)=(norm((pnnew-pno)))^2;
+    J_new=(J(1)/dj1 + J(2)/dj2 + J(3)/dj3);
+    delta_J = J_new-J_old;
+	if min(1,exp(-delta_J))>rand
+     
+                Parameters_keep(:,keep_count)=par_new;
+                c_keep(:,keep_count)=c_new;
+                 J_keep(keep_count)=J_new;
+                 pg_keep(:,keep_count)=pgnew;
+                 pn_keep(:,keep_count)=pnnew;
+                 pi_keep(:,keep_count)=pinew;
+                 keep_count=keep_count+1;
+                 par_old=par_new;
+                 c_old=c_new;
+                 J_old=J_new;
+                 
+           
+    else Parameters_keep(:,keep_count)=par_old;
+                c_keep(:,keep_count)=c_old;
+                 J_keep(keep_count)=J_old;
+              
+                 keep_count=keep_count+1;
+                 par_old=par_old;
+                 c_old=c_old;
+                 J_old=J_old;
+    Parameters_rec(:,simu)=par_old;     
+    J_rec(:,simu)=J_old;        
+   	end
+    simu;
+    keep_count;
+
+end
+Tgimean=mean(Parameters_keep(1,:));
+Tgistdev=std(Parameters_keep(1,:));
+Tgamean=mean(Parameters_keep(2,:));
+Tgastdev=std(Parameters_keep(2,:));
+Tigmean=mean(Parameters_keep(3,:));
+Tigstdev=std(Parameters_keep(3,:));
+Tagmean=mean(Parameters_keep(4,:));
+Tagstdev=std(Parameters_keep(4,:));
+Tiamean=mean(Parameters_keep(5,:));
+Tiastdev=std(Parameters_keep(5,:));
+Taimean=mean(Parameters_keep(6,:));
+Taistdev=std(Parameters_keep(6,:));
+
+
+figure(1)
+subplot(3,2,1), hist(Parameters_rec(1,(nsimu/2):nsimu-1),50)
+axis([Min(1) Max(1) 0 100000])
+title('Kgi')
+
+subplot(3,2,2), hist(Parameters_rec(2,(nsimu/2):nsimu-1),50)
+axis([Min(2) Max(2) 0 100000])
+title('Kga')
+
+subplot(3,2,3), hist(Parameters_rec(3,(nsimu/2):nsimu-1),50)
+axis([Min(3) Max(3) 0 100000])
+title('Kig')
+
+subplot(3,2,4), hist(Parameters_rec(4,(nsimu/2):nsimu-1),50)
+axis([Min(4) Max(4) 0 100000])
+title('Kag')
+
+subplot(3,2,5), hist(Parameters_rec(5,(nsimu/2):nsimu-1),50)
+axis([Min(5) Max(5) 0 100000])
+title('Kia')
+
+subplot(3,2,6), hist(Parameters_rec(6,(nsimu/2):nsimu-1),50)
+axis([Min(6) Max(6) 0 100000])
+title('Kai')
+
+
+
+csvwrite('dkffusion1984savedchain4.csv',P);
+save('diffusion1984savedchain4');

@@ -1,0 +1,53 @@
+<!-- Specify the report's official name, goal & description. -->
+# Contagion results
+**Report Goal**:  Provide a minimalistic report prototype for future reports.
+**Report Description**: This is a prototype of a simple report.  It should represent the one side of the spectrum of MIECHV automated reports..
+
+<!-- Point knitr to the underlying code file so it knows where to look for the chunks. -->
+```{r, echo=FALSE}
+pathSourceCode <- file.path(getwd(), "Contagion.R")
+#This allows knitr to call chunks tagged in the underlying PrototypeCode.R file.
+read_chunk(pathSourceCode) 
+```
+
+### Cohort: 1980
+Andrey -write something here.
+```{r}
+cohortYear <- 1980
+```
+```{r GoDogGo, fig.keep='all', fig.path='figure/Cohort1980'}
+```
+
+
+### Cohort: 1981
+```{r}
+cohortYear <- 1981
+a<-5
+sqrt(a)
+
+```
+```{r GoDogGo, fig.keep='all', fig.path='figure/Cohort1981'}
+```
+
+### Cohort: 1982
+```{r}
+cohortYear <- 1982
+```
+```{r GoDogGo, fig.keep='all', fig.path='figure/Cohort1982'}
+```
+
+### Cohort: 1983
+```{r}
+cohortYear <- 1983
+```
+```{r GoDogGo, fig.keep='all', fig.path='figure/Cohort1983'}
+```
+
+
+### Cohort: 1984
+```{r}
+cohortYear <- 1984
+```
+```{r GoDogGo, fig.keep='all', fig.path='figure/Cohort1984'}
+```
+
