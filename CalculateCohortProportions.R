@@ -14,7 +14,6 @@ pathOutDataLong <- file.path(pathDirectory, "Long.csv") #The name of the file to
 pathOutDataSummarized <- file.path(pathDirectory, "SummaryBirthYearByTime.csv") #The name of the file to write to.
 
 dsWide <- read.csv(pathInData, stringsAsFactors=FALSE)
-
 dsWide <- rename(dsWide, c(byear="cohort"))
 
 times <- 0:8

@@ -13,19 +13,10 @@ modelC<-paste0(specification,"Contagion",distribution)
 modelD<-paste0(specification,"Diffusion",distribution)
 
 #Dataprep
-pathResults <- file.path(getwd(),paste0(specification,"Results"))
-# brings in the model solution -connecting with "originalResults.R" - 
-pathResultsH <- file.path(getwd(),modelH)
-pathModelHIn <-file.path(pathResultsH,paste0(modelH,"_resultsIn",".csv"))
-dsModelH <- read.csv(pathModelHIn, stringsAsFactors=FALSE)
-
-pathResultsC <- file.path(getwd(),modelC)
-pathModelCIn <-file.path(pathResultsC,paste0(modelC,"_resultsIn",".csv"))
-dsModelC <- read.csv(pathModelCIn, stringsAsFactors=FALSE)
-
-pathResultsD <- file.path(getwd(),modelD)
-pathModelDIn <-file.path(pathResultsD,paste0(modelD,"_resultsIn",".csv"))
-dsModelD <- read.csv(pathModelDIn, stringsAsFactors=FALSE)
+pathDirectory <- file.path(getwd())
+dsModelH<-read.csv(file.path(pathDirectory,modelH,paste0(modelH,"_resultsIn",".csv")),stringsAsFactors=FALSE)
+dsModelC<-read.csv(file.path(pathDirectory,modelC,paste0(modelC,"_resultsIn",".csv")),stringsAsFactors=FALSE)
+dsModelD<-read.csv(file.path(pathDirectory,modelD,paste0(modelD,"_resultsIn",".csv")),stringsAsFactors=FALSE)
 
 dsResults<-rbind(dsModelH,dsModelC,dsModelD)
 
@@ -46,20 +37,23 @@ str(dsLongDIC)
 
 modelcolors<-c("black","goldenrod2","royalblue2")
 
-p<-ggplot(originalDIC, aes(x=cohort,y=DIC,group=model))+
+# DIC plot
+
+p<-ggplot(dsResults, aes(x=cohort,y=DIC,group=model))+
   geom_line( aes( colour = model),size=1,guide=FALSE)+ 
   geom_point(aes(colour = model ),size=4)+
-   scale_color_manual(values = modelcolors)+
-  ylim(c(-100,-60))+
+  scale_color_manual(values = modelcolors)+
+  ylim(c(-100,-40))+
   labs(title=paste0(specification," specification"))
 p
 plast<-p
 
-pathFileOut<-file.path(pathResults,paste0(specification,"_DIC",".png"))
+pathFileOut<-file.path(getwd(),paste0(specification,"Results","/",specification,"_DIC.png")) 
 png (filename = pathFileOut ,
-             width = 600, height = 800 , units = "px")
+     width = 600, height = 800 , units = "px")
 plot(plast)
 dev.off()
+
 
 
 

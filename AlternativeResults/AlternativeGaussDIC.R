@@ -5,7 +5,7 @@ require(reshape2)
 require(lme4) #Load the library necessary for multilevel models
 require(colorspace) #Load the library necessary for creating tightly-controlled palettes.
 
-specification<-c("original")
+specification<-c("Alternative")
 distribution<-c("Gauss")
 
 modelH<-paste0(specification,"Hybrid",distribution)
@@ -53,6 +53,8 @@ png (filename = pathFileOut ,
      width = 600, height = 800 , units = "px")
 plot(plast)
 dev.off()
+
+
 
 
 
