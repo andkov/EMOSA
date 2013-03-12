@@ -8,13 +8,13 @@ require(colorspace) #Load the library necessary for creating tightly-controlled 
 
 
 #Model selection
-specification<-c("original")
+specification<-c("Alternative")
 distribution<-c("Gauss")
-
+num<-c("Plus 2")
 pars12<- c("Tgi","Tga","Tig","Tag","Tia","Tai",
            "Cgi","Cga","Cig","Cag","Cia","Cai")	
 
-modelH<-paste0(specification,"Hybrid",distribution)
+modelH<-paste0(specification,"Hybrid",num)
 modelC<-paste0(specification,"Contagion",distribution)
 modelD<-paste0(specification,"Diffusion",distribution)
 
@@ -66,7 +66,7 @@ dsObsLong <- plyr::rename(dsObsLong, replace=c(variable="time", value="prevalenc
 dsObsLong$cattrans<-paste0("p",dsObsLong$cattrans,dsObsLong$time)
 dsObsLong$time <- as.integer(dsObsLong$time) #Convert to a number.
 dsObsWide<-dcast(dsObsLong, cohort ~ cattrans, mean)
-str(dsObsLong)
+ 
 
 # input the model soution
 # reads in the result of a model run: Hybrid, Contagion, or Diffusion for 5 cohorts
@@ -119,12 +119,12 @@ p<-ggplot(dsDIC, aes(x=cohort,y=DIC,group=model))+
   ylim(c(-100,-40))+
   labs(title=paste0(specification," specification"))
 p
-# plast<-p
-# pathFileOut<-file.path(getwd(),paste0(specification,"Results","/",specification,"_DIC.png")) 
-# png (filename = pathFileOut ,
-#      width = 600, height = 800 , units = "px")
-# plot(plast)
-# dev.off()
+plast<-p
+pathFileOut<-file.path(getwd(),paste0(specification,"Results","/",specification,"_DIC_",num,".png")) 
+png (filename = pathFileOut ,
+     width = 600, height = 800 , units = "px")
+plot(plast)
+dev.off()
 
 
 # Parameter Solution plot 1x12 
@@ -140,22 +140,12 @@ str(dsModelsParsLong)
                    breaks=c(.2,.4,.6,.8,1))+
   geom_abline(intercept = .5, slope = 0, color="red", size=.1,linetype=4)
 p
-# plast<-p
-# pathFileOut<-file.path(getwd(),paste0(specification,"Results","/",specification,"_Solution.png")) 
-# png (filename = pathFileOut ,
-#      width = 1600, height = 200 , units = "px")
-# plot(plast)
-# dev.off()
-
-# proportion by 5 cohorts
-dsFORp <- subset(dsPrevsLong, cohort %in% allCohorts)
-p<-ggplot(dsFORp, aes(x=time,y=proportion,group=catatrans,fill=factor(catatrans)))+
-  scale_color_manual(values = c("pG"="green2","pI"="goldenrod2","pA"="red3"))+
-  geom_line(aes(colour = catatrans))+ facet_grid(. ~ cohort)+
-  geom_point(aes(colour=catatrans),show_guide = FALSE)+
-  labs(title=paste0("Observed by predicted for each cohort"))
-p
-
+plast<-p
+pathFileOut<-file.path(getwd(),paste0(specification,"Results","/",specification,"_Solution_",num,".png")) 
+png (filename = pathFileOut ,
+     width = 1600, height = 200 , units = "px")
+plot(plast)
+dev.off()
 
 
 # Creates predictions based on observed prevalence and model solution

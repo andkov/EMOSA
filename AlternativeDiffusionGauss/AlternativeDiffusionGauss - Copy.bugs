@@ -1,10 +1,11 @@
 model {
 	for( i in 1:(timeCount-1) ) {
 		pgHat[i+1] <- pg[i] 
+			- (Kgi * pg[i]) 
+			- (Kga * pg[i])	
 			+ (Kig * pi[i]) 
 			+ (Kag * pa[i]) 
-			- (Kgi * pg[i]) 
-			- (Kga * pg[i])
+
 	
 		piHat[i+1] <- pi[i] 
 			+ (Kgi * pg[i]) 

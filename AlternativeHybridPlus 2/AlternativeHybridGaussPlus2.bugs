@@ -1,17 +1,18 @@
 model {
 	for( i in 1:(timeCount-1) ) {
 		pgHat[i+1] <- pg[i] 
-			- (Tgi * pi[i]) 
-			- (Tga * pa[i])
-			+ (Tig * pg[i]) 
-			+ (Tag * pg[i]) 
+			- (Tgi * ((pg[i]*(1-cgi)) + (pi[i]*cgi)))
+			- (Tga * ((pg[i]*(1-cga)) + (pa[i]*cga)))
+			+ (Tig * ((pi[i]*(1-cig)) + (pg[i]*cig))) 
+			+ (Tag * ((pa[i]*(1-cag)) + (pg[i]*cag))) 
 
 		
 		piHat[i+1] <- pi[i] 
-			+ (Tgi * pi[i]) 
-			+ (Tai * pi[i]) 
-			- (Tig * pg[i]) 
-			- (Tia * pa[i])
+			- (Tig * ((pi[i]*(1-cig)) + (pg[i]*cig)))  
+			- (Tia * ((pi[i]*(1-cia)) + (pa[i]*cia)))
+			+ (Tgi * ((pg[i]*(1-cgi)) + (pi[i]*cgi))) 
+			+ (Tai * ((pa[i]*(1-cai)) + (pi[i]*cai))) 
+				
 		
 		paHat[i+1] <- 1 - pgHat[i+1] - piHat[i+1]
 		
@@ -27,9 +28,17 @@ model {
 	sigmaG ~ dunif(0, 1000)
 	sigmaI ~ dunif(0, 1000)
 	#sigmaA ~ dunif(0, 1000)
-	
+		
 	alpha <- 1
 	beta <- 1
+	
+	cig ~ dbeta(alpha, beta)
+	cag ~ dbeta(alpha, beta)
+	cgi ~ dbeta(alpha, beta)
+	cga ~ dbeta(alpha, beta)
+	cai ~ dbeta(alpha, beta)
+	cia ~ dbeta(alpha, beta)
+	
 	Tgi ~ dbeta(alpha, beta)
 	Tga ~ dbeta(alpha, beta)	
 	Tig ~ dbeta(alpha, beta)
@@ -38,3 +47,4 @@ model {
 	Tai ~ dbeta(alpha, beta)
 	
 }	
+	

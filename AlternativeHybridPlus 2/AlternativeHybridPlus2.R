@@ -7,7 +7,7 @@ require(rjags)
 # require(coda)
 rjags::load.module("dic") # load a few useful modules (JAGS is modular in design): https://sites.google.com/site/autocatalysis/bayesian-methods-using-jags
 
-model<-"AlternativeHybridPlus"
+model<-"AlternativeHybridPlus 2"
 distribution<-"Gauss"
 
 pathDirectory <- file.path(getwd())
@@ -17,11 +17,11 @@ pathDirectory <- file.path(getwd())
 
 { #This bracket permits the 'else' clause (because it's located on the top layer of the code.)
   if( basename(getwd()) == "EMOSA" ) {#This clause executes when run from the *.R file.
-    pathModel <- file.path(getwd(),paste(model),"AlternativeHybridGaussPlus.bugs")
+    pathModel <- file.path(getwd(),paste(model),"AlternativeHybridGaussPlus2.bugs")
     pathData <- file.path(getwd(), "Data/SummaryBirthYearByTime.csv")
   }
   else if( basename(getwd()) == paste(model) ) { #This clause executes when run from the *.Rmd/Rnw file.
-    pathModel <- file.path(dirname(getwd()), paste(model), "AlternativeHybridGaussPlus.bugs")
+    pathModel <- file.path(dirname(getwd()), paste(model), "AlternativeHybridGaussPlus2.bugs")
     pathData <- file.path(dirname(getwd()), "Data/SummaryBirthYearByTime.csv")      
   }
   else {
@@ -129,7 +129,7 @@ dev.off()
 
 
 
-fileSink<-file.path(pathDirectory,paste(model),"RawOut",paste0(cohortYear,".","solution.txt"))
+fileSink<-file.path(pathDirectory,paste(model),"RawOut",paste0(cohortYear,"solution.txt"))
 sink(fileSink)
 distribution
 model
