@@ -1,4 +1,4 @@
-## Welcome to the FANTASTIC EMOSA PROJECT by Will and Andrey
+## Welcome to the "Religiosity EMOSA" project by Will and Andrey
 Please read these links to help you get started.  If you have questions, please contact Andrey or Will.
 
 ### Installation is important
