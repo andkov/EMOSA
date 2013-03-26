@@ -1,52 +1,88 @@
-rm(list=ls(all=TRUE)) #Clear out variables from previous runs.
-# update.packages("ask=F")
-require(colorspace)
-require(lme4)
-require(Matrix)
-require(lattice)
-require(car)
-require(MASS)
-require(nnet)
-require(ggplot2)
-require(plyr)
-require(reshape2)
-require(colorspace) #Load the library necessary for creating tightly-controlled palettes.
-# NOTE: you must have  "NLSY-97_Religiosity" repository in your local GitHub folder
-
-
-####### ------------------- Read, clean, melt, cast, collect model solutions -----------------begin--------------
+###  executes  "EMOSA_datasets.R"   ###
 pathEMOSA_datasets <- file.path(getwd(),"EMOSA_datasets.R")
-source(pathEMOSA_datasets) # execute "EMOSA_datasets.R" code
-ls()
-# Choose dataset(s) to keep 
-# rm(list=setdiff(ls(),c("dsSource", #  original  NLSY97 datasource
-#                        "dsSWprops", # observed prevalences and transitions S-summarized, W-Wide, props- proportions
-#                        "dsSLprops", # elongated with time as ID and prevalence as RESPONS 
-#                        "dsSWcatatrans", # both counts and proportions - for both prevalences and transitions
-#                        "dsModelCoPars", # ds with Contagion original Parameters
-#                        "dsModelDoPars", # ds with Contagion original Parameters
-#                        "dsModelCsPars", # ds with Contagion scaled Parameters
-#                        "dsModelDsPars", # ds with Contagion scaled Parameters
-#                        "dsDIC"       # mean difference, penalty, and DIC of 4 models
-# )))
-####### ------------------- Read, clean, melt, cast, collect model solutions ----------------- end-_-------------
+# C:/Users/USERNAME/Documents/GitHub  /Repository       /NN_Script.R 
+source(pathEMOSA_datasets)
 
-#  Choose model for which to produce forecast
-dsModel<-dsModelDoPars 
-
-# Load observed prevalences (and/or transitions) for the chosen cohort
-timevars<-c("cohort", "time", "age")    # select time variables 
-obsvars<- c("pG","pgg", "pgi", "pga",  # select observed prevalences (and/or transitions)
-            "pI", "pig", "pii", "pia",
-            "pA" , "pag", "pai", "paa"
+# Create lists of variables for later subsetting and sorting
+timevars<-c("cohort", "time", "age")   # time variables
+obsvars<- c("pG","pgg", "pgi", "pga",  # prevalences of Goers-Irregulars-Absentees
+            "pI", "pig", "pii", "pia", # Goers-Irregulars-Absentees
+            "pA" , "pag", "pai", "paa" # and transition among them betwen 2000-2010
 )   
+# Choose dataset(s) to keep 
+keepds<-c("keepds","timevars","obsvars", "dsModel",
+#   "dsSource",         # Clean and processed NLSY file from the source(08032013)
+#   "dsW_attend",       # Wide timeseris, subset(dsSource) vars:  original responses to the question (1-8)
+#   "dsL_attend",       # Long time series, elongated dsW_attend
+#   "dsW_catatrans",    # Wide timeseries: subset(dsSource)
+#   "dsL_catatrans",    # Long timeseries, elongated dsW_catatrans
+  "dsWS_catatrans",   # Wide summaries of catatrans, both counts and proportions, summaried dsL_catatrans
+  "dsWSP_catatrans",  # Wide summaries of catatrans as proportions, subset(dsWS_catatrans)
+  "dsLSP_catatrans",  # (!)Long summaries of catatrans as proportion, elongated dsWSP_catatrans
+#   "dsWSC_catatrans",  # Wide summaries of catatrans as counts, subset(dsWS_catatrans)
+#   "dsLSC_catatrans",  # Long summaries of catatrans as counts, elongated dsWSC_catatrans
+#   "dsOCont",          # Original Contagion complete model values: parameters, fit, precision, etc.
+  "dsOContPars",      # Original Contagion parameters 
+#   "dsODiff",          # Original Diffusion complete model values: parameters, fit, precision, etc.
+  "dsODiffPars",      # Original Diffusion parameters 
+#   "dsSCont",          # Scaled Contagion complete model values: parameters, fit, precision, etc.
+  "dsSContPars",      # Scaled Contagion parameters 
+#   "dsSDiff",          # Scaled Diffusion complete model values: parameters, fit, precision, etc.
+  "dsSDiffPars",      # Scaled Diffusion parameters 
+#   "dsModels",         # All tested models: complet model values:parameters, fit, precision, etc.
+  "dsModelsPars",     # All tested models: parameters
+  "dsModelsParsLong", # all tested models: parameters - LONG FORM 
+#   "dsDIC",            # Mean difference, penalty, and DIC of all models
+  "dsDICLong"         # eLONGated dsDIC for easier ggplotting
+)
+rm(list=setdiff(ls(),keepds))
 
-# Compute model forecast using observed values and the model solution
+
+
+# Original DIffusion ###############################################################
+dsModel<-dsODiffPars
+print(dsModel)
+# Compute model forecast using observed values, specification, and the model solution
 pathModel <- file.path(getwd(),"EMOSA_models/forecasting.R")
-source(pathModel) 
-head(dsPredLong)
-modelDo<-join(dsSLprops,dsPredLong)
+source(pathModel)
+
+# Original Contagion ###############################################################
+dsModel<-dsOContPars
+print(dsModel)
+# Compute model forecast using observed values, specification, and the model solution
+pathModel <- file.path(getwd(),"EMOSA_models/forecasting.R")
+source(pathModel)
+
+# Scaled DIffusion ###############################################################
+dsModel<-dsSDiffPars
+print(dsModel)
+# Compute model forecast using observed values, specification, and the model solution
+pathModel <- file.path(getwd(),"EMOSA_models/forecasting.R")
+source(pathModel)
+
+# Scaled Contagion ###############################################################
+dsModel<-dsSContPars
+print(dsModel)
+# Compute model forecast using observed values, specification, and the model solution
+pathModel <- file.path(getwd(),"EMOSA_models/forecasting.R")
+source(pathModel)
+
+dsEMOSA<-join(dsLSP_catatrans,pred_OD)
+dsEMOSA<-join(dsEMOSA,pred_OC)
+dsEMOSA<-join(dsEMOSA,pred_SD)
+dsEMOSA<-join(dsEMOSA,pred_SC)
 
 
-# 
+dsEMOSA<-mutate(dsEMOSA,sqdif_OD=(obs_proportion-OD_proportion)^2,
+                    sqdif_OC=(obs_proportion-OC_proportion)^2,
+                    sqdif_SD=(obs_proportion-SD_proportion)^2,
+                    sqdif_SC=(obs_proportion-SC_proportion)^2)
+
+fit<-dcast(dsEMOSA, cohort ~ time,value.var="sqdif_OD", sum)
+
+
+
+?dcast
+
+
 

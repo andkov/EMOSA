@@ -4,14 +4,14 @@ source(pathVectorsPalettes)
 
 # 3x3 matrix of OBSERVED transition probabilities as % total
 #------------------------------------------------graph 2------#
-dsFORp <- modelDo#[(dsSLprops$cohort %in% allCohorts),]
+dsFORp <- dsEMOSA#[(dsSLprops$cohort %in% allCohorts),]
 # select prevalences ("pA","pI","pG") or transitions ("pgg","pgi","pga","pig","pii","pia","pag","pai","paa")
 dsFORp <- dsFORp[!(dsFORp$catatrans %in% c("paa","pii","pgg")),] 
 dsFORp$cohort<-factor(dsFORp$cohort, levels=c(1984:980))
 dsFORp <- mutate(dsFORp,parcoh=paste(cohort,catatrans))
 table(dsFORp$catatrans)
 
-p<-ggplot(dsFORp, aes(x=age,y=obs_proportion,group=factor(parcoh),fill=factor(catatrans)))+
+p<-ggplot(dsFORp, aes(x=age,y=SC_proportion,group=factor(parcoh),fill=factor(catatrans)))+
   scale_color_manual(values =catatransColor)+
   geom_line(aes(group=parcoh,colour = catatrans))+
   facet_grid(mx ~ my)+

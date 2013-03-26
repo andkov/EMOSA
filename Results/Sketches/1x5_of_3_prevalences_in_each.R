@@ -3,14 +3,14 @@ source(pathVectorsPalettes)
 
 # 1x5 strip of prevalence for all 5 cohorts 
 #------------------------------------------------graph 1------#
-dsFORp <- dsSLprops[(dsSLprops$cohort %in% allCohorts),]
+dsFORp <- dsEMOSA[(dsEMOSA$cohort %in% allCohorts),]
 # select prevalences ("pA","pI","pG") or transitions ("pgg","pgi","pga","pig","pii","pia","pag","pai","paa")
 dsFORp <- dsFORp[(dsFORp$catatrans %in% c("pA","pI","pG")),] 
 dsFORp$cohort<-factor(dsFORp$cohort, levels=c(1984:980))
 dsFORp <- mutate(dsFORp,parcoh=paste(cohort,catatrans))
 table(dsFORp$catatrans)
 
-p<-ggplot(dsFORp, aes(x=age,y=proportion,group=catatrans,fill=factor(catatrans)))+
+p<-ggplot(dsFORp, aes(x=age,y=SC_proportion,group=catatrans,fill=factor(catatrans)))+
   scale_color_manual(values =catatransColor)+
   geom_line(aes(colour = catatrans))+
   facet_grid(. ~ cohort)+

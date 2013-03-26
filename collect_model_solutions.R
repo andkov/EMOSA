@@ -16,45 +16,38 @@ spec1name<-rep(spec1,5)
 spec2name<-rep(spec2,5)
 
 # input the Original Contagion model soution and attache observed prevalences
-modelCo<-paste0(spec1,"Contagion",distribution)
-dsModelCo<-read.csv(file.path(getwd(),modelCo,paste0(modelCo,"_resultsIn",".csv")),stringsAsFactors=FALSE)
-dsModelCo$specification<-spec1name
-dsModelCoPars<-dsModelCo[,c("specification","model","cohort",pars12)]
-dsModelCo<-join(dsModelCo,dsOBSprops, by="cohort") # dsOBSprop is produced
-# by 
+OCont<-paste0(spec1,"Contagion",distribution)
+dsOCont<-read.csv(file.path(getwd(),OCont,paste0(OCont,"_resultsIn",".csv")),stringsAsFactors=FALSE)
+dsOCont$specification<-spec1name
+dsOContPars<-dsOCont[,c("specification","model","cohort",pars12)]
 
 # input the Original Diffusion model soution and attache observed prevalences
-modelDo<-paste0(spec1,"Diffusion",distribution)
-dsModelDo<-read.csv(file.path(getwd(),modelDo,paste0(modelDo,"_resultsIn",".csv")),stringsAsFactors=FALSE)
-dsModelDo$specification<-spec1name
-dsModelDoPars<-dsModelDo[,c("specification", "model","cohort",pars12)]
-dsModelDo<-join(dsModelDo,dsOBSprops, by="cohort")
+ODiff<-paste0(spec1,"Diffusion",distribution)
+dsODiff<-read.csv(file.path(getwd(),ODiff,paste0(ODiff,"_resultsIn",".csv")),stringsAsFactors=FALSE)
+dsODiff$specification<-spec1name
+dsODiffPars<-dsODiff[,c("specification", "model","cohort",pars12)]
 
 
 # input the Scaled Contagion model soution and attache observed prevalences
-modelCs<-paste0(spec2,"Contagion",distribution)
-dsModelCs<-read.csv(file.path(getwd(),modelCs,paste0(modelCs,"_resultsIn",".csv")),stringsAsFactors=FALSE)
-dsModelCs$specification<-spec2name
-dsModelCsPars<-dsModelCs[,c("specification", "model","cohort",pars12)]
-dsModelCs<-join(dsModelCs,dsOBSprops, by="cohort")
-
+SCont<-paste0(spec2,"Contagion",distribution)
+dsSCont<-read.csv(file.path(getwd(),SCont,paste0(SCont,"_resultsIn",".csv")),stringsAsFactors=FALSE)
+dsSCont$specification<-spec2name
+dsSContPars<-dsSCont[,c("specification", "model","cohort",pars12)]
 
 # input the Scaled Diffusion model soution and attache observed prevalences
-modelDs<-paste0(spec2,"Diffusion",distribution)
-dsModelDs<-read.csv(file.path(getwd(),modelDs,paste0(modelDs,"_resultsIn",".csv")),stringsAsFactors=FALSE)
-dsModelDs$specification<-spec2name
-dsModelDsPars<-dsModelDs[,c("specification", "model","cohort",pars12)]
-dsModelDs<-join(dsModelDs,dsOBSprops, by="cohort")
-
+SDiff<-paste0(spec2,"Diffusion",distribution)
+dsSDiff<-read.csv(file.path(getwd(),SDiff,paste0(SDiff,"_resultsIn",".csv")),stringsAsFactors=FALSE)
+dsSDiff$specification<-spec2name
+dsSDiffPars<-dsSDiff[,c("specification", "model","cohort",pars12)]
 
 # Combine model solutions into a single dataset
-dsModelsPars<-rbind(dsModelCoPars,dsModelDoPars,dsModelCsPars,dsModelDsPars)
-dsModels<-rbind(dsModelCo,dsModelDo,dsModelCs,dsModelDs) # stacked ds with models solutions (H,C,D)
+dsModelsPars<-rbind(dsOContPars,dsODiffPars,dsSContPars,dsSDiffPars)
+dsModels<-rbind(dsOCont,dsODiff,dsSCont,dsSDiff) # stacked ds with models solutions (H,C,D)
 
-# dsModels$specification<-factor(dsModelCo$specification,levels=c("Original","Scaled"))  
-# dsModels$model<-factor(dsModelDo$model,levels=c("Original","Scaled")) 
-# dsModelsPars$specification<-factor(dsModelCs$specification,levels=c("Original","Scaled")) 
-# dsModelsPars$model<-factor(dsModelDs$model,levels=c("Original","Scaled")) 
+# dsModels$specification<-factor(dsOCont$specification,levels=c("Original","Scaled"))  
+# dsModels$model<-factor(dsODiff$model,levels=c("Original","Scaled")) 
+# dsModelsPars$specification<-factor(dsSCont$specification,levels=c("Original","Scaled")) 
+# dsModelsPars$model<-factor(dsSDiff$model,levels=c("Original","Scaled")) 
 
 # selection only model perfomance incides: mean difference (md), penalty (p), and DIC (DIC)
 keepvars <- c("specification","model","cohort", "md","p","DIC")
