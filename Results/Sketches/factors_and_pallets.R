@@ -32,4 +32,4 @@ catatransColor<-c("pG"="red2","pgg"="red","pgi"="red","pga"="red",
                   "pI"="black","pig"="black","pii"="black","pia"="black",
                   "pA"="blue2","pag"="blue2","pai"="blue2","paa"="blue2")
 
-modelcolors<-c("goldenrod2","royalblue1","goldenrod1","royalblue2")
+modelcolors<-c("goldenrod2","royalblue1","violet")

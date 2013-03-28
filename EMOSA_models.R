@@ -78,11 +78,6 @@ dsEMOSA<-mutate(dsEMOSA,sqdif_OD=(obs_proportion-OD_proportion)^2,
                     sqdif_SD=(obs_proportion-SD_proportion)^2,
                     sqdif_SC=(obs_proportion-SC_proportion)^2)
 
-fit<-dcast(dsEMOSA, cohort ~ time,value.var="sqdif_OD", sum)
 
-
-
-?dcast
-
-
+# write.table(dsEMOSA,file="dsEMOSA.csv",sep=",",row.names=F)
 
