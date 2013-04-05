@@ -1,9 +1,9 @@
 
 rm(list=ls(all=TRUE)) #Clear out variables from previous runs.
-cohortYear <- 1980 #1980, 1981, 1982, 1983, 1984
+cohortYear <- 1984 #1980, 1981, 1982, 1983, 1984
 
 countChains <- 6#3 #6
-countIterations <- 10000
+countIterations <- 100000
 
 ## @knitr GoDogGo
 require(rjags)
@@ -65,7 +65,7 @@ jagsData <- list("pg"=pg, "pi"=pi, "pa"=pa, "timeCount"=timeCount)
 
 # For Contagion or Diffusion
 parametersToTrack <- c("Tgi", "Tga", "Tig", "Tia", "Tag", "Tai", 
-                       "sigmaG", "sigmaI")
+                       "sigmaG", "sigmaA")
 
 
 #parametersToTrackWithDic <- c("pD", "deviance", parametersToTrack) #Must first execute 'rjags::load.module("dic")'

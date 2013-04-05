@@ -20,7 +20,7 @@ pathGitHub <- file.path("C:/Users/kovalav/Documents/GitHub") # locate the "GitHu
 
 # (1) requires "NLSY-97_Religiosity" repository
 # Read the source file from NLS Web Investigator and prepare the parent dataset "dsSource"
-pathReadClean <- file.path(getwd(), "NLSY-97_Religiosity/01_reading_and_cleaning.R")
+pathReadClean <- file.path(pathGitHub, "NLSY-97_Religiosity/01_reading_and_cleaning.R")
 # C:/Users/USERNAME/Documents/GitHub  /Repository        /NN_Script.R 
 source(pathReadClean)
 rm(list=setdiff(ls(),(c("pathGitHub","dsSource")))) # Clean temp elements
@@ -63,7 +63,7 @@ rm(list=setdiff(ls(),c(
 
 
 
-
+# write.table(dsWSP_catatrans,file="dsWSP_catatrans.csv",sep=",",row.names=F)
 
 
 

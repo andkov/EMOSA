@@ -1,55 +1,57 @@
 [1] "Gauss"
 [1] "OriginalContagionGauss"
-[1] 10000
+[1] 1e+05
 [1] 1983
-Mean deviance:  -75.35 
-penalty 6.882 
-Penalized deviance: -68.47 
+Mean deviance:  -91.7 
+penalty 5.458 
+Penalized deviance: -86.24 
 
-Iterations = 11001:21000
+Iterations = 101001:201000
 Thinning interval = 1 
 Number of chains = 6 
-Sample size per chain = 10000 
+Sample size per chain = 1e+05 
 
 1. Empirical mean and standard deviation for each variable,
    plus standard error of the mean:
 
           Mean       SD  Naive SE Time-series SE
-Tag    0.50226 0.269108 1.099e-03      7.063e-03
-Tai    0.39767 0.240244 9.808e-04      6.073e-03
-Tga    0.48221 0.267634 1.093e-03      7.034e-03
-Tgi    0.71543 0.219965 8.980e-04      3.550e-03
-Tia    0.59342 0.240798 9.831e-04      6.069e-03
-Tig    0.27746 0.218541 8.922e-04      3.618e-03
-sigmaG 0.02416 0.008798 3.592e-05      6.513e-05
-sigmaI 0.02792 0.010273 4.194e-05      7.529e-05
+Tag    0.43577 0.255078 3.293e-04      3.122e-03
+Tai    0.50012 0.288363 3.723e-04      4.399e-04
+Tga    0.56283 0.254916 3.291e-04      3.112e-03
+Tgi    0.56671 0.257209 3.321e-04      1.153e-03
+Tia    0.50042 0.288848 3.729e-04      3.732e-04
+Tig    0.43506 0.257323 3.322e-04      1.142e-03
+sigmaA 0.02716 0.007997 1.032e-05      1.617e-05
+sigmaG 0.02620 0.007651 9.878e-06      1.466e-05
 
 2. Quantiles for each variable:
 
           2.5%     25%     50%     75%   97.5%
-Tag    0.04247 0.27856 0.49988 0.72772 0.96520
-Tai    0.01994 0.19416 0.38615 0.58303 0.86370
-Tga    0.03128 0.25772 0.48060 0.70360 0.95330
-Tgi    0.18831 0.58129 0.76414 0.89534 0.98975
-Tia    0.13039 0.40707 0.60232 0.79482 0.97923
-Tig    0.01018 0.10194 0.22532 0.40477 0.81294
-sigmaG 0.01317 0.01822 0.02224 0.02785 0.04610
-sigmaI 0.01543 0.02109 0.02562 0.03211 0.05394
+Tag    0.02216 0.21538 0.43212 0.65000 0.88200
+Tai    0.02534 0.25064 0.50044 0.74966 0.97517
+Tga    0.11881 0.34851 0.56563 0.78232 0.97740
+Tgi    0.07253 0.36716 0.58176 0.78202 0.97579
+Tia    0.02502 0.24986 0.50055 0.75102 0.97512
+Tig    0.02468 0.21992 0.42141 0.63444 0.92796
+sigmaA 0.01652 0.02168 0.02559 0.03080 0.04700
+sigmaG 0.01585 0.02093 0.02473 0.02977 0.04506
 
 Potential scale reduction factors:
 
        Point est. Upper C.I.
-Tag             1       1.01
-Tai             1       1.00
-Tga             1       1.00
-Tgi             1       1.01
-Tia             1       1.01
-Tig             1       1.00
-sigmaG          1       1.00
-sigmaI          1       1.00
+Tag             1          1
+Tai             1          1
+Tga             1          1
+Tgi             1          1
+Tia             1          1
+Tig             1          1
+sigmaA          1          1
+sigmaG          1          1
 
 Multivariate psrf
 
 1
-      Tag       Tai       Tga       Tgi       Tia       Tig    sigmaG    sigmaI 
- 1449.216  1579.911  1447.626  3868.153  1578.564  3655.705 18485.695 19436.035 
+       Tag        Tai        Tga        Tgi        Tia        Tig 
+  6670.442 429899.153   6702.797  49766.377 599111.509  50844.489 
+    sigmaA     sigmaG 
+245032.548 272365.680 

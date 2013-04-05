@@ -1,9 +1,10 @@
 
+
 rm(list=ls(all=TRUE)) #Clear out variables from previous runs.
 cohortYear <- 1984 #1980, 1981, 1982, 1983, 1984
 
 countChains <- 6#3 #6
-countIterations <- 10000
+countIterations <- 100000
 
 ## @knitr GoDogGo
 require(rjags)
