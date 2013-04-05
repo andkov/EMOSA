@@ -27,22 +27,16 @@ dsODiff<-read.csv(file.path(getwd(),ODiff,paste0(ODiff,"_resultsIn",".csv")),str
 dsODiff$specification<-spec1name
 dsODiffPars<-dsODiff[,c("specification", "model","cohort",pars12)]
 
+# input the Original Diffusion model soution and attache observed prevalences
+OHyb<-paste0(spec1,"Hybrid",distribution)
+dsOHyb<-read.csv(file.path(getwd(),OHyb,paste0(OHyb,"_resultsIn",".csv")),stringsAsFactors=FALSE)
+dsOHyb$specification<-spec1name
+dsOHybPars<-dsOHyb[,c("specification", "model","cohort",pars12)]
 
-# input the Scaled Contagion model soution and attache observed prevalences
-SCont<-paste0(spec2,"Contagion",distribution)
-dsSCont<-read.csv(file.path(getwd(),SCont,paste0(SCont,"_resultsIn",".csv")),stringsAsFactors=FALSE)
-dsSCont$specification<-spec2name
-dsSContPars<-dsSCont[,c("specification", "model","cohort",pars12)]
-
-# input the Scaled Diffusion model soution and attache observed prevalences
-SDiff<-paste0(spec2,"Diffusion",distribution)
-dsSDiff<-read.csv(file.path(getwd(),SDiff,paste0(SDiff,"_resultsIn",".csv")),stringsAsFactors=FALSE)
-dsSDiff$specification<-spec2name
-dsSDiffPars<-dsSDiff[,c("specification", "model","cohort",pars12)]
 
 # Combine model solutions into a single dataset
-dsModelsPars<-rbind(dsOContPars,dsODiffPars,dsSContPars,dsSDiffPars)
-dsModels<-rbind(dsOCont,dsODiff,dsSCont,dsSDiff) # stacked ds with models solutions (H,C,D)
+dsModelsPars<-rbind(dsOContPars,dsODiffPars,dsOHybPars)
+dsModels<-rbind(dsOCont,dsODiff,dsOHyb) # stacked ds with models solutions (H,C,D)
 
 # dsModels$specification<-factor(dsOCont$specification,levels=c("Original","Scaled"))  
 # dsModels$model<-factor(dsODiff$model,levels=c("Original","Scaled")) 

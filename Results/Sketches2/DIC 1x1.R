@@ -4,7 +4,7 @@ source(pathVectorsPalettes)
 # DIC plot - 
 
 #------------------------------------------------graph 2------#
-dsFORp <- dsDICLong[!(dsDICLong$specification %in% c("Scaled") & dsDICLong$model %in% c("Contagion")),]
+dsFORp <- dsDICLong#[!(dsDICLong$specification %in% c("Scaled") & dsDICLong$model %in% c("Contagion")),]
 dsFORp <- dsFORp[(dsFORp$index %in% c("DIC")),] 
 
 dsFORp <- mutate(dsFORp,specmod=paste(specification,model))

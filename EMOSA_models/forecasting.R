@@ -41,7 +41,7 @@ dsPredLong<- plyr::rename(dsPredLong, replace=c(variable="catatrans",
 # saves the forecast for this model in a individual dataset "pred_SM"
 pred_SM<-paste0("pred_", substr(specification,1,1),substr(model,1,1))
 assign(pred_SM, dsPredLong)
-rm(list=setdiff(ls(),c(keepds,"pred_OD","pred_OC","pred_SD","pred_SC")))
+rm(list=setdiff(ls(),c(keepds,"pred_OD","pred_OC","pred_OH")))
 
 
 

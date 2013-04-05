@@ -12,13 +12,13 @@ dsFORp <- mutate(dsFORp,parcoh=paste(cohort,catatrans))
 table(dsFORp$catatrans)
 
 p<-ggplot(dsFORp, aes(x=age,group=catatrans,fill=factor(catatrans)))+
-  labs(title=paste0("Recreating prevalences with Resilience"))+
+  labs(title=paste0("Recreating prevalences with hybrid"))+
   geom_line(aes(y=obs_proportion,colour = catatrans),size=2.5,alpha=.3,show_guide = FALSE)+
-  geom_line(aes(y=SD_proportion), linetype="solid")+
+  geom_line(aes(y=OH_proportion), linetype="solid")+
 #   geom_point(aes(colour=catatrans),show_guide = FALSE)+
   
   scale_y_continuous("Prevalence: proportion of total",
-                     limits=c(0, .7),
+                     limits=c(0, 1),
                      breaks=c(0,.1,.2,.3,.4,.5,.6,.7))+
   #   scale_x_continuous("years after 2000",              # for aes(x=time-2000)
   #                      limits=c(0, 10),
@@ -30,7 +30,7 @@ p<-ggplot(dsFORp, aes(x=age,group=catatrans,fill=factor(catatrans)))+
   facet_grid(cohort~.)
 p
 plast<-p
-pathFileOut<-file.path(getwd(),"Results","Sketches2","Recreating Resilience - 5x1 -prevalences_age.png") 
+pathFileOut<-file.path(getwd(),"Results","Sketches2","Recreating hybrid - 5x1 -prevalences_age.png") 
 png (filename = pathFileOut ,
      width = 400, height = 1200 , units = "px")
 plot(plast)

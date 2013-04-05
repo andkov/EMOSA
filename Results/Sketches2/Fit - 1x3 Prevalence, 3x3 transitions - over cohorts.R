@@ -9,11 +9,11 @@ p<-ggplot(dsFORp, aes(x=cohort))+
   geom_point(aes(y=sqdif_OD), stat="summary",fun.y="sum",size=3,color="royalblue2")+
   geom_line(aes(y=sqdif_OC), stat="summary",fun.y="sum",size=.5,color="goldenrod1")+
   geom_point(aes(y=sqdif_OC), stat="summary",fun.y="sum",size=3,color="goldenrod1")+
-  geom_line(aes(y=sqdif_SD), stat="summary",fun.y="sum",size=.5,color="violet")+
-  geom_point(aes(y=sqdif_SD), stat="summary",fun.y="sum",size=3,color="violet")+
+  geom_line(aes(y=sqdif_OH), stat="summary",fun.y="sum",size=.5,color="violet")+
+  geom_point(aes(y=sqdif_OH), stat="summary",fun.y="sum",size=3,color="violet")+
   annotate("text", x=1981,y=.057, label ="contagion", color="goldenrod1", size=7)+
   annotate("text", x=1981,y=.050, label ="diffusion", color="royalblue2", size=7)+
-  annotate("text", x=1981,y=.045, label ="resilience", color="violet", size=7)+
+  annotate("text", x=1981,y=.045, label ="hybrid", color="violet", size=7)+
   scale_y_continuous("Misfit: SS (lower=better)")
 p 
 plast<-p
@@ -31,11 +31,11 @@ p<-ggplot(dsFORp, aes(x=cohort))+
   geom_point(aes(y=sqdif_OD), stat="summary",fun.y="sum",size=3,color="royalblue2")+
   geom_line(aes(y=sqdif_OC), stat="summary",fun.y="sum",size=.5,color="goldenrod1")+
   geom_point(aes(y=sqdif_OC), stat="summary",fun.y="sum",size=3,color="goldenrod1")+
-  geom_line(aes(y=sqdif_SD), stat="summary",fun.y="sum",size=.5,color="violet")+
-  geom_point(aes(y=sqdif_SD), stat="summary",fun.y="sum",size=3,color="violet")+
+  geom_line(aes(y=sqdif_OH), stat="summary",fun.y="sum",size=.5,color="violet")+
+  geom_point(aes(y=sqdif_OH), stat="summary",fun.y="sum",size=3,color="violet")+
   annotate("text", x=1981,y=.4, label ="contagion", color="goldenrod1", size=7)+
   annotate("text", x=1981,y=.37, label ="diffusion", color="royalblue2", size=7)+
-  annotate("text", x=1981,y=.34, label ="resilience", color="violet", size=7)+
+  annotate("text", x=1981,y=.34, label ="hybrid", color="violet", size=7)+
   scale_y_continuous("Misfit: SS (lower=better)")
 p 
 plast<-p

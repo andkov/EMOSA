@@ -51,11 +51,9 @@ rm(list=setdiff(ls(),c(
   "dsOCont",          # Original Contagion complete model values: parameters, fit, precision, etc.
   "dsOContPars",      # Original Contagion parameters 
   "dsODiff",          # Original Diffusion complete model values: parameters, fit, precision, etc.
-  "dsODiffPars",      # Original Diffusion parameters 
-  "dsSCont",          # Scaled Contagion complete model values: parameters, fit, precision, etc.
-  "dsSContPars",      # Scaled Contagion parameters 
-  "dsSDiff",          # Scaled Diffusion complete model values: parameters, fit, precision, etc.
-  "dsSDiffPars",      # Scaled Diffusion parameters 
+  "dsODiffPars",      # Original Diffusion parameters   
+  "dsOHyb",           # Original Hybrid complete model values: parameters, fit, precision, etc.
+  "dsOHybPars",       # Original Hybrid parameters 
   "dsModels",         # All tested models: complet model values:parameters, fit, precision, etc.
   "dsModelsPars",     # All tested models: parameters
   "dsModelsParsLong", # all tested models: parameters - LONG FORM 
