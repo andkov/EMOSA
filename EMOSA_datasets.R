@@ -14,13 +14,13 @@ require(colorspace)
 #######
 # NOTE: you must have  "NLSY-97_Religiosity" repository in your local GitHub folder 
 # in order to execute (1) and (2)
-pathGitHub <- file.path("C:/Users/inspirion/Documents/GitHub") # locate the "GitHub" folder on your computer
+pathGitHub <- file.path("C:/Users/kovalav/Documents/GitHub") # locate the "GitHub" folder on your computer
 #######
 
 
 # (1) requires "NLSY-97_Religiosity" repository
 # Read the source file from NLS Web Investigator and prepare the parent dataset "dsSource"
-pathReadClean <- file.path(pathGitHub,"NLSY-97_Religiosity/01_reading_and_cleaning.R")
+pathReadClean <- file.path(getwd(), "NLSY-97_Religiosity/01_reading_and_cleaning.R")
 # C:/Users/USERNAME/Documents/GitHub  /Repository        /NN_Script.R 
 source(pathReadClean)
 rm(list=setdiff(ls(),(c("pathGitHub","dsSource")))) # Clean temp elements
