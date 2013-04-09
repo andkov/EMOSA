@@ -27,7 +27,7 @@ dsODiff<-read.csv(file.path(getwd(),ODiff,paste0(ODiff,"_resultsIn",".csv")),str
 dsODiff$specification<-spec1name
 dsODiffPars<-dsODiff[,c("specification", "model","cohort",pars12)]
 
-# input the Original Diffusion model soution and attache observed prevalences
+# input the Original Hybrid model soution and attache observed prevalences
 OHyb<-paste0(spec1,"Hybrid",distribution)
 dsOHyb<-read.csv(file.path(getwd(),OHyb,paste0(OHyb,"_resultsIn",".csv")),stringsAsFactors=FALSE)
 dsOHyb$specification<-spec1name

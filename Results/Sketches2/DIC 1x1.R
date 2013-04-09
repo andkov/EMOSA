@@ -18,7 +18,7 @@ scale_y_continuous("DIC (lower=better)")
 p
 
 
-plast<-p
+plast<-p2
 pathFileOut<-file.path(getwd(),"Results","Sketches2","DIC 1x1 3 models.png") 
 png (filename = pathFileOut ,
      width = 500, height = 400 , units = "px")

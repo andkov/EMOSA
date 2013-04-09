@@ -14,7 +14,7 @@ table(dsFORp$catatrans)
 p<-ggplot(dsFORp, aes(x=age,group=catatrans,fill=factor(catatrans)))+
   labs(title=paste0("Recreating prevalences with hybrid"))+
   geom_line(aes(y=obs_proportion,colour = catatrans),size=2.5,alpha=.3,show_guide = FALSE)+
-  geom_line(aes(y=OH_proportion), linetype="solid")+
+  geom_line(aes(y=OC_proportion), linetype="solid")+
 #   geom_point(aes(colour=catatrans),show_guide = FALSE)+
   
   scale_y_continuous("Prevalence: proportion of total",
@@ -30,7 +30,7 @@ p<-ggplot(dsFORp, aes(x=age,group=catatrans,fill=factor(catatrans)))+
   facet_grid(cohort~.)
 p
 plast<-p
-pathFileOut<-file.path(getwd(),"Results","Sketches2","Recreating hybrid - 5x1 -prevalences_age.png") 
+pathFileOut<-file.path(getwd(),"Results","Sketches3","Recreating hybrid - 5x1 -prevalences_age.png") 
 png (filename = pathFileOut ,
      width = 400, height = 1200 , units = "px")
 plot(plast)

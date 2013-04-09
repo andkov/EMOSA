@@ -19,8 +19,8 @@ keepds<-c("keepds","timevars","obsvars", "dsModel",
   "dsWS_catatrans",   # Wide summaries of catatrans, both counts and proportions, summaried dsL_catatrans
   "dsWSP_catatrans",  # Wide summaries of catatrans as proportions, subset(dsWS_catatrans)
   "dsLSP_catatrans",  # (!)Long summaries of catatrans as proportion, elongated dsWSP_catatrans
-#   "dsWSC_catatrans",  # Wide summaries of catatrans as counts, subset(dsWS_catatrans)
-#   "dsLSC_catatrans",  # Long summaries of catatrans as counts, elongated dsWSC_catatrans
+  "dsWSC_catatrans",  # Wide summaries of catatrans as counts, subset(dsWS_catatrans)
+  "dsLSC_catatrans",  # Long summaries of catatrans as counts, elongated dsWSC_catatrans
 #   "dsOCont",          # Original Contagion complete model values: parameters, fit, precision, etc.
   "dsOContPars",        # Original Contagion parameters 
 #   "dsODiff",          # Original Diffusion complete model values: parameters, fit, precision, etc.
