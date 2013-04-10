@@ -14,7 +14,9 @@ model<-"GiA431HybridGauss"
 distribution<-"Gauss"
 pathDirectory <- file.path(getwd())
 
-pathModel <- file.path(getwd(),paste(model),paste0(model,".bugs"))
+# pathModel <- file.path(getwd(),paste(model),paste0(model,".bugs"))
+# pathModel <- file.path(getwd(),paste(model),paste0(model,"Binomial.bugs"))
+pathModel <- file.path(getwd(),paste(model),paste0(model,"SimplePaste.bugs"))
 pathData <- file.path(getwd(), "Data/SummaryBirthYearByTime.csv")
 
 
@@ -92,7 +94,7 @@ density<-densityplot(chains)
 elapsed
 
 particularity<-countIterations
-pathOutData <- file.path(pathDirectory,paste(model),"/figure") # where to put images
+pathOutData <- file.path(pathDirectory,paste(model),"figure") # where to put images
 xyplotname<-"xyplot"  # assigns the name of the file with posterior distribution of parameters
 densname<- "densname" # assigns the name of the file with evaluated parameter sets
 
