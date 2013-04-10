@@ -34,12 +34,12 @@ source(pathModel)
 # melt into LONG with prevalance as the outcome
 dsPredLong <- reshape2::melt(data.frame(pred), id.vars=c("time", "cohort","age"))  ## id.vars declares MEASURED variables (as opposed to RESPONSE variable)
 dsPredLong<- plyr::rename(dsPredLong, replace=c(variable="catatrans", 
-                                                value=paste0(substr(specification,1,1),
+                                                value=paste0("O",
                                                              substr(model,1,1),
                                                              "_proportion")))
 
 # saves the forecast for this model in a individual dataset "pred_SM"
-pred_SM<-paste0("pred_", substr(specification,1,1),substr(model,1,1))
+pred_SM<-paste0("pred_",  "O",substr(model,1,1))
 assign(pred_SM, dsPredLong)
 rm(list=setdiff(ls(),c(keepds,"pred_OD","pred_OC","pred_OH")))
 

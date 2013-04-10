@@ -20,16 +20,31 @@ pathGitHub <- file.path("C:/Users/inspirion/Documents/GitHub") # locate the "Git
 
 # (1) requires "NLSY-97_Religiosity" repository
 # Read the source file from NLS Web Investigator and prepare the parent dataset "dsSource"
+######## Chose how the categories are defined in terms of the original scale.
+#### GIA332 - create variable to record a summarized category of attendance
+# Goers<-c(8,7,6)
+# Irregulars<-c(5,4,3)
+# Absentees<-c(2,1)
+#### GIA431 - create variable to record a summarized category of attendance
+Goers<-c(8,7,6,5)
+Irregulars<-c(4,3,2)
+Absentees<-c(1)
+
 pathReadClean <- file.path(pathGitHub, "NLSY-97_Religiosity/01_reading_and_cleaning.R")
 # C:/Users/USERNAME/Documents/GitHub  /Repository        /NN_Script.R 
 source(pathReadClean)
 rm(list=setdiff(ls(),(c("pathGitHub","dsSource")))) # Clean temp elements
+
 
 # (2) requires "NLSY-97_Religiosity" repository
 # breack up dsSource into smaller datasets, transform them for modeling and graphing
 pathMeltCast <- file.path(pathGitHub,"NLSY-97_Religiosity/02_melting_and_casting.R")
 # C:/Users/USERNAME/Documents/GitHub  /Repository       /NN_Script.R 
 source(pathMeltCast)
+# Create the file to be used in parameter estimation
+pathFileOut<-file.path(getwd(),"Data","SummaryBirthYearByTime.csv")
+write.table(dsWSP_catatrans,file=pathFileOut,sep=",",row.names=F)
+
 
 # Collect model solutions from folders in EMOSA repository
 pathCollectSolutions <- file.path(getwd(),"collect_model_solutions.R")
@@ -62,8 +77,6 @@ rm(list=setdiff(ls(),c(
 )))
 
 
-
-# write.table(dsWSP_catatrans,file="dsWSP_catatrans.csv",sep=",",row.names=F)
 
 
 

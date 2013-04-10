@@ -37,23 +37,24 @@ rm(list=setdiff(ls(),keepds))
 
 
 
-# Original DIffusion ###############################################################
+#  DIffusion ###############################################################
 dsModel<-dsODiffPars
 print(dsModel)
 # Compute model forecast using observed values, specification, and the model solution
 pathModel <- file.path(getwd(),"EMOSA_models/forecasting.R")
 source(pathModel)
 
-# Original Contagion ###############################################################
+#  Contagion ###############################################################
 dsModel<-dsOContPars
 print(dsModel)
 # Compute model forecast using observed values, specification, and the model solution
 pathModel <- file.path(getwd(),"EMOSA_models/forecasting.R")
 source(pathModel)
 
-# Original Hybrid ###############################################################
+#  Hybrid ###############################################################
 dsModel<-dsOHybPars
 print(dsModel)
+
 # Compute model forecast using observed values, specification, and the model solution
 pathModel <- file.path(getwd(),"EMOSA_models/forecasting.R")
 source(pathModel)
@@ -67,10 +68,6 @@ dsEMOSA<-join(dsEMOSA,pred_OH)
 dsEMOSA<-mutate(dsEMOSA,sqdif_OD=(obs_proportion-OD_proportion)^2,
                     sqdif_OC=(obs_proportion-OC_proportion)^2,
                     sqdif_OH=(obs_proportion-OH_proportion)^2)
-
-fit<-dcast(dsEMOSA, cohort ~ time,value.var="sqdif_OD", sum)
-
-
 
 ?dcast
 

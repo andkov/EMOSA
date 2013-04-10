@@ -1,0 +1,57 @@
+[1] "Gauss"
+[1] "GiA431HybridGauss"
+[1] 10000
+[1] 1980
+Mean deviance:  -110.3 
+penalty 6.738 
+Penalized deviance: -103.6 
+
+Iterations = 11001:21000
+Thinning interval = 1 
+Number of chains = 5 
+Sample size per chain = 10000 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+          Mean       SD  Naive SE Time-series SE
+Tag    0.60810 0.260843 1.167e-03      1.251e-02
+Tai    0.43321 0.260362 1.164e-03      1.691e-02
+Tga    0.19748 0.129163 5.776e-04      8.643e-03
+Tgi    0.25417 0.154804 6.923e-04      7.177e-03
+Tia    0.16195 0.084237 3.767e-04      5.342e-03
+Tig    0.58346 0.267232 1.195e-03      9.090e-03
+sigmaA 0.01289 0.003882 1.736e-05      3.664e-05
+sigmaG 0.02182 0.006421 2.871e-05      4.393e-05
+
+2. Quantiles for each variable:
+
+           2.5%     25%     50%     75%   97.5%
+Tag    0.071673 0.41264 0.64498 0.82890 0.98272
+Tai    0.024315 0.22188 0.41037 0.62681 0.94260
+Tga    0.010483 0.09338 0.18182 0.28136 0.49010
+Tgi    0.015264 0.12927 0.23819 0.36355 0.58174
+Tia    0.016835 0.10134 0.15634 0.21622 0.34111
+Tig    0.061605 0.37283 0.61372 0.81270 0.98052
+sigmaA 0.007771 0.01021 0.01212 0.01466 0.02258
+sigmaG 0.013256 0.01743 0.02058 0.02476 0.03768
+
+Potential scale reduction factors:
+
+       Point est. Upper C.I.
+Tag          1.01       1.03
+Tai          1.01       1.02
+Tga          1.00       1.01
+Tgi          1.01       1.02
+Tia          1.01       1.02
+Tig          1.00       1.01
+sigmaA       1.00       1.00
+sigmaG       1.00       1.00
+
+Multivariate psrf
+
+1.01
+       Tag        Tai        Tga        Tgi        Tia        Tig     sigmaA 
+  440.1944   238.9428   223.4750   485.7789   258.4409   880.7905 11407.6773 
+    sigmaG 
+21515.7635 

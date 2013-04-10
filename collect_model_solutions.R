@@ -9,7 +9,7 @@ require(colorspace) #Load the library necessary for creating tightly-controlled 
 pars12<- c("Tgi","Tga","Tig","Tag","Tia","Tai") # ,"Cgi","Cga","Cig","Cag","Cia","Cai")  # for Hybrid
 
 #Model selection
-spec1<-c("Original")
+spec1<-c("GiA431") # choose what definition of the behavioral categories to use
 spec2<-c("Scaled")
 distribution<-c("Gauss")
 spec1name<-rep(spec1,5)
@@ -32,7 +32,6 @@ OHyb<-paste0(spec1,"Hybrid",distribution)
 dsOHyb<-read.csv(file.path(getwd(),OHyb,paste0(OHyb,"_resultsIn",".csv")),stringsAsFactors=FALSE)
 dsOHyb$specification<-spec1name
 dsOHybPars<-dsOHyb[,c("specification", "model","cohort",pars12)]
-
 
 # Combine model solutions into a single dataset
 dsModelsPars<-rbind(dsOContPars,dsODiffPars,dsOHybPars)
