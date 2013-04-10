@@ -1,15 +1,15 @@
-# ga,ag - contagion; gi,ia,ai,ig - Diffusion
+# ai,ag,ig- contagion; gi,ga, ia  - Diffusion
 model {
 	for( i in 1:(timeCount-1) ) {
 		pgHat[i+1] <- pg[i]
-			- (Tgi * pg[i]) - (Tga * pg[i] * pa[i])		
-			+ (Tig * pi[i]) + (Tag * pa[i] * pg[i]) 
+			- (Tgi * pg[i]) - (Tga * pg[i])		
+			+ (Tig * pi[i] * pg[i]) + (Tag * pa[i] * pg[i]) 
 		
     	piHat[i+1] <- 1 - pgHat[i+1] - paHat[i+1]
 		
 		paHat[i+1] <- pa[i] 
-			- (Tag * pa[i] * pg[i])  - (Tai * pa[i])
-			+ (Tga * pg[i] * pa[i])	 + (Tia * pi[i])
+			- (Tag * pa[i] * pg[i]) - (Tai * pa[i] * pi[i])
+			+ (Tga * pg[i])	+ (Tia * pi[i])
 		
 		pg[i+1] ~ dnorm(pgHat[i+1], precG)
 		#pi[i+1] ~ dnorm(piHat[i+1], precI)

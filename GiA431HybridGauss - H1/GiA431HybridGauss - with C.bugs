@@ -1,15 +1,14 @@
-# ga,ag - contagion; gi,ia,ai,ig - Diffusion
 model {
 	for( i in 1:(timeCount-1) ) {
 		pgHat[i+1] <- pg[i]
-			- (Tgi * pg[i]) - (Tga * pg[i] * pa[i])		
-			+ (Tig * pi[i]) + (Tag * pa[i] * pg[i]) 
+			- (Tgi * pg[i] * pow(pi[i],Cgi)) - (Tga * pg[i] * pow(pa[i], Cga))		
+			+ (Tig * pi[i] * pow(pg[i],Cig)) + (Tag * pa[i] * pow(pg[i],Cag)) 
 		
     	piHat[i+1] <- 1 - pgHat[i+1] - paHat[i+1]
 		
 		paHat[i+1] <- pa[i] 
-			- (Tag * pa[i] * pg[i])  - (Tai * pa[i])
-			+ (Tga * pg[i] * pa[i])	 + (Tia * pi[i])
+			- (Tag * pa[i] * pow(pg[i],Cag)) - (Tai * pa[i] * pow(pi[i],Cai))
+			+ (Tga * pg[i] * pow(pa[i],Cga)) + (Tia * pi[i] * pow(pa[i],Cia))
 		
 		pg[i+1] ~ dnorm(pgHat[i+1], precG)
 		#pi[i+1] ~ dnorm(piHat[i+1], precI)
@@ -26,7 +25,8 @@ model {
 		
 	alpha <- 1
 	beta <- 1
-	
+	D<-d[0:1]
+		
 	Tgi ~ dbeta(alpha, beta)
 	Tga ~ dbeta(alpha, beta)	
 	Tig ~ dbeta(alpha, beta)
@@ -34,5 +34,10 @@ model {
 	Tag ~ dbeta(alpha, beta)
 	Tai ~ dbeta(alpha, beta)
 	
+	Cig ~ dcat(p[D,1:2])
+	Cag ~ dcat(p[D,1:2])
+	Cgi ~ dcat(p[D,1:2])
+	Cga ~ dcat(p[D,1:2])
+	Cai ~ dcat(p[D,1:2])
+	Cia ~ dcat(p[D,1:2])
 }	
-	

@@ -9,10 +9,10 @@ for( i in 2:yearCount ) {
 #   # Model is defined though predictions of specific transitions
 #   # How many people will transit from g(Goers) to i(Irregulars)? 
   pred[i,"pgi"]<-Tgi*pred[i-1, "pG"]
-  pred[i,"pga"]<-Tga*pred[i-1, "pG"]*pred[i-1, "pA"]
-  pred[i,"pig"]<-Tig*pred[i-1, "pI"]
+  pred[i,"pga"]<-Tga*pred[i-1, "pG"]
+  pred[i,"pig"]<-Tig*pred[i-1, "pI"]*pred[i-1, "pG"]
   pred[i,"pag"]<-Tag*pred[i-1, "pA"]*pred[i-1, "pG"]
-  pred[i,"pai"]<-Tai*pred[i-1, "pA"]
+  pred[i,"pai"]<-Tai*pred[i-1, "pA"]*pred[i-1, "pI"]
   pred[i,"pia"]<-Tia*pred[i-1, "pI"]
 # #   # The rest of the code does not change with models
   pred[i,"pgg"]<- pred[i-1,"pG"]-pred[i,"pgi"]- pred[i,"pga"]
