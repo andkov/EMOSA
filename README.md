@@ -4,7 +4,7 @@ Programming support to estimation of EMOSA (Epidemic Models of Onset of Social A
 
 
 # Model Specification 
-![Figure 2](figures/Figure%201.png)
+![Figure 2](figures/Figure%202.png)
 
 # Model Results
 - [Diffusion Only](https://github.com/andkov/EMOSA/blob/master/DiffusionOnly/Diffusion%20results.pdf)  
