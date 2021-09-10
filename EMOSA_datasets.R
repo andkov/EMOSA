@@ -14,7 +14,7 @@ require(colorspace)
 #######
 # NOTE: you must have  "NLSY-97_Religiosity" repository in your local GitHub folder 
 # in order to execute (1) and (2)
-pathGitHub <- file.path("C:/Users/inspirion/Documents/GitHub") # locate the "GitHub" folder on your computer
+pathGitHub <- file.path("C:/Users/koval/Documents/GitHub/andkov/") # locate the "GitHub" folder on your computer
 #######
 
 
