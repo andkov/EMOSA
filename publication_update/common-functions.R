@@ -5,6 +5,8 @@ ggplot2::theme_set(
   )+
     ggplot2::theme(
       strip.background = element_rect(fill="grey95", color = NA)
+      ,axis.ticks = element_blank()
+      ,panel.grid = element_line(color = "grey80")
     )
 )
 
@@ -83,3 +85,12 @@ neat_DT <- function(x, filter_="top",...){
 }
 
 dt <- neat_DT
+
+
+
+RemoveLeadingZero <- function( x ) {
+  #   g <- grep("\\A\\b(?<=0)(\\.\\d{1,})$", x, perl=TRUE, value=TRUE);
+  g <- gsub("\\b(0)(\\.\\d{1,})$", "\\2", x, perl=TRUE);
+  return( g )
+} #
+
