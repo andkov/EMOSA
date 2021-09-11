@@ -68,11 +68,24 @@ dsEMOSA<-mutate(dsEMOSA,sqdif_OD=(obs_proportion-OD_proportion)^2,
                     sqdif_OC=(obs_proportion-OC_proportion)^2,
                     sqdif_OH=(obs_proportion-OH_proportion)^2)
 
-fit<-dcast(dsEMOSA, cohort ~ time,value.var="sqdif_OD", sum)
 
+# write to disk
+ls_out <-list(
+    "dsDICLong"            = dsDICLong       
+  , "dsEMOSA"              = dsEMOSA     
+  , "dsLSC_catatrans"      = dsLSC_catatrans             
+  , "dsLSP_catatrans"      = dsLSP_catatrans             
+  , "dsModel"              = dsModel     
+  , "dsModelsPars"         = dsModelsPars          
+  , "dsModelsParsLong"     = dsModelsParsLong              
+  , "dsOContPars"          = dsOContPars         
+  , "dsODiffPars"          = dsODiffPars         
+  , "dsOHybPars"           = dsOHybPars        
+  , "dsWS_catatrans"       = dsWS_catatrans            
+  , "dsWSC_catatrans"      = dsWSC_catatrans             
+  , "dsWSP_catatrans"      = dsWSP_catatrans             ) 
 
-
-?dcast
+readr::write_rds(ls_out, "Data/EMOSA_models.rds")
 
 
 
