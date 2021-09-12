@@ -6,7 +6,7 @@ ggplot2::theme_set(
     ggplot2::theme(
       strip.background = element_rect(fill="grey95", color = NA)
       ,axis.ticks = element_blank()
-      ,panel.grid = element_line(color = "grey80")
+      ,panel.grid = element_line(color = "grey90")
     )
 )
 
