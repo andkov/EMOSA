@@ -305,6 +305,361 @@ g <-
   labs(title=paste0("Prevalence of church attendance"))
 g
 
+
+# ---- make-fig-6ab -------------
+y_label_7d <- "Misfit SS"
+
+g6a <- dsDICLong %>% 
+  filter(index == "DIC") %>% 
+  make_simple_traj(
+    xvar = "cohort"
+    ,yvar = "value"
+    ,cvar = "model"
+    ,clevels = model_colors
+  )+
+  labs(y ="DIC (lower = better)")+
+  theme(
+    legend.position = "none"
+  )
+# g6a
+
+g6b <- dsEMOSA %>% 
+  filter(catatrans %in% c("pG","pI","pA")) %>% 
+  group_by(cohort) %>% 
+  summarize(
+    sqdif_OD = sum(sqdif_OD, na.rm = T)
+    ,sqdif_OC = sum(sqdif_OC, na.rm = T)
+    ,sqdif_OH = sum(sqdif_OH, na.rm = T)
+  ) %>% 
+  ungroup() %>% 
+  tidyr::pivot_longer(
+    cols = paste0("sqdif_O",c("D","C","H"))
+    ,names_to = "model"
+    ,values_to = "value"
+  ) %>% 
+  mutate(
+    model = case_when(
+      model == "sqdif_OD" ~ "Diffusion"
+      ,model == "sqdif_OC" ~ "Contagion"
+      ,model == "sqdif_OH" ~ "Hybrid"
+    )
+  ) %>% 
+  make_simple_traj("cohort","value","model")+
+  scale_y_continuous(labels = RemoveLeadingZero)+
+  labs(y =y_label_7d)+
+  theme(
+    legend.position = "none"
+  )
+# g6b
+
+
+legend_g6ab <- cowplot::get_legend(
+  g6a +
+    # labs(fill="Dependend/Outcome Variable: ")+
+    guides(color = guide_legend(ncol = 1)) +
+    theme(
+      legend.position = "right"
+      ,legend.title = element_text(size = 16)
+      
+    )
+)
+
+g6ab <- cowplot::plot_grid(
+  g6a
+  ,legend_g6ab
+  ,g6b
+  ,nrow = 1
+  ,rel_widths = c(1,.3,1)
+  ,rel_heights = c(1,.3,1)
+)
+# g6ab
+
+
+ggplot2::ggsave(
+  filename = paste0("figure_6ab",".jpg"),
+  plot     = g6ab,
+  device   = "jpg",
+  path     = prints_folder,
+  width    = 10,
+  height   = 3,
+  # units = "cm",
+  dpi      = 'retina',
+  limitsize = FALSE
+  # ,...
+)
+
+
+# ---- make-fig-7ab --------------- 
+
+g7a <- dsEMOSA %>% 
+  filter(!catatrans %in% c("pG","pI","pA")) %>% 
+  group_by(cohort) %>% 
+  summarize(
+    sqdif_OD = sum(sqdif_OD, na.rm = T)
+    ,sqdif_OC = sum(sqdif_OC, na.rm = T)
+    ,sqdif_OH = sum(sqdif_OH, na.rm = T)
+  ) %>% 
+  ungroup() %>% 
+  tidyr::pivot_longer(
+    cols = paste0("sqdif_O",c("D","C","H"))
+    ,names_to = "model"
+    ,values_to = "value"
+  ) %>% 
+  mutate(
+    model = case_when(
+      model == "sqdif_OD" ~ "Diffusion"
+      ,model == "sqdif_OC" ~ "Contagion"
+      ,model == "sqdif_OH" ~ "Hybrid"
+    )
+  ) %>% 
+  make_simple_traj("cohort","value","model")+
+  scale_y_continuous(labels = RemoveLeadingZero)+
+  labs(y = y_label_7d)+
+  theme(
+    legend.position = "none"
+  )
+# g7a
+
+g7b <- g6b
+# g7b
+
+
+legend_g7ab <- legend_g6ab
+
+g7ab <- cowplot::plot_grid(
+  g7a + labs(title = "PREVALENCE")
+  ,legend_g7ab
+  ,g7b + labs(title = "TRANSITION")
+  ,nrow = 1
+  ,rel_widths = c(.8,.4,.8)
+  ,rel_heights = c(1,.3,1)
+)
+# g7ab
+
+# ---- make-fig-7c -------------
+
+# g7c <- dsEMOSA %>% 
+#   filter(catatrans %in% c("pG","pI","pA")) %>% 
+#   group_by(cohort, catatrans) %>% 
+#   summarize(
+#     sqdif_OD = sum(sqdif_OD, na.rm = T)
+#     ,sqdif_OC = sum(sqdif_OC, na.rm = T)
+#     ,sqdif_OH = sum(sqdif_OH, na.rm = T)
+#   ) %>% 
+#   ungroup() %>% 
+#   tidyr::pivot_longer(
+#     cols = paste0("sqdif_O",c("D","C","H"))
+#     ,names_to = "model"
+#     ,values_to = "value"
+#   ) %>% 
+#   mutate(
+#     model = case_when(
+#       model == "sqdif_OD" ~ "Diffusion"
+#       ,model == "sqdif_OC" ~ "Contagion"
+#       ,model == "sqdif_OH" ~ "Hybrid"
+#     )
+#   ) %>% 
+#   make_simple_traj("cohort","value","model")+
+#   facet_grid(.~catatrans)+
+#   scale_y_continuous(labels = RemoveLeadingZero)+
+#   labs(y ="Misfit: SS (lower=better)")+
+#   theme(
+#     legend.position = "none"
+#   )
+# g7c
+
+
+
+
+d7c <- dsEMOSA %>% 
+  filter(catatrans %in% c("pG","pI","pA")) %>% 
+  group_by(cohort, catatrans) %>% 
+  summarize(
+    sqdif_OD = sum(sqdif_OD, na.rm = T)
+    ,sqdif_OC = sum(sqdif_OC, na.rm = T)
+    ,sqdif_OH = sum(sqdif_OH, na.rm = T)
+  ) %>% 
+  ungroup() %>% 
+  tidyr::pivot_longer(
+    cols = paste0("sqdif_O",c("D","C","H"))
+    ,names_to = "model"
+    ,values_to = "value"
+  ) %>% 
+  mutate(
+    model = case_when(
+      model == "sqdif_OD" ~ "Diffusion"
+      ,model == "sqdif_OC" ~ "Contagion"
+      ,model == "sqdif_OH" ~ "Hybrid"
+    )
+  ) 
+
+add_common_elements_g7c <- function(p){
+  p <- p +
+    scale_y_continuous(
+      limits = c(0,.025), breaks = seq(0,.025,.01),labels=RemoveLeadingZero 
+      )+
+    theme(
+      legend.position = "none"
+    )
+}
+
+g7c1 <- 
+  (d7c %>% 
+  filter(catatrans == "pG") %>% 
+  make_simple_traj("cohort","value","model")+
+  annotate("text", x=1981.2,y=.013, label ="Goers", color="grey60", size=7)+
+  labs(y = y_label_7d)
+  ) %>% 
+  add_common_elements_g7c()+
+  theme(
+    axis.title.x = element_text(color = "NA")
+  )
+
+
+g7c2 <- 
+  (d7c %>% 
+     filter(catatrans == "pI") %>% 
+     make_simple_traj("cohort","value","model")+
+     annotate("text", x=1981.4,y=.013, label ="Irregulars", color="grey60", size=7) 
+  )%>% 
+  add_common_elements_g7c()+
+  theme(
+    axis.title.y = element_text(color = "NA")
+    # axis.text.y = element_blank()
+    
+  )
+
+g7c3 <- 
+  (d7c %>% 
+     filter(catatrans == "pA") %>% 
+     make_simple_traj("cohort","value","model")+
+     annotate("text", x=1981.5,y=.013, label ="Absentees", color="grey60", size=7) 
+  )%>% 
+  add_common_elements_g7c()+
+  theme(
+    axis.title.x = element_text(color = "NA")
+    ,axis.title.y = element_text(color = "NA")
+  )
+
+g7c <- cowplot::plot_grid(
+  g7c1,g7c2,g7c3
+  ,nrow=1
+  ,rel_widths = c(1, 1, 1)
+)
+# g7c
+
+# ---- make-fig-7d -------------
+
+d7d <- dsEMOSA %>% 
+  filter(!catatrans %in% c("pG","pI","pA")) %>% 
+  group_by(cohort, mx, my) %>% 
+  summarize(
+    sqdif_OD = sum(sqdif_OD, na.rm = T)
+    ,sqdif_OC = sum(sqdif_OC, na.rm = T)
+    ,sqdif_OH = sum(sqdif_OH, na.rm = T)
+  ) %>% 
+  ungroup() %>% 
+  tidyr::pivot_longer(
+    cols = paste0("sqdif_O",c("D","C","H"))
+    ,names_to = "model"
+    ,values_to = "value"
+  ) %>% 
+  mutate(
+    model = case_when(
+      model == "sqdif_OD" ~ "Diffusion"
+      ,model == "sqdif_OC" ~ "Contagion"
+      ,model == "sqdif_OH" ~ "Hybrid"
+    )
+  ) %>% 
+  mutate(
+    mx = fct_recode(mx,Goer = "G",Irregular = "I",Absentee = "A")
+    ,my = fct_recode(my,Goer = "G",Irregular = "I",Absentee = "A")
+  )
+
+add_common_7d <- function(p){
+  p <- p +
+    scale_y_continuous(
+      labels=RemoveLeadingZero 
+      ,limits = c(0,.1)
+      , breaks = seq(0,.1,.02)
+    )+
+    theme(
+      legend.position = "none"
+      ,axis.title = element_text(color = NA)
+    )
+}
+
+g7d1 <- (d7d %>% filter(mx=="Goer",my=="Goer") %>%  make_simple_traj("cohort","value","model"))          %>% add_common_7d()
+g7d2 <- (d7d %>% filter(mx=="Goer",my=="Irregular") %>%  make_simple_traj("cohort","value","model"))     %>% add_common_7d()
+g7d3 <- (d7d %>% filter(mx=="Goer",my=="Absentee") %>%  make_simple_traj("cohort","value","model"))      %>% add_common_7d()
+g7d4 <- (d7d %>% filter(mx=="Irregular",my=="Goer") %>%  make_simple_traj("cohort","value","model"))     %>% add_common_7d()
+g7d5 <- (d7d %>% filter(mx=="Irregular",my=="Irregular") %>%  make_simple_traj("cohort","value","model"))%>% add_common_7d()
+g7d6 <- (d7d %>% filter(mx=="Irregular",my=="Absentee") %>%  make_simple_traj("cohort","value","model")) %>% add_common_7d()
+g7d7 <- (d7d %>% filter(mx=="Absentee",my=="Goer") %>%  make_simple_traj("cohort","value","model"))      %>% add_common_7d()
+g7d8 <- (d7d %>% filter(mx=="Absentee",my=="Irregular") %>%  make_simple_traj("cohort","value","model")) %>% add_common_7d()
+g7d9 <- (d7d %>% filter(mx=="Absentee",my=="Absentee") %>%  make_simple_traj("cohort","value","model"))  %>% add_common_7d()
+
+
+g7d1 <- g7d1 + annotate("text", x=1981.8,y=.065, label = sprintf('G\u2192G'), alpha =.5, size=5) 
+g7d2 <- g7d2 + annotate("text", x=1982,y=.065, label = sprintf('G\u2192I'), alpha =.5, size=5)
+g7d3 <- g7d3 + annotate("text", x=1982,y=.065, label = sprintf('G\u2192A'), alpha =.5, size=5)
+g7d4 <- g7d4 + annotate("text", x=1982,y=.065, label = sprintf('I\u2192G'), alpha =.5, size=5)+labs(y=y_label_7d)+theme(axis.title.y =element_text(color = "black"))
+g7d5 <- g7d5 + annotate("text", x=1982,y=.065, label = sprintf('I\u2192I'), alpha =.5, size=5)
+g7d6 <- g7d6 + annotate("text", x=1982,y=.065, label = sprintf('I\u2192A'), alpha =.5, size=5)
+g7d7 <- g7d7 + annotate("text", x=1982,y=.065, label = sprintf('A\u2192G'), alpha =.5, size=5)
+g7d8 <- g7d8 + annotate("text", x=1982,y=.065, label = sprintf('A\u2192I'), alpha =.5, size=5)+labs(x="cohort")+theme(axis.title.x =element_text(color = "black"))
+g7d9 <- g7d9 + annotate("text", x=1982,y=.065, label = sprintf('A\u2192A'), alpha =.5, size=5)
+
+g7d <- cowplot::plot_grid(
+  g7d1, g7d2,g7d3,
+  g7d4,g7d5,g7d6,
+  g7d7,g7d8,g7d9
+  
+  ,ncol = 3
+  # rel_heights values control vertical title margins
+  ,rel_heights = rep(1,9)
+  ,rel_widths = rep(1,9)
+)+
+  theme(
+    plot.background =element_rect(fill = "white", color = "white")
+  )
+# matrix_plot 
+
+# final_plot <- matrix_plot
+
+title_ab <- cowplot::ggdraw()+cowplot::draw_label("Total model misfit in predicting")
+title_c <- cowplot::ggdraw()+cowplot::draw_label("Model misfit in predicting PREVALENCE")
+title_d <- cowplot::ggdraw()+cowplot::draw_label("Model misfit in predicting TRANSITION")
+
+final_plot <- cowplot::plot_grid(
+  title_ab
+  ,g7ab
+  ,title_c
+  ,g7c
+  ,title_d
+  ,g7d
+  ,ncol = 1
+  ,rel_heights = c(.1,1.2, .1,1, .1,3)
+
+)
+final_plot
+# final_plot
+# final_plot %>% quick_save(dto$model_name,width = 10, height = 5)
+ggplot2::ggsave(
+  filename = paste0("figure_7",".jpg"),
+  plot     = final_plot,
+  device   = "jpg",
+  path     = prints_folder,
+  width    = 10,
+  height   = 12,
+  # units = "cm",
+  dpi      = 'retina',
+  limitsize = FALSE
+  # ,...
+)
+
+
+
 # ---- graph-2 -----------------------------------------------------------------
 
 # ---- save-to-disk ------------------------------------------------------------
