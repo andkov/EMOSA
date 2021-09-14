@@ -23,6 +23,7 @@ library(stringr)   # strings
 library(lubridate) # dates
 library(tibble)
 library(cowplot)
+library(lemon)     # for faceting
 
 # ---- declare-globals ---------------------------------------------------------
 
@@ -205,17 +206,17 @@ adj_off_d <- function(p){
 }
 
 # Diagonal
-p_g  <- p_g  %>% adj_on_both %>% adj_on_d()  + common_theme + annotate("text", x=23,y=.6, label ="Goers", color="grey60", size=7)
-p_i  <- p_i  %>% adj_on_both %>% adj_on_d()  + common_theme + annotate("text", x=23,y=.6, label ="Irregulars", color="grey60", size=7)
-p_a  <- p_a  %>% adj_on_both %>% adj_on_d()  + common_theme + annotate("text", x=23,y=.8, label ="Absentees", color="grey60", size=7)
+p_g  <- p_g  %>% adj_on_both %>% adj_on_d()  + common_theme + annotate("text", x=23,y=.95, label ="Goers", color="grey60", size=7)
+p_i  <- p_i  %>% adj_on_both %>% adj_on_d()  + common_theme + annotate("text", x=23,y=.95, label ="Irregulars", color="grey60", size=7)
+p_a  <- p_a  %>% adj_on_both %>% adj_on_d()  + common_theme + annotate("text", x=23,y=.95, label ="Absentees", color="grey60", size=7)
 # Top
-p_gi <- p_gi %>% adj_on_both %>% adj_off_d() + common_theme + annotate("text", x=1980.2,y=.05, label = sprintf('G\u2192I'), alpha =.5, size=5)
-p_ga <- p_ga %>% adj_on_both %>% adj_off_d() + common_theme + annotate("text", x=1980.2,y=.05, label = sprintf('G\u2192A'), alpha =.5, size=5)
-p_ia <- p_ia %>% adj_on_both %>% adj_off_d() + common_theme + annotate("text", x=1980.2,y=.05, label = sprintf('I\u2192A'), alpha =.5, size=5)
+p_gi <- p_gi %>% adj_on_both %>% adj_off_d() + common_theme + annotate("text", x=1982,y=.95, label = sprintf('G\u2192I'), alpha =.5, size=5)
+p_ga <- p_ga %>% adj_on_both %>% adj_off_d() + common_theme + annotate("text", x=1982,y=.95, label = sprintf('G\u2192A'), alpha =.5, size=5)
+p_ia <- p_ia %>% adj_on_both %>% adj_off_d() + common_theme + annotate("text", x=1982,y=.95, label = sprintf('I\u2192A'), alpha =.5, size=5)
 # Bottom
-p_ai <- p_ai %>% adj_on_both %>% adj_off_d() + common_theme + annotate("text", x=1983.7,y=.95, label = sprintf('A\u2192I'), alpha =.5, size=5)
-p_ag <- p_ag %>% adj_on_both %>% adj_off_d() + common_theme + annotate("text", x=1983.7,y=.95, label = sprintf('A\u2192G'), alpha =.5, size=5)
-p_ig <- p_ig %>% adj_on_both %>% adj_off_d() + common_theme + annotate("text", x=1983.7,y=.95, label = sprintf('I\u2192G'), alpha =.5, size=5)
+p_ai <- p_ai %>% adj_on_both %>% adj_off_d() + common_theme + annotate("text", x=1982,y=.95, label = sprintf('A\u2192I'), alpha =.5, size=5)
+p_ag <- p_ag %>% adj_on_both %>% adj_off_d() + common_theme + annotate("text", x=1982,y=.95, label = sprintf('A\u2192G'), alpha =.5, size=5)
+p_ig <- p_ig %>% adj_on_both %>% adj_off_d() + common_theme + annotate("text", x=1982,y=.95, label = sprintf('I\u2192G'), alpha =.5, size=5)
 
 # look into adding an arrow:
 # annotate("segment", x = 1982.5, xend = 1983, y = .9, yend = .9, colour = "grey60", size=1, alpha=0.6, arrow=arrow())
@@ -223,7 +224,7 @@ p_ig <- p_ig %>% adj_on_both %>% adj_off_d() + common_theme + annotate("text", x
 title_final <- cowplot::ggdraw()+cowplot::draw_label("Estimated parameter values for three models")
 caption_final <- cowplot::ggdraw()+cowplot::draw_label("Note: Diagonal shows observed prevalence")
 matrix_plot <- cowplot::plot_grid(
-
+  
   p_g,  p_gi, p_ga,
   p_ig, p_i,  p_ia,
   p_ag, p_ai, p_a
@@ -236,78 +237,61 @@ matrix_plot <- cowplot::plot_grid(
   theme(
     plot.background =element_rect(fill = "white", color = "white")
 )
-final_plot <- cowplot::plot_grid(
-  title_final
-  ,matrix_plot
-  # ,caption_final
-  ,ncol = 1
-  ,rel_heights = c(.1, 1)
-  
+
+legend_5c <- cowplot::get_legend(
+  p_gi +
+    labs(color="Model: ")+
+    guides(color = guide_legend(nrow = 1)) +
+    theme(
+      legend.position = "top"
+      ,legend.title = element_text(size = 16, hjust = .5)
+      ,legend.text = element_text(size=16)
+      
+    )
 )
-final_plot
+
+# input_5a <- system.file(path="./publication_update/fig5a.png", package = "cowplot") %>% draw_image()%>% system.file("extdata","./publication_update/fig5a.png", package = "cowplot")
+input_5a <- magick::image_read(path="./publication_update/fig5a.png")
+
+final_plot <- cowplot::plot_grid(
+  patchwork::plot_spacer()+theme(panel.border = element_blank())
+  ,legend_5c
+  ,matrix_plot
+  ,ncol=1
+  ,labels = c("(a)","(b)")
+  ,rel_heights =  c(1,.2, 3)
+)+draw_image(input_5a,vjust = -.4)
+# final_plot
+ 
+# ggdraw(p) + 
+#   draw_image(logo_file, x = 1, y = 1, hjust = 1, vjust = 1, width = 0.13, height = 0.2)
+
+
+# final_plot <- cowplot::plot_grid(
+#   title_final
+#   ,matrix_plot
+#   # ,caption_final
+#   ,ncol = 1
+#   ,rel_heights = c(.1, 1)
+#   
+# )
+# final_plot
 # final_plot
 # final_plot %>% quick_save(dto$model_name,width = 10, height = 5)
 ggplot2::ggsave(
-  filename = paste0("figure_5b",".jpg"),
+  filename = paste0("figure_5",".jpg"),
   plot     = final_plot,
   device   = "jpg",
   path     = prints_folder,
-  width    = 10,
-  height   = 10,
+  width    = 7.7,
+  height   = 9,
   # units = "cm",
   dpi      = 'retina',
   limitsize = FALSE
   # ,...
 )
-
-# ---- figure-5b -----------------------------------------------------------------
-g <- 
-  dsModelsParsLong %>% 
-  mutate(
-    mx  = substr(parameter,2,2) %>% as_factor() %>% fct_relevel("g","i","a")
-    ,my = substr(parameter,3,3)%>% as_factor() %>% fct_relevel("g","i","a")
-  ) %>% 
-  ggplot(aes(x = cohort, color = model))+
-  facet_grid(mx~my)+
-  geom_line(aes(y=value),size=.7,alpha=.8)+
-  geom_point(aes(y=value),size=6, shape=20)+
-  geom_abline(intercept = .5, slope = 0, color="red", size=.1,linetype=4)+
-  scale_y_continuous("value of parameter",
-                     limits=c(0, 1),
-                     breaks=c(.2,.4,.6,.8,1))+
-  scale_color_manual(values = model_colors)+
-  labs(title=paste0("Parameter values for 3 models"))
-g
-
-
-# ---- figure-5c --------------
-# observed prevalence on the diagonal 
-g <- 
-  dsEMOSA %>% 
-  filter(catatrans %in% c("pG","pI","pA")) %>% 
-  mutate(
-    cohort = as_factor(cohort) %>% fct_relevel(paste0(1984:1980))
-    ,parcoh=paste(cohort,catatrans)
-  ) %>% 
-  ggplot(aes(x=age,y=obs_proportion,group=parcoh,fill=factor(catatrans)))+
-  geom_line(aes(colour = catatrans), show.legend = FALSE)+
-    # facet_grid(. ~ cohort)+
-  geom_point(aes(colour=catatrans),show.legend = FALSE)+
-  scale_color_manual(values =catatransColor)+
-  scale_y_continuous("Prevalence: proportion of total",
-                     limits=c(0, .7),
-                     breaks=c(0,.1,.2,.3,.4,.5,.6,.7)
-                     , labels = RemoveLeadingZero
-                     )+
-  scale_x_continuous("age in years at the time of the interview",     # for aes(x=age)
-                     limits=c(16,30),
-                     breaks=c(16,18,20,22,24,26,28,30))+
-  labs(title=paste0("Prevalence of church attendance"))
-g
-
-
 # ---- make-fig-6ab -------------
-y_label_7d <- "Misfit SS"
+y_label_7d <- "SSE"
 
 g6a <- dsDICLong %>% 
   filter(index == "DIC") %>% 
@@ -317,7 +301,6 @@ g6a <- dsDICLong %>%
     ,cvar = "model"
     ,clevels = model_colors
   )+
-  labs(y ="DIC (lower = better)")+
   theme(
     legend.position = "none"
   )
@@ -355,40 +338,151 @@ g6b <- dsEMOSA %>%
 
 legend_g6ab <- cowplot::get_legend(
   g6a +
-    # labs(fill="Dependend/Outcome Variable: ")+
+    labs(color="Model: ")+
     guides(color = guide_legend(ncol = 1)) +
     theme(
       legend.position = "right"
-      ,legend.title = element_text(size = 16)
+      ,legend.title = element_text(size = 16, hjust = .5)
+      ,legend.text = element_text(size=16)
       
     )
 )
 
 g6ab <- cowplot::plot_grid(
-  g6a
+ 
+  g6a+labs(title = "Deviance Information Criterion", y = "DIC")+theme(plot.title = element_text(hjust=.5))
   ,legend_g6ab
-  ,g6b
+  ,g6b+labs(title = "Sum of Squared Errors", y = "SSE")+theme(plot.title = element_text(hjust=.5))
   ,nrow = 1
-  ,rel_widths = c(1,.3,1)
-  ,rel_heights = c(1,.3,1)
+  ,rel_widths = c(.8,.4,.8)
+  ,labels = c("(a)","","(b)")
+  
+  # ,rel_heights = c(1,.3,1)
 )
 # g6ab
 
 
+# ggplot2::ggsave(
+#   filename = paste0("figure_6ab",".jpg"),
+#   plot     = g6ab,
+#   device   = "jpg",
+#   path     = prints_folder,
+#   width    = 10,
+#   height   = 3,
+#   # units = "cm",
+#   dpi      = 'retina',
+#   limitsize = FALSE
+#   # ,...
+# )
+
+
+# ---- make-fig-6c -------------
+
+make_6c_single <- function(
+  d
+  ,model_prop = "OD_proportion"
+){
+  # d          = dsEMOSA
+  # model_prop = "OD_proportion"
+  
+  
+  d <- dsEMOSA %>% 
+    filter(catatrans %in% c("pG","pI","pA")) %>% 
+    mutate(
+      cohort  = as_factor(cohort) %>% fct_rev()
+      ,parcoh = paste(cohort,catatrans)
+    )
+  
+  g <- d %>% 
+    ggplot(aes(x=age,group=catatrans,fill=catatrans))+
+    geom_line(aes(y=obs_proportion,colour = catatrans),size=2.5,alpha=.3,show.legend =  FALSE)+
+    geom_line(aes_string(y=model_prop), linetype="solid")+
+    scale_y_continuous("Prevalence: proportion of total count",
+                       limits=c(0, .7),
+                       breaks=seq(.2,.6,.2))+
+    scale_x_continuous(#"Age in years at the time of the interview", 
+                       limits=c(16,30),
+                       breaks=c(16,18,20,22,24,26,28,30)
+    )+
+    scale_color_manual(values =catatransColor)+
+    facet_wrap(facets = "cohort",ncol=1, scales = "fixed")
+  g
+  
+}
+
+# dsEMOSA %>% make_6c_single("OD_proportion")
+# dsEMOSA %>% make_6c_single("OC_proportion")
+# dsEMOSA %>% make_6c_single("OH_proportion")
+
+
+g6c1 <- dsEMOSA %>% make_6c_single("OD_proportion")+labs(title = "Diffusion")+theme(plot.title = element_text(hjust=.5),axis.title.x=element_blank(), )
+g6c2 <- dsEMOSA %>% make_6c_single("OC_proportion")+labs(title = "Contagion")+theme(plot.title = element_text(hjust=.5),axis.title.x=element_blank(),axis.title.y = element_text(color="NA"))
+g6c3 <- dsEMOSA %>% make_6c_single("OH_proportion")+labs(title = "Hybrid")   +theme(plot.title = element_text(hjust=.5),axis.title.x=element_blank(),axis.title.y = element_text(color="NA"))
+
+
+g6c <- cowplot::plot_grid(
+   g6c1, g6c2, g6c3 
+  ,nrow = 1
+  ,rel_widths = c(1,1,1)
+  ,labels = c("(c)","(d)","(e)")
+  
+)
+# g6c
+
+# ggplot2::ggsave(
+#   filename = paste0("figure_6c",".jpg"),
+#   plot     = g6c,
+#   device   = "jpg",
+#   path     = prints_folder,
+#   width    = 10,
+#   height   = 10,
+#   # units = "cm",
+#   dpi      = 'retina',
+#   limitsize = FALSE
+#   # ,...
+# )
+
+title_6ab   <- cowplot::ggdraw() %>% draw_label("Model Performance Measures")
+title_6c    <- cowplot::ggdraw() %>% draw_label("Observed vs Predicted Prevalence")
+legend_x_6c <- cowplot::ggdraw() %>% draw_label("Age in years at the time of the interview")
+
+
+title_6ab <- cowplot::ggdraw()+cowplot::draw_label("Model Performance Measures")
+title_6c <- cowplot::ggdraw()+cowplot::draw_label("Observed vs Predicted Prevalence")
+legend_x_6c <- cowplot::ggdraw()+cowplot::draw_label("Age in years at the time of the interview",size = 12)
+g6 <- cowplot::plot_grid(
+  title_6ab
+  ,g6ab
+  ,title_6c
+  ,g6c
+  ,legend_x_6c
+  ,ncol = 1
+  ,rel_heights = c(.2, 1.5, .2, 5, .1)
+)
+
+
+# g6 <- cowplot::plot_grid(
+#   title_6ab
+#   ,g6ab
+#   ,title_6c
+#   ,g6c
+#   ,legend_x_6c
+#   ,ncol = 1
+#   ,rel_heights = c(.1, 1.5, .1, 5,.1)
+# )
+
 ggplot2::ggsave(
-  filename = paste0("figure_6ab",".jpg"),
-  plot     = g6ab,
+  filename = paste0("figure_6",".jpg"),
+  plot     = g6,
   device   = "jpg",
   path     = prints_folder,
-  width    = 10,
-  height   = 3,
+  width    = 7.7,
+  height   = 10.3,
   # units = "cm",
   dpi      = 'retina',
   limitsize = FALSE
   # ,...
 )
-
-
 # ---- make-fig-7ab --------------- 
 
 g7a <- dsEMOSA %>% 
@@ -427,12 +521,13 @@ g7b <- g6b
 legend_g7ab <- legend_g6ab
 
 g7ab <- cowplot::plot_grid(
-  g7a + labs(title = "PREVALENCE")
+  g7a + labs(title = "PREVALENCE")+theme(plot.title = element_text(hjust=.5))
   ,legend_g7ab
-  ,g7b + labs(title = "TRANSITION")
+  ,g7b + labs(title = "TRANSITION")+theme(plot.title = element_text(hjust=.5))
   ,nrow = 1
   ,rel_widths = c(.8,.4,.8)
   ,rel_heights = c(1,.3,1)
+  ,labels = c("(a)","","(b)")
 )
 # g7ab
 
@@ -507,7 +602,7 @@ g7c1 <-
   (d7c %>% 
   filter(catatrans == "pG") %>% 
   make_simple_traj("cohort","value","model")+
-  annotate("text", x=1981.2,y=.013, label ="Goers", color="grey60", size=7)+
+  annotate("text", x=1982,y=.022, label ="Goers", color="grey60", size=7)+
   labs(y = y_label_7d)
   ) %>% 
   add_common_elements_g7c()+
@@ -520,7 +615,7 @@ g7c2 <-
   (d7c %>% 
      filter(catatrans == "pI") %>% 
      make_simple_traj("cohort","value","model")+
-     annotate("text", x=1981.4,y=.013, label ="Irregulars", color="grey60", size=7) 
+     annotate("text", x=1982,y=.022, label ="Irregulars", color="grey60", size=7) 
   )%>% 
   add_common_elements_g7c()+
   theme(
@@ -533,7 +628,7 @@ g7c3 <-
   (d7c %>% 
      filter(catatrans == "pA") %>% 
      make_simple_traj("cohort","value","model")+
-     annotate("text", x=1981.5,y=.013, label ="Absentees", color="grey60", size=7) 
+     annotate("text", x=1982,y=.022, label ="Absentees", color="grey60", size=7) 
   )%>% 
   add_common_elements_g7c()+
   theme(
@@ -627,7 +722,7 @@ g7d <- cowplot::plot_grid(
 
 # final_plot <- matrix_plot
 
-title_ab <- cowplot::ggdraw()+cowplot::draw_label("Total model misfit in predicting")
+title_ab <- cowplot::ggdraw()+cowplot::draw_label("Model Performance Measures")
 title_c <- cowplot::ggdraw()+cowplot::draw_label("Model misfit in predicting PREVALENCE")
 title_d <- cowplot::ggdraw()+cowplot::draw_label("Model misfit in predicting TRANSITION")
 
@@ -642,7 +737,7 @@ final_plot <- cowplot::plot_grid(
   ,rel_heights = c(.1,1.2, .1,1, .1,3)
 
 )
-final_plot
+# final_plot
 # final_plot
 # final_plot %>% quick_save(dto$model_name,width = 10, height = 5)
 ggplot2::ggsave(
@@ -650,8 +745,8 @@ ggplot2::ggsave(
   plot     = final_plot,
   device   = "jpg",
   path     = prints_folder,
-  width    = 10,
-  height   = 12,
+  width    = 7.7,
+  height   = 10.3,
   # units = "cm",
   dpi      = 'retina',
   limitsize = FALSE
