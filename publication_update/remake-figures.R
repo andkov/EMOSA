@@ -640,6 +640,7 @@ g7c <- cowplot::plot_grid(
   g7c1,g7c2,g7c3
   ,nrow=1
   ,rel_widths = c(1, 1, 1)
+  ,labels = c("(c)")
 )
 # g7c
 
@@ -714,6 +715,7 @@ g7d <- cowplot::plot_grid(
   # rel_heights values control vertical title margins
   ,rel_heights = rep(1,9)
   ,rel_widths = rep(1,9)
+  ,labels = c("(d)")
 )+
   theme(
     plot.background =element_rect(fill = "white", color = "white")
